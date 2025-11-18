@@ -1,19 +1,22 @@
 package com.sportall.az.ui.settings
 
 import com.sportall.az.core.BaseViewModel
+import com.sportall.az.domain.usecases.IsExportUnlockedUseCase
+import com.sportall.az.domain.usecases.IsWipeUnlockedUseCase
 import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
-import com.sportall.az.domain.usecases.IsPremiumUnlockedUseCase
 import com.sportall.az.domain.usecases.PurchaseUnlockUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class SettingsState(
-    val premiumUnlocked: Boolean = false,
+    val exportUnlocked: Boolean = false,
+    val wipeUnlocked: Boolean = false,
     val exclusiveUnlocked: Boolean = false
 )
 
 class SettingsViewModel(
-    private val isPremiumUnlocked: IsPremiumUnlockedUseCase,
+    private val isExportUnlocked: IsExportUnlockedUseCase,
+    private val isWipeUnlocked: IsWipeUnlockedUseCase,
     private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase,
     private val purchaseUnlock: PurchaseUnlockUseCase
 ) : BaseViewModel() {
@@ -23,13 +26,19 @@ class SettingsViewModel(
 
     fun refresh() {
         _state.value = SettingsState(
-            premiumUnlocked = isPremiumUnlocked(),
+            exportUnlocked = isExportUnlocked(),
+            wipeUnlocked = isWipeUnlocked(),
             exclusiveUnlocked = isExclusiveUnlocked()
         )
     }
 
-    fun unlockPremium() {
-        purchaseUnlock.unlockPremium()
+    fun unlockExport() {
+        purchaseUnlock.unlockExport()
+        refresh()
+    }
+
+    fun unlockWipe() {
+        purchaseUnlock.unlockWipe()
         refresh()
     }
 

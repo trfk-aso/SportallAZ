@@ -36,7 +36,7 @@ class DefaultDrillRepository(
 
     override suspend fun getAll(): List<Drill> = ensureCache()
 
-    override suspend fun getById(id: Int): Drill? = ensureCache().firstOrNull { it.id == id.toString() }
+    override suspend fun getById(id: Int): Drill? = ensureCache().firstOrNull { it.id == id }
 
     override suspend fun search(query: String): List<Drill> {
         if (query.isBlank()) return ensureCache()
@@ -51,18 +51,12 @@ class DefaultDrillRepository(
         ensureCache().filter { it.category == category }
 
     override suspend fun filterByDifficulty(level: Difficulty): List<Drill> =
-        ensureCache().filter { drill ->
-            when (level) {
-                Difficulty.Easy -> drill.difficulty <= 1
-                Difficulty.Medium -> drill.difficulty == 2
-                Difficulty.Hard -> drill.difficulty >= 3
-            }
-        }
+        ensureCache().filter { it.difficulty == level }
 
     override suspend fun getCategories(): List<Category> = ensureCache()
         .map { it.category }
         .distinct()
 
-    override fun isExclusive(drill: Drill): Boolean = drill.category == Category.Exclusive
+    override fun isExclusive(drill: Drill): Boolean = drill.isExclusive
 }
 

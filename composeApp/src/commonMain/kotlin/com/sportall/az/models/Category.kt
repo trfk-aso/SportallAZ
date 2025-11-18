@@ -6,6 +6,9 @@ enum class Category(val displayName: String) {
     Dribbling("Dribbling"),
     Rondo("Rondo"),
     Shooting("Shooting"),
-    Exclusive("Exclusive")
+    Agility("Agility"),
+    Goalkeeper("Goalkeeper"),
+    TeamGames("Team Games"),
+    Recovery("Recovery")
 }
 

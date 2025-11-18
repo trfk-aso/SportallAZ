@@ -40,13 +40,13 @@ class DrillDetailsViewModel(
     }
 
     fun toggleFavorite() {
-        val id = currentId ?: state.value.drill?.id?.toIntOrNull() ?: return
+        val id = currentId ?: state.value.drill?.id ?: return
         toggleFavorite(id)
         _state.value = _state.value.copy(isFavorite = !_state.value.isFavorite)
     }
 
     fun completeWithRating(stars: Int?) {
-        val id = currentId ?: state.value.drill?.id?.toIntOrNull() ?: return
+        val id = currentId ?: state.value.drill?.id ?: return
         addHistoryItem(HistoryRecord(drillId = id, date = Clock.System.now().toEpochMilliseconds(), stars = stars))
     }
 }

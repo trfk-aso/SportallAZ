@@ -27,7 +27,7 @@ class FavoritesViewModel(
             _state.value = _state.value.copy(loading = true, error = null)
             runCatching {
                 val favIds = getFavorites().toSet()
-                getDrills().filter { it.id.toIntOrNull()?.let { id -> id in favIds } == true }
+                getDrills().filter { it.id in favIds }
             }.onSuccess { drills ->
                 _state.value = _state.value.copy(loading = false, drills = drills)
             }.onFailure { e ->
