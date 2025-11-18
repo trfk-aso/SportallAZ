@@ -1,0 +1,38 @@
+package com.sportall.az.ui.favorites
+
+import com.sportall.az.core.BaseViewModel
+import com.sportall.az.domain.usecases.GetDrillsUseCase
+import com.sportall.az.domain.usecases.GetFavoritesUseCase
+import com.sportall.az.models.Drill
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+data class FavoritesState(
+    val loading: Boolean = true,
+    val drills: List<Drill> = emptyList(),
+    val error: String? = null
+)
+
+class FavoritesViewModel(
+    private val getFavorites: GetFavoritesUseCase,
+    private val getDrills: GetDrillsUseCase
+) : BaseViewModel() {
+
+    private val _state = MutableStateFlow(FavoritesState())
+    val state: StateFlow<FavoritesState> = _state
+
+    fun load() {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(loading = true, error = null)
+            runCatching {
+                val favIds = getFavorites().toSet()
+                getDrills().filter { it.id.toIntOrNull()?.let { id -> id in favIds } == true }
+            }.onSuccess { drills ->
+                _state.value = _state.value.copy(loading = false, drills = drills)
+            }.onFailure { e ->
+                _state.value = _state.value.copy(loading = false, error = e.message)
+            }
+        }
+    }
+}

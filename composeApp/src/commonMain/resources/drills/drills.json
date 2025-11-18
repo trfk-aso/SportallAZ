@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "Warm-up Circle",
+    "category": "WarmUp",
+    "difficulty": 1,
+    "steps": ["Form a circle", "Pass clockwise", "Increase tempo"],
+    "recommendation": "Great for starting sessions",
+    "isPremium": false,
+    "image": null
+  },
+  {
+    "id": "2",
+    "name": "Short Passing",
+    "category": "Passing",
+    "difficulty": 2,
+    "steps": ["Two players", "Short distance", "Quick movement"],
+    "recommendation": "Focus on precision",
+    "isPremium": false,
+    "image": null
+  }
+]
