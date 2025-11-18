@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.sportall.az.di.ProvideKoin
 import com.sportall.az.ui.splash.SplashScreen
+import com.sportall.az.ui.home.HomeScreen
 
 @Composable
 fun App() {
@@ -127,7 +128,6 @@ object SettingsTab : IconTab {
         }
 }
 
-@Composable fun HomeScreen() {}
 @Composable fun SearchScreen() {}
 @Composable fun FavoritesScreen() {}
 @Composable fun HistoryScreen() {}

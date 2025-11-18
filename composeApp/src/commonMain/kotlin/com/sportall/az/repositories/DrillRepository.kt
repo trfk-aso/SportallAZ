@@ -28,7 +28,7 @@ class DefaultDrillRepository(
 
     private suspend fun ensureCache(): List<Drill> {
         cache?.let { return it }
-        val text = dataSource.readText("drills/drills.json")
+        val text = dataSource.readText("files/drills/drills.json")
         val list = json.decodeFromString(ListSerializer(Drill.serializer()), text)
         cache = list
         return list
