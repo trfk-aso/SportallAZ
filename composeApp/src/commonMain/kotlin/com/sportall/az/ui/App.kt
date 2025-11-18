@@ -68,11 +68,39 @@ interface IconTab : Tab {
     val icon: ImageVector
 }
 
+// Screen wrappers for tab content
+data object HomeScreenObj : Screen {
+    @Composable
+    override fun Content() { HomeScreen() }
+}
+
+data object SearchScreenObj : Screen {
+    @Composable
+    override fun Content() { SearchScreen() }
+}
+
+data object FavoritesScreenObj : Screen {
+    @Composable
+    override fun Content() { FavoritesScreen() }
+}
+
+data object HistoryScreenObj : Screen {
+    @Composable
+    override fun Content() { HistoryScreen() }
+}
+
+data object SettingsScreenObj : Screen {
+    @Composable
+    override fun Content() { SettingsScreen() }
+}
+
 object HomeTab : IconTab {
     override val icon = Icons.Filled.Home
 
     @Composable
-    override fun Content() { HomeScreen() }
+    override fun Content() {
+        Navigator(HomeScreenObj)
+    }
 
     override val options: TabOptions
         @Composable get() = remember {
@@ -84,7 +112,9 @@ object SearchTab : IconTab {
     override val icon = Icons.Filled.Search
 
     @Composable
-    override fun Content() { SearchScreen() }
+    override fun Content() {
+        Navigator(SearchScreenObj)
+    }
 
     override val options: TabOptions
         @Composable get() = remember {
@@ -96,7 +126,9 @@ object FavoritesTab : IconTab {
     override val icon = Icons.Filled.Favorite
 
     @Composable
-    override fun Content() { FavoritesScreen() }
+    override fun Content() {
+        Navigator(FavoritesScreenObj)
+    }
 
     override val options: TabOptions
         @Composable get() = remember {
@@ -108,7 +140,9 @@ object HistoryTab : IconTab {
     override val icon = Icons.Filled.History
 
     @Composable
-    override fun Content() { HistoryScreen() }
+    override fun Content() {
+        Navigator(HistoryScreenObj)
+    }
 
     override val options: TabOptions
         @Composable get() = remember {
@@ -120,7 +154,9 @@ object SettingsTab : IconTab {
     override val icon = Icons.Filled.Settings
 
     @Composable
-    override fun Content() { SettingsScreen() }
+    override fun Content() {
+        Navigator(SettingsScreenObj)
+    }
 
     override val options: TabOptions
         @Composable get() = remember {

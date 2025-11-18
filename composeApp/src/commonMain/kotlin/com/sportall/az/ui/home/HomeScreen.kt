@@ -20,11 +20,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import com.sportall.az.models.Category
 import com.sportall.az.models.Drill
 import com.sportall.az.ui.SearchTab
 import com.sportall.az.ui.SettingsTab
+import com.sportall.az.ui.catalog.DrillDetailsScreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -32,6 +35,7 @@ fun HomeScreen() {
     val viewModel: HomeViewModel = koinInject()
     val state by viewModel.state.collectAsState()
     val tabNavigator = LocalTabNavigator.current
+    val navigator = LocalNavigator.currentOrThrow
 
     var selectedCategory by remember { mutableStateOf<Category?>(null) }
 
@@ -76,7 +80,7 @@ fun HomeScreen() {
                             if (lastDrill != null) {
                                 ContinueCard(
                                     drill = lastDrill,
-                                    onClick = { /* TODO: Navigate to drill details */ }
+                                    onClick = { navigator.push(DrillDetailsScreen(lastDrill.id)) }
                                 )
                             }
                         }
@@ -120,7 +124,7 @@ fun HomeScreen() {
                             DrillsGrid(
                                 drills = state.drills,
                                 favorites = state.favorites,
-                                onDrillClick = { /* TODO: Navigate to drill details */ },
+                                onDrillClick = { drill -> navigator.push(DrillDetailsScreen(drill.id)) },
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxWidth()
