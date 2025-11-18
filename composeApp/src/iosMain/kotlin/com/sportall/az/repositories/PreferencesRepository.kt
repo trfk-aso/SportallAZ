@@ -13,6 +13,13 @@ actual class PreferencesRepository {
     actual fun getString(key: String): String? =
         prefs.stringForKey(key)
 
+    actual fun putBoolean(key: String, value: Boolean) {
+        prefs.setBool(value, forKey = key)
+    }
+
+    actual fun getBoolean(key: String): Boolean =
+        prefs.boolForKey(key)
+
     actual fun putStringList(key: String, list: List<String>) {
         putString(key, list.joinToString("||"))
     }

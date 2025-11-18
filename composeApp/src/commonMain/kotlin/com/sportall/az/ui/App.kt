@@ -3,11 +3,14 @@ package com.sportall.az.ui
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.*
+import cafe.adriel.voyager.core.screen.Screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.sportall.az.di.ProvideKoin
+import com.sportall.az.ui.splash.SplashScreen
 
 @Composable
 fun App() {
@@ -20,11 +23,18 @@ fun App() {
 
 @Composable
 fun AppNavigation() {
-    TabNavigator(HomeTab) {
-        Scaffold(
-            bottomBar = { BottomNavigationBar() }
-        ) {
-            CurrentTab()
+    Navigator(SplashScreen)
+}
+
+data object MainTabsScreen : Screen {
+    @Composable
+    override fun Content() {
+        TabNavigator(HomeTab) {
+            Scaffold(
+                bottomBar = { BottomNavigationBar() }
+            ) {
+                CurrentTab()
+            }
         }
     }
 }

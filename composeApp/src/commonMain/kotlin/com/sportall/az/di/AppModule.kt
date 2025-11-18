@@ -48,6 +48,11 @@ val appModule = module {
     factory { IsPremiumUnlockedUseCase(get()) }
     factory { IsExclusiveUnlockedUseCase(get()) }
 
+    factory { IsFirstLaunchUseCase(get()) }
+    factory { CompleteOnboardingUseCase(get()) }
+
+    factory { com.sportall.az.ui.splash.SplashViewModel(get()) }
+    factory { com.sportall.az.ui.onboarding.OnboardingViewModel(get()) }
     factory { com.sportall.az.ui.home.HomeViewModel(get(), get(), get(), get(), get(), get()) }
     factory { com.sportall.az.ui.search.SearchViewModel(get(), get(), get(), get()) }
     factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get()) }
