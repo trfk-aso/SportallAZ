@@ -132,7 +132,7 @@ object FavoritesTab : IconTab {
 
     override val options: TabOptions
         @Composable get() = remember {
-            TabOptions(2u, "Favorites", null)
+            TabOptions(2u, "Journal", null)
         }
 }
 
@@ -146,7 +146,7 @@ object HistoryTab : IconTab {
 
     override val options: TabOptions
         @Composable get() = remember {
-            TabOptions(3u, "History", null)
+            TabOptions(3u, "Statistics", null)
         }
 }
 
@@ -160,7 +160,7 @@ object SettingsTab : IconTab {
 
     override val options: TabOptions
         @Composable get() = remember {
-            TabOptions(4u, "Settings", null)
+            TabOptions(4u, "Favorites", null)
         }
 }
 
