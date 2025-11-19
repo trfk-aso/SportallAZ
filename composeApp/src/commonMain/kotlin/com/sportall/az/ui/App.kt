@@ -15,6 +15,7 @@ import com.sportall.az.ui.home.HomeScreen
 import com.sportall.az.ui.settings.SettingsScreen
 import com.sportall.az.ui.history.StatisticsScreen
 import com.sportall.az.ui.favorites.FavoritesScreen
+import com.sportall.az.ui.search.SearchScreen
 
 @Composable
 fun App() {
@@ -79,7 +80,9 @@ data object HomeScreenObj : Screen {
 
 data object SearchScreenObj : Screen {
     @Composable
-    override fun Content() { SearchScreen() }
+    override fun Content() {
+        SearchScreen()
+    }
 }
 
 data object FavoritesScreenObj : Screen {
@@ -166,5 +169,3 @@ object SettingsTab : IconTab {
             TabOptions(4u, "Favorites", null)
         }
 }
-
-@Composable fun SearchScreen() {}
