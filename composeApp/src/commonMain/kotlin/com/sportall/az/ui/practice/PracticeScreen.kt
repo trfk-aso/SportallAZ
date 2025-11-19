@@ -303,7 +303,8 @@ fun RatingDialog(
             ) {
                 Text(
                     text = "How well did you complete it?",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -375,5 +376,7 @@ fun RatingDialog(
 private fun formatTime(seconds: Int): String {
     val minutes = seconds / 60
     val secs = seconds % 60
-    return "%02d:%02d".format(minutes, secs)
+    val minutesStr = if (minutes < 10) "0$minutes" else "$minutes"
+    val secsStr = if (secs < 10) "0$secs" else "$secs"
+    return "$minutesStr:$secsStr"
 }

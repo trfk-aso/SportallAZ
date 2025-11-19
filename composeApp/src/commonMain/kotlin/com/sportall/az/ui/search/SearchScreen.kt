@@ -3,6 +3,8 @@ package com.sportall.az.ui.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -11,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -21,6 +24,8 @@ import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.home.DrillsGrid
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import com.sportall.az.ui.theme.Gold
+import com.sportall.az.ui.theme.LimeGreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -51,8 +56,9 @@ fun SearchScreen() {
             // Category Filters
             Text(
                 text = "Categories",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
 
             CategoryFilters(
@@ -64,8 +70,9 @@ fun SearchScreen() {
             // Difficulty Filters
             Text(
                 text = "Difficulty",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
 
             DifficultyFilters(
@@ -78,8 +85,9 @@ fun SearchScreen() {
             if (state.history.isNotEmpty() && state.query.isEmpty()) {
                 Text(
                     text = "Recent queries",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
 
                 state.history.forEach { query ->
@@ -137,19 +145,21 @@ fun SearchTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        shape = RoundedCornerShape(12.dp),
-        color = MaterialTheme.colorScheme.surfaceVariant
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shadowElevation = 2.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -161,7 +171,7 @@ fun SearchTextField(
                 placeholder = {
                     Text(
                         text = "Search drills...",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                        color = Color.White.copy(alpha = 0.6f)
                     )
                 },
                 colors = TextFieldDefaults.colors(
@@ -170,9 +180,14 @@ fun SearchTextField(
                     disabledContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = { onSearch() })
             )
 
             if (query.isNotEmpty()) {
@@ -180,7 +195,7 @@ fun SearchTextField(
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Clear",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = Color.White
                     )
                 }
             }
@@ -205,7 +220,7 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == null,
                 onClick = { onCategorySelected(null) },
-                label = { Text("All") }
+                label = { Text("All", color = Color.White) }
             )
 
             FilterChip(
@@ -213,7 +228,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.WarmUp) null else Category.WarmUp)
                 },
-                label = { Text("Warm-up") }
+                label = { Text("Warm-up", color = Color.White) }
             )
 
             FilterChip(
@@ -221,7 +236,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Passing) null else Category.Passing)
                 },
-                label = { Text("Passing") }
+                label = { Text("Passing", color = Color.White) }
             )
 
             FilterChip(
@@ -229,7 +244,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Dribbling) null else Category.Dribbling)
                 },
-                label = { Text("Dribbling") }
+                label = { Text("Dribbling", color = Color.White) }
             )
         }
 
@@ -243,7 +258,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Shooting) null else Category.Shooting)
                 },
-                label = { Text("Shooting") }
+                label = { Text("Shooting", color = Color.White) }
             )
 
             FilterChip(
@@ -251,7 +266,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Rondo) null else Category.Rondo)
                 },
-                label = { Text("Rondo / Possession") }
+                label = { Text("Rondo / Possession", color = Color.White) }
             )
 
             FilterChip(
@@ -259,7 +274,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Agility) null else Category.Agility)
                 },
-                label = { Text("Agility") }
+                label = { Text("Agility", color = Color.White) }
             )
         }
 
@@ -273,7 +288,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Goalkeeper) null else Category.Goalkeeper)
                 },
-                label = { Text("Goalkeeper") }
+                label = { Text("Goalkeeper", color = Color.White) }
             )
 
             FilterChip(
@@ -281,7 +296,7 @@ fun CategoryFilters(
                 onClick = {
                     onCategorySelected(if (selectedCategory == Category.Recovery) null else Category.Recovery)
                 },
-                label = { Text("Recovery") }
+                label = { Text("Recovery", color = Color.White) }
             )
 
             // Exclusive chip with lock icon
@@ -293,11 +308,12 @@ fun CategoryFilters(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Exclusive")
+                        Text("Exclusive", color = Color.White)
                         Icon(
                             imageVector = Icons.Default.Lock,
                             contentDescription = null,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(16.dp),
+                            tint = Gold
                         )
                     }
                 }
@@ -320,7 +336,7 @@ fun DifficultyFilters(
             onClick = {
                 onDifficultySelected(if (selectedDifficulty == Difficulty.Easy) null else Difficulty.Easy)
             },
-            label = { Text("Easy") }
+            label = { Text("Easy", color = Color.White) }
         )
 
         FilterChip(
@@ -328,7 +344,7 @@ fun DifficultyFilters(
             onClick = {
                 onDifficultySelected(if (selectedDifficulty == Difficulty.Medium) null else Difficulty.Medium)
             },
-            label = { Text("Medium") }
+            label = { Text("Medium", color = Color.White) }
         )
 
         FilterChip(
@@ -336,13 +352,26 @@ fun DifficultyFilters(
             onClick = {
                 onDifficultySelected(if (selectedDifficulty == Difficulty.Hard) null else Difficulty.Hard)
             },
-            label = { Text("Hard") }
+            label = { Text("Hard", color = Color.White) }
         )
 
         FilterChip(
             selected = false,
             onClick = onExclusiveClick,
-            label = { Text("Exclusive") }
+            label = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Exclusive", color = Color.White)
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = Gold
+                    )
+                }
+            }
         )
     }
 }
@@ -355,29 +384,34 @@ fun RecentQueryItem(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
-        onClick = onQueryClick
+        onClick = onQueryClick,
+        shadowElevation = 1.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 14.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
             ) {
                 Icon(
                     imageVector = Icons.Default.History,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = Color.White,
+                    modifier = Modifier.size(20.dp)
                 )
                 Text(
                     text = query,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
                 )
             }
 
@@ -385,7 +419,8 @@ fun RecentQueryItem(
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Remove",
-                    tint = MaterialTheme.colorScheme.error
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(20.dp)
                 )
             }
         }
@@ -406,23 +441,36 @@ fun EmptySearchState(
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+            modifier = Modifier.size(80.dp),
+            tint = Color.White.copy(alpha = 0.3f)
         )
 
-        Text(
-            text = "No drills found.",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "No drills found",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
+
+            Text(
+                text = "Try adjusting your filters or search query",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = Color.White.copy(alpha = 0.6f)
+            )
+        }
 
         Button(
             onClick = onBackToAll,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFB4FF39)
+                containerColor = LimeGreen
             )
         ) {
             Text(

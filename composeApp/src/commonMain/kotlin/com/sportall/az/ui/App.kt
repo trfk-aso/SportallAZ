@@ -8,19 +8,25 @@ import cafe.adriel.voyager.navigator.tab.*
 import cafe.adriel.voyager.core.screen.Screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.sportall.az.di.ProvideKoin
 import com.sportall.az.ui.splash.SplashScreen
 import com.sportall.az.ui.home.HomeScreen
 import com.sportall.az.ui.settings.SettingsScreen
 import com.sportall.az.ui.history.StatisticsScreen
+import com.sportall.az.ui.history.HistoryScreen
 import com.sportall.az.ui.favorites.FavoritesScreen
 import com.sportall.az.ui.search.SearchScreen
+import com.sportall.az.ui.theme.DeepBlue
+import com.sportall.az.ui.theme.LimeGreen
+import com.sportall.az.ui.theme.SurfaceBlue
+import com.sportall.az.ui.theme.SportallTheme
 
 @Composable
 fun App() {
     ProvideKoin {
-        MaterialTheme {
+        SportallTheme {
             AppNavigation()
         }
     }
@@ -56,13 +62,23 @@ fun BottomNavigationBar() {
         SettingsTab
     )
 
-    NavigationBar {
+    NavigationBar(
+        containerColor = DeepBlue,
+        contentColor = Color.White
+    ) {
         tabs.forEach { tab ->
             NavigationBarItem(
                 selected = tabNavigator.current == tab,
                 onClick = { tabNavigator.current = tab },
                 icon = { Icon(tab.icon, tab.options.title) },
-                label = { Text(tab.options.title) }
+                label = { Text(tab.options.title) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = LimeGreen,
+                    selectedTextColor = LimeGreen,
+                    unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                    unselectedTextColor = Color.White.copy(alpha = 0.6f),
+                    indicatorColor = SurfaceBlue
+                )
             )
         }
     }
@@ -92,7 +108,9 @@ data object FavoritesScreenObj : Screen {
 
 data object HistoryScreenObj : Screen {
     @Composable
-    override fun Content() { StatisticsScreen() }
+    override fun Content() {
+        HistoryScreen.Content()
+    }
 }
 
 data object SettingsScreenObj : Screen {
@@ -152,7 +170,7 @@ object HistoryTab : IconTab {
 
     override val options: TabOptions
         @Composable get() = remember {
-            TabOptions(3u, "Statistics", null)
+            TabOptions(3u, "History", null)
         }
 }
 
@@ -166,6 +184,6 @@ object SettingsTab : IconTab {
 
     override val options: TabOptions
         @Composable get() = remember {
-            TabOptions(4u, "Favorites", null)
+            TabOptions(4u, "Settings", null)
         }
 }

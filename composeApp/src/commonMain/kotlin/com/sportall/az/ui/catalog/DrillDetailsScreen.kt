@@ -24,6 +24,11 @@ import com.sportall.az.models.Drill
 import com.sportall.az.ui.practice.PracticeScreen
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import com.sportall.az.ui.theme.DeepBlue
+import com.sportall.az.ui.theme.DrillCardBlue
+import com.sportall.az.ui.theme.Gold
+import com.sportall.az.ui.theme.LimeGreen
+import com.sportall.az.ui.theme.SurfaceBlue
 import org.koin.compose.koinInject
 
 data class DrillDetailsScreen(val drillId: Int) : Screen {
@@ -95,12 +100,17 @@ fun DrillDetailsTopBar(
             Text(
                 text = drillName,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
         },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.White
+                )
             }
         },
         actions = {
@@ -108,10 +118,13 @@ fun DrillDetailsTopBar(
                 Icon(
                     imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",
-                    tint = if (isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurface
+                    tint = if (isFavorite) Gold else Color.White.copy(alpha = 0.7f)
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = DeepBlue
+        )
     )
 }
 
@@ -142,7 +155,11 @@ fun DrillDetailsContent(
                     .fillMaxWidth()
                     .height(200.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
+                        color = if (drill.isExclusive) {
+                            Gold.copy(alpha = 0.4f)
+                        } else {
+                            DrillCardBlue
+                        },
                         shape = RoundedCornerShape(16.dp)
                     ),
                 contentAlignment = Alignment.Center
@@ -151,23 +168,42 @@ fun DrillDetailsContent(
                     text = drill.visualDescription,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
+                    color = if (drill.isExclusive) Color.Black else Color.White,
                     modifier = Modifier.padding(16.dp)
                 )
+
+                // Lock icon for exclusive drills
+                if (drill.isExclusive) {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Exclusive",
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(12.dp)
+                            .size(24.dp),
+                        tint = Color(0xFF8B7500)
+                    )
+                }
             }
 
             // Metadata Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = SurfaceBlue
+                )
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Metadata:",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        text = "Metadata",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
 
                     MetadataRow("Category:", drill.category.displayName)
@@ -188,7 +224,11 @@ fun DrillDetailsContent(
             // Self Rating Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = SurfaceBlue
+                )
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),
@@ -197,14 +237,16 @@ fun DrillDetailsContent(
                 ) {
                     Text(
                         text = "Self rating",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
 
                     Text(
                         text = "How well did you complete this drill?",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                        color = Color.White,
+                        textAlign = TextAlign.Center
                     )
 
                     StarRatingSelector(
@@ -226,7 +268,7 @@ fun DrillDetailsContent(
                     .padding(top = 8.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFB4FF39) // Lime green
+                    containerColor = LimeGreen
                 )
             ) {
                 Text(
@@ -246,7 +288,7 @@ fun DrillDetailsContent(
                     .padding(16.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFB4FF39) // Green from Figma
+                    containerColor = LimeGreen
                 )
             ) {
                 Text(
@@ -304,7 +346,11 @@ fun StepsContent(drill: Drill) {
     } else {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = SurfaceBlue
+            )
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -312,20 +358,21 @@ fun StepsContent(drill: Drill) {
             ) {
                 Text(
                     text = "Steps",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
 
                 if (drill.setup.isNotEmpty()) {
-                    StepSection("Setup:", drill.setup)
+                    StepSection("Setup", drill.setup)
                 }
 
                 if (drill.execution.isNotEmpty()) {
-                    StepSection("Execution:", drill.execution)
+                    StepSection("Execution", drill.execution)
                 }
 
                 if (drill.coachingPoints.isNotEmpty()) {
-                    StepSection("Coaching Points:", drill.coachingPoints)
+                    StepSection("Coaching Points", drill.coachingPoints)
                 }
             }
         }
@@ -335,27 +382,30 @@ fun StepsContent(drill: Drill) {
 @Composable
 fun StepSection(title: String, steps: List<String>) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
 
         steps.forEach { step ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Top
             ) {
                 Text(
                     text = "• ",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 2.dp)
                 )
                 Text(
                     text = step,
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    lineHeight = MaterialTheme.typography.bodyMedium.lineHeight
                 )
             }
         }
@@ -366,7 +416,8 @@ fun StepSection(title: String, steps: List<String>) {
 fun LockedContent(onUnlockClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
             modifier = Modifier
@@ -375,6 +426,13 @@ fun LockedContent(onUnlockClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = Gold
+            )
+
             Text(
                 text = "Exclusive drill. Unlock to see steps.",
                 style = MaterialTheme.typography.bodyLarge,
@@ -387,7 +445,7 @@ fun LockedContent(onUnlockClick: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFB4FF39)
+                    containerColor = LimeGreen
                 )
             ) {
                 Row(
@@ -431,12 +489,12 @@ fun StarRatingSelector(
                 },
                 contentDescription = "Rating $rating",
                 tint = if (selectedRating != null && rating <= selectedRating) {
-                    Color(0xFFFFD700)
+                    Gold
                 } else {
                     Color.Gray
                 },
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(48.dp)
                     .clickable {
                         onRatingSelected(if (selectedRating == rating) null else rating)
                     }

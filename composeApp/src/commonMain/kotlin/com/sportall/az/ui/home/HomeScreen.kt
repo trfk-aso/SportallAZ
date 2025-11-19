@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
@@ -30,6 +31,8 @@ import com.sportall.az.ui.SettingsTab
 import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import com.sportall.az.ui.theme.DrillCardBlue
+import com.sportall.az.ui.theme.Gold
 import org.koin.compose.koinInject
 
 @Composable
@@ -96,9 +99,10 @@ fun HomeScreen() {
                         // Categories
                         Text(
                             text = "Categories",
-                            style = MaterialTheme.typography.headlineSmall,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            color = Color.White,
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
                         )
 
                         CategoryChips(
@@ -115,9 +119,10 @@ fun HomeScreen() {
                         // Featured / Popular drills
                         Text(
                             text = "Featured / Popular drills",
-                            style = MaterialTheme.typography.headlineSmall,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            color = Color.White,
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp)
                         )
 
                         // Drills Grid
@@ -159,24 +164,47 @@ fun HomeTopBar(
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = "SPORTALL AZ",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "SPORTALL",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "AZ",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = com.sportall.az.ui.theme.LimeGreen
+                )
+            }
         },
         navigationIcon = {
             IconButton(onClick = onSearchClick) {
-                Icon(Icons.Default.Search, contentDescription = "Search")
+                Icon(
+                    Icons.Default.Search,
+                    contentDescription = "Search",
+                    tint = Color.White
+                )
             }
         },
         actions = {
             IconButton(onClick = onSettingsClick) {
-                Icon(Icons.Default.Settings, contentDescription = "Settings")
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = "Settings",
+                    tint = Color.White
+                )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = com.sportall.az.ui.theme.DeepBlue
+        )
     )
 }
 
@@ -188,56 +216,92 @@ fun ContinueCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = com.sportall.az.ui.theme.SurfaceBlue
+        )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = drill.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    AssistChip(
+                        onClick = {},
+                        label = {
+                            Text(
+                                text = drill.category.displayName,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        },
+                        modifier = Modifier.height(24.dp),
+                        colors = AssistChipDefaults.assistChipColors(
+                            containerColor = com.sportall.az.ui.theme.DrillCardBlue,
+                            labelColor = Color.White
+                        )
+                    )
+                }
+            }
+
             // Visual placeholder
             Box(
                 modifier = Modifier
-                    .size(120.dp, 80.dp)
+                    .size(80.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = RoundedCornerShape(8.dp)
+                        color = DrillCardBlue,
+                        shape = RoundedCornerShape(12.dp)
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = drill.visualDescription.take(20) + "...",
-                    style = MaterialTheme.typography.bodySmall,
-                    textAlign = TextAlign.Center
+                    text = drill.visualDescription.take(15),
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    fontSize = 9.sp,
+                    modifier = Modifier.padding(4.dp)
                 )
             }
+        }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
+        Button(
+            onClick = onClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = com.sportall.az.ui.theme.LimeGreen
+            )
+        ) {
             Text(
-                text = drill.name,
+                text = "Continue",
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            AssistChip(
-                onClick = {},
-                label = { Text(drill.category.displayName) }
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Button(
-                onClick = onClick,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Continue")
-            }
         }
     }
 }
@@ -258,7 +322,13 @@ fun CategoryChips(
             FilterChip(
                 selected = selectedCategory == null,
                 onClick = { onCategorySelected(null) },
-                label = { Text("All") }
+                label = { Text("All") },
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = com.sportall.az.ui.theme.LimeGreen,
+                    selectedLabelColor = Color.Black,
+                    containerColor = Color.Transparent,
+                    labelColor = Color.White
+                )
             )
         }
 
@@ -270,7 +340,14 @@ fun CategoryChips(
                 label = { Text(category.displayName) },
                 leadingIcon = if (category.displayName == "Exclusive") {
                     { Icon(Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(16.dp)) }
-                } else null
+                } else null,
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = com.sportall.az.ui.theme.LimeGreen,
+                    selectedLabelColor = Color.Black,
+                    containerColor = Color.Transparent,
+                    labelColor = Color.White,
+                    iconColor = if (category.displayName == "Exclusive") com.sportall.az.ui.theme.Gold else Color.White
+                )
             )
         }
     }
@@ -310,85 +387,91 @@ fun DrillCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = com.sportall.az.ui.theme.SurfaceBlue
+        )
     ) {
-        Box {
-            Column(
-                modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // Visual placeholder
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(140.dp)
+                    .background(
+                        color = if (drill.isExclusive) {
+                            Gold.copy(alpha = 0.4f) // Gold overlay
+                        } else {
+                            DrillCardBlue // Brand blue for standard drills
+                        }
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                // Visual placeholder
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .background(
-                            color = if (drill.isExclusive) {
-                                Color(0xFFFFD700).copy(alpha = 0.3f) // Gold
-                            } else {
-                                MaterialTheme.colorScheme.primaryContainer
-                            }
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = drill.visualDescription.take(30),
-                        style = MaterialTheme.typography.bodySmall,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(8.dp)
-                    )
-
-                    // Lock icon for exclusive
-                    if (drill.isExclusive) {
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = "Exclusive",
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(8.dp)
-                                .size(20.dp),
-                            tint = Color.Gray
-                        )
-                    }
-                }
-
-                Column(
+                Text(
+                    text = drill.visualDescription.take(40),
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center,
+                    color = if (drill.isExclusive) Color.Black else Color.White,
+                    fontSize = 11.sp,
                     modifier = Modifier.padding(12.dp)
-                ) {
-                    Text(
-                        text = drill.name,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
+                )
+
+                // Lock icon for exclusive
+                if (drill.isExclusive) {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Exclusive",
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(10.dp)
+                            .size(18.dp),
+                        tint = Color(0xFF8B7500)
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AssistChip(
-                            onClick = {},
-                            label = {
-                                Text(
-                                    text = drill.category.displayName,
-                                    style = MaterialTheme.typography.labelSmall
-                                )
-                            },
-                            modifier = Modifier.height(24.dp)
-                        )
-
-                        // Favorite star
-                        Icon(
-                            imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
-                            contentDescription = "Favorite",
-                            tint = if (isFavorite) Color(0xFFFFD700) else Color.Gray,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
                 }
+
+                // Favorite star overlay
+                Icon(
+                    imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
+                    contentDescription = "Favorite",
+                    tint = if (isFavorite) Gold else Color.White.copy(alpha = 0.7f),
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(10.dp)
+                        .size(20.dp)
+                )
+            }
+
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = drill.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 15.sp
+                )
+
+                AssistChip(
+                    onClick = {},
+                    label = {
+                        Text(
+                            text = drill.category.displayName,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 11.sp
+                        )
+                    },
+                    modifier = Modifier.height(26.dp),
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = com.sportall.az.ui.theme.DrillCardBlue,
+                        labelColor = Color.White
+                    )
+                )
             }
         }
     }

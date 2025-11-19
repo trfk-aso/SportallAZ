@@ -1,18 +1,25 @@
 package com.sportall.az.ui.onboarding
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.ui.MainTabsScreen
+import com.sportall.az.ui.theme.DeepBlue
+import com.sportall.az.ui.theme.LimeGreen
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -41,6 +48,7 @@ data object OnboardingScreen : Screen {
         }
 
         Scaffold(
+            containerColor = DeepBlue,
             topBar = {
                 Box(
                     modifier = Modifier
@@ -48,7 +56,14 @@ data object OnboardingScreen : Screen {
                         .padding(16.dp),
                     contentAlignment = Alignment.TopEnd
                 ) {
-                    TextButton(onClick = { viewModel.skipOnboarding() }) {
+                    OutlinedButton(
+                        onClick = { viewModel.skipOnboarding() },
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = LimeGreen
+                        ),
+                        border = BorderStroke(1.dp, LimeGreen),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
                         Text("Skip")
                     }
                 }
@@ -64,6 +79,7 @@ data object OnboardingScreen : Screen {
                     Text(
                         text = "${pagerState.currentPage + 1}/3",
                         style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
@@ -78,9 +94,19 @@ data object OnboardingScreen : Screen {
                                 viewModel.skipOnboarding() // "Get started" = finish onboarding
                             }
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = LimeGreen,
+                            contentColor = Color.Black
+                        )
                     ) {
-                        Text(if (pagerState.currentPage < 2) "Next" else "Get started")
+                        Text(
+                            text = if (pagerState.currentPage < 2) "Next" else "Get started",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 4.dp)
+                        )
                     }
                 }
             }
@@ -116,7 +142,9 @@ fun OnboardingPage(page: Int) {
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DeepBlue),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -126,16 +154,25 @@ fun OnboardingPage(page: Int) {
                 .fillMaxWidth()
                 .padding(32.dp)
         ) {
+            // Title text
             Text(
                 text = content.title,
                 style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
             )
+
+            // White descriptive text below
             Text(
                 text = content.description,
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

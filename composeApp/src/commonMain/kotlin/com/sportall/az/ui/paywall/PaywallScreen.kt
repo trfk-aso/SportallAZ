@@ -6,7 +6,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,10 +29,12 @@ enum class PaywallType {
 
 data class PaywallScreen(val type: PaywallType) : Screen {
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val purchaseUnlock: PurchaseUnlockUseCase = koinInject()
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
         val content = when (type) {
             PaywallType.EXCLUSIVE -> PaywallContent(
@@ -71,28 +72,47 @@ data class PaywallScreen(val type: PaywallType) : Screen {
             )
         }
 
-        Scaffold(
-            topBar = {
-                PaywallTopBar(onBackClick = { navigator.pop() })
+        ModalBottomSheet(
+            onDismissRequest = { navigator.pop() },
+            sheetState = sheetState,
+            containerColor = com.sportall.az.ui.theme.DeepBlue,
+            contentColor = Color.White,
+            dragHandle = {
+                // Custom drag handle at top
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .width(32.dp)
+                            .height(4.dp)
+                            .background(
+                                color = Color.White.copy(alpha = 0.4f),
+                                shape = RoundedCornerShape(2.dp)
+                            )
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
-        ) { paddingValues ->
+        ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
+                    .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
 
                 // Title
                 Text(
                     text = content.title,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = Color.White
                 )
 
                 // Description
@@ -100,7 +120,7 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                     text = content.description,
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    color = Color.White
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -110,7 +130,7 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        containerColor = com.sportall.az.ui.theme.SurfaceBlue
                     )
                 ) {
                     Column(
@@ -132,7 +152,7 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                     text = content.price,
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = Color.White
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -163,36 +183,10 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                     )
                 }
 
-                // Restore Purchases Button
-                TextButton(
-                    onClick = { /* Mock - do nothing */ },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = false
-                ) {
-                    Text(
-                        text = "Restore Purchases",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-                    )
-                }
-
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PaywallTopBar(onBackClick: () -> Unit) {
-    TopAppBar(
-        title = { },
-        navigationIcon = {
-            IconButton(onClick = onBackClick) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
-        }
-    )
 }
 
 @Composable
@@ -210,7 +204,8 @@ fun FeatureItem(text: String) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = Color.White
         )
     }
 }

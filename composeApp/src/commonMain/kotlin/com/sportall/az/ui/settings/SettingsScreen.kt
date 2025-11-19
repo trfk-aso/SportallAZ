@@ -99,9 +99,13 @@ fun SettingsTopBar() {
             Text(
                 text = "Settings",
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color.White
             )
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = com.sportall.az.ui.theme.DeepBlue
+        )
     )
 }
 
@@ -113,13 +117,14 @@ fun LanguageSection() {
         Text(
             text = "Language",
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
 
         Text(
             text = "English (default)",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            color = Color.White
         )
     }
 }
@@ -137,7 +142,8 @@ fun DataSection(
         Text(
             text = "Data",
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
 
         // Wipe Data Button
@@ -227,7 +233,8 @@ fun OtherSection(
         Text(
             text = "Other",
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
 
         // About Row
@@ -253,7 +260,10 @@ fun SettingsRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = com.sportall.az.ui.theme.SurfaceBlue
+        )
     ) {
         Row(
             modifier = Modifier
