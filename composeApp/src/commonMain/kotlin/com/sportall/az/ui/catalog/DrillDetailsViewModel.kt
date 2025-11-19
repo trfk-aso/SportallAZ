@@ -3,6 +3,7 @@ package com.sportall.az.ui.catalog
 import com.sportall.az.core.BaseViewModel
 import com.sportall.az.domain.usecases.AddHistoryItemUseCase
 import com.sportall.az.domain.usecases.GetDrillByIdUseCase
+import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.ToggleFavoriteUseCase
 import com.sportall.az.models.Drill
 import com.sportall.az.models.HistoryRecord
@@ -15,13 +16,15 @@ data class DrillDetailsState(
     val loading: Boolean = true,
     val drill: Drill? = null,
     val isFavorite: Boolean = false,
+    val isExclusiveUnlocked: Boolean = false,
     val error: String? = null
 )
 
 class DrillDetailsViewModel(
     private val getDrillById: GetDrillByIdUseCase,
     private val toggleFavorite: ToggleFavoriteUseCase,
-    private val addHistoryItem: AddHistoryItemUseCase
+    private val addHistoryItem: AddHistoryItemUseCase,
+    private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow(DrillDetailsState())
@@ -34,7 +37,13 @@ class DrillDetailsViewModel(
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true, error = null)
             runCatching { getDrillById(drillId) }
-                .onSuccess { d -> _state.value = _state.value.copy(loading = false, drill = d) }
+                .onSuccess { d ->
+                    _state.value = _state.value.copy(
+                        loading = false,
+                        drill = d,
+                        isExclusiveUnlocked = isExclusiveUnlocked()
+                    )
+                }
                 .onFailure { e -> _state.value = _state.value.copy(loading = false, error = e.message) }
         }
     }

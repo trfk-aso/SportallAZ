@@ -19,6 +19,8 @@ import com.sportall.az.models.Category
 import com.sportall.az.models.Difficulty
 import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.home.DrillsGrid
+import com.sportall.az.ui.paywall.PaywallScreen
+import com.sportall.az.ui.paywall.PaywallType
 import org.koin.compose.koinInject
 
 @Composable
@@ -55,7 +57,8 @@ fun SearchScreen() {
 
             CategoryFilters(
                 selectedCategory = state.selectedCategory,
-                onCategorySelected = { viewModel.selectCategory(it) }
+                onCategorySelected = { viewModel.selectCategory(it) },
+                onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
             )
 
             // Difficulty Filters
@@ -67,7 +70,8 @@ fun SearchScreen() {
 
             DifficultyFilters(
                 selectedDifficulty = state.selectedDifficulty,
-                onDifficultySelected = { viewModel.selectDifficulty(it) }
+                onDifficultySelected = { viewModel.selectDifficulty(it) },
+                onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
             )
 
             // Recent Queries
@@ -109,7 +113,11 @@ fun SearchScreen() {
                         drills = state.results,
                         favorites = state.favorites,
                         onDrillClick = { drill ->
-                            navigator.push(DrillDetailsScreen(drill.id))
+                            if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                                navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                            } else {
+                                navigator.push(DrillDetailsScreen(drill.id))
+                            }
                         }
                     )
                 }
@@ -183,7 +191,8 @@ fun SearchTextField(
 @Composable
 fun CategoryFilters(
     selectedCategory: Category?,
-    onCategorySelected: (Category?) -> Unit
+    onCategorySelected: (Category?) -> Unit,
+    onExclusiveClick: () -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -278,7 +287,7 @@ fun CategoryFilters(
             // Exclusive chip with lock icon
             FilterChip(
                 selected = false,
-                onClick = { /* TODO: Navigate to paywall */ },
+                onClick = onExclusiveClick,
                 label = {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -300,7 +309,8 @@ fun CategoryFilters(
 @Composable
 fun DifficultyFilters(
     selectedDifficulty: Difficulty?,
-    onDifficultySelected: (Difficulty?) -> Unit
+    onDifficultySelected: (Difficulty?) -> Unit,
+    onExclusiveClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -331,7 +341,7 @@ fun DifficultyFilters(
 
         FilterChip(
             selected = false,
-            onClick = { /* TODO: Navigate to paywall */ },
+            onClick = onExclusiveClick,
             label = { Text("Exclusive") }
         )
     }

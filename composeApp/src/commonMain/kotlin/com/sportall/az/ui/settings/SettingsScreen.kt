@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.ui.paywall.PaywallScreen
+import com.sportall.az.ui.paywall.PaywallType
 import org.koin.compose.koinInject
 
 @Composable
@@ -55,7 +57,7 @@ fun SettingsScreen() {
                     if (state.wipeUnlocked) {
                         showWipeDialog = true
                     } else {
-                        viewModel.unlockWipe() // TODO: Show paywall
+                        navigator.push(PaywallScreen(PaywallType.WIPE))
                     }
                 },
                 onExportClick = {
@@ -64,7 +66,7 @@ fun SettingsScreen() {
                         // TODO: Save to file / share
                         println("Exported data: $data")
                     } else {
-                        viewModel.unlockExport() // TODO: Show paywall
+                        navigator.push(PaywallScreen(PaywallType.EXPORT))
                     }
                 }
             )

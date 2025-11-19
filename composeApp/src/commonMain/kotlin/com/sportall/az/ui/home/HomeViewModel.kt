@@ -6,6 +6,7 @@ import com.sportall.az.domain.usecases.FilterDrillsByDifficultyUseCase
 import com.sportall.az.domain.usecases.GetDrillsUseCase
 import com.sportall.az.domain.usecases.GetFavoritesUseCase
 import com.sportall.az.domain.usecases.GetStatisticsUseCase
+import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.LoadCategoriesUseCase
 import com.sportall.az.domain.usecases.StatisticsResult
 import com.sportall.az.models.Category
@@ -20,6 +21,7 @@ data class HomeState(
     val drills: List<Drill> = emptyList(),
     val categories: List<Category> = emptyList(),
     val favorites: Set<Int> = emptySet(),
+    val isExclusiveUnlocked: Boolean = false,
     val stats: StatisticsResult? = null,
     val error: String? = null
 )
@@ -30,7 +32,8 @@ class HomeViewModel(
     private val filterDrillsByCategory: FilterDrillsByCategoryUseCase,
     private val filterDrillsByDifficulty: FilterDrillsByDifficultyUseCase,
     private val getFavorites: GetFavoritesUseCase,
-    private val getStatistics: GetStatisticsUseCase
+    private val getStatistics: GetStatisticsUseCase,
+    private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -46,12 +49,14 @@ class HomeViewModel(
                 val categories = loadCategories()
                 val favorites = getFavorites().toSet()
                 val stats = getStatistics()
+                val exclusiveUnlocked = isExclusiveUnlocked()
 
                 HomeState(
                     loading = false,
                     drills = drills,
                     categories = categories,
                     favorites = favorites,
+                    isExclusiveUnlocked = exclusiveUnlocked,
                     stats = stats
                 )
             }.onSuccess { newState ->

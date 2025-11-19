@@ -5,6 +5,7 @@ import com.sportall.az.domain.usecases.AddSearchQueryUseCase
 import com.sportall.az.domain.usecases.GetDrillsUseCase
 import com.sportall.az.domain.usecases.GetFavoritesUseCase
 import com.sportall.az.domain.usecases.GetSearchHistoryUseCase
+import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.SearchDrillsUseCase
 import com.sportall.az.models.Category
 import com.sportall.az.models.Difficulty
@@ -19,6 +20,7 @@ data class SearchState(
     val allDrills: List<Drill> = emptyList(),
     val history: List<String> = emptyList(),
     val favorites: Set<Int> = emptySet(),
+    val isExclusiveUnlocked: Boolean = false,
     val selectedCategory: Category? = null,
     val selectedDifficulty: Difficulty? = null,
     val loading: Boolean = false,
@@ -30,7 +32,8 @@ class SearchViewModel(
     private val addSearchQuery: AddSearchQueryUseCase,
     private val getSearchHistory: GetSearchHistoryUseCase,
     private val getDrills: GetDrillsUseCase,
-    private val getFavorites: GetFavoritesUseCase
+    private val getFavorites: GetFavoritesUseCase,
+    private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow(SearchState())
@@ -40,6 +43,7 @@ class SearchViewModel(
         loadAllDrills()
         loadHistory()
         loadFavorites()
+        loadExclusiveUnlockStatus()
     }
 
     private fun loadAllDrills() {
@@ -142,6 +146,12 @@ class SearchViewModel(
     private fun loadFavorites() {
         viewModelScope.launch {
             _state.value = _state.value.copy(favorites = getFavorites().toSet())
+        }
+    }
+
+    private fun loadExclusiveUnlockStatus() {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(isExclusiveUnlocked = isExclusiveUnlocked())
         }
     }
 }

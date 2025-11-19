@@ -22,6 +22,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.models.Drill
 import com.sportall.az.ui.practice.PracticeScreen
+import com.sportall.az.ui.paywall.PaywallScreen
+import com.sportall.az.ui.paywall.PaywallType
 import org.koin.compose.koinInject
 
 data class DrillDetailsScreen(val drillId: Int) : Screen {
@@ -67,6 +69,7 @@ data class DrillDetailsScreen(val drillId: Int) : Screen {
                     state.drill != null -> {
                         DrillDetailsContent(
                             drill = state.drill!!,
+                            state = state,
                             onMarkAsDone = { rating ->
                                 viewModel.completeWithRating(rating)
                                 navigator.pop()
@@ -115,6 +118,7 @@ fun DrillDetailsTopBar(
 @Composable
 fun DrillDetailsContent(
     drill: Drill,
+    state: DrillDetailsState,
     onMarkAsDone: (Int?) -> Unit
 ) {
     var selectedRating by remember { mutableStateOf<Int?>(null) }
@@ -173,10 +177,10 @@ fun DrillDetailsContent(
             }
 
             // Steps Section or Locked State
-            if (drill.isExclusive) {
-                // TODO: Check if user has unlocked exclusive pack
-                // For now, always show locked state for exclusive drills
-                LockedContent()
+            if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                LockedContent(
+                    onUnlockClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
+                )
             } else {
                 StepsContent(drill)
             }
@@ -211,45 +215,48 @@ fun DrillDetailsContent(
             }
         }
 
-        // Practice Button
-        Button(
-            onClick = { navigator.push(PracticeScreen(drill)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(top = 8.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFB4FF39) // Lime green
-            )
-        ) {
-            Text(
-                text = "Start Practice",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
-        }
+        // Practice and Mark as Done buttons - only show if drill is not locked
+        if (!(drill.isExclusive && !state.isExclusiveUnlocked)) {
+            // Practice Button
+            Button(
+                onClick = { navigator.push(PracticeScreen(drill)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFB4FF39) // Lime green
+                )
+            ) {
+                Text(
+                    text = "Start Practice",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                )
+            }
 
-        // Mark as Done Button (Fixed at bottom)
-        Button(
-            onClick = { onMarkAsDone(selectedRating) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFB4FF39) // Green from Figma
-            )
-        ) {
-            Text(
-                text = "Mark as done",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
+            // Mark as Done Button (Fixed at bottom)
+            Button(
+                onClick = { onMarkAsDone(selectedRating) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFB4FF39) // Green from Figma
+                )
+            ) {
+                Text(
+                    text = "Mark as done",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                )
+            }
         }
     }
 }
@@ -356,7 +363,7 @@ fun StepSection(title: String, steps: List<String>) {
 }
 
 @Composable
-fun LockedContent() {
+fun LockedContent(onUnlockClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
@@ -376,7 +383,7 @@ fun LockedContent() {
             )
 
             Button(
-                onClick = { /* TODO: Navigate to paywall */ },
+                onClick = onUnlockClick,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(

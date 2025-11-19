@@ -19,6 +19,8 @@ import com.sportall.az.models.Category
 import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.home.CategoryChips
 import com.sportall.az.ui.home.DrillsGrid
+import com.sportall.az.ui.paywall.PaywallScreen
+import com.sportall.az.ui.paywall.PaywallType
 import org.koin.compose.koinInject
 
 @Composable
@@ -100,7 +102,13 @@ fun FavoritesScreen() {
                             DrillsGrid(
                                 drills = filteredDrills,
                                 favorites = state.drills.map { it.id }.toSet(),
-                                onDrillClick = { drill -> navigator.push(DrillDetailsScreen(drill.id)) },
+                                onDrillClick = { drill ->
+                                    if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                                        navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                    } else {
+                                        navigator.push(DrillDetailsScreen(drill.id))
+                                    }
+                                },
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxWidth()

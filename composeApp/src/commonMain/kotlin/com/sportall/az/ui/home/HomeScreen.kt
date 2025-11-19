@@ -28,6 +28,8 @@ import com.sportall.az.models.Drill
 import com.sportall.az.ui.SearchTab
 import com.sportall.az.ui.SettingsTab
 import com.sportall.az.ui.catalog.DrillDetailsScreen
+import com.sportall.az.ui.paywall.PaywallScreen
+import com.sportall.az.ui.paywall.PaywallType
 import org.koin.compose.koinInject
 
 @Composable
@@ -80,7 +82,13 @@ fun HomeScreen() {
                             if (lastDrill != null) {
                                 ContinueCard(
                                     drill = lastDrill,
-                                    onClick = { navigator.push(DrillDetailsScreen(lastDrill.id)) }
+                                    onClick = {
+                                        if (lastDrill.isExclusive && !state.isExclusiveUnlocked) {
+                                            navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                        } else {
+                                            navigator.push(DrillDetailsScreen(lastDrill.id))
+                                        }
+                                    }
                                 )
                             }
                         }
@@ -124,7 +132,13 @@ fun HomeScreen() {
                             DrillsGrid(
                                 drills = state.drills,
                                 favorites = state.favorites,
-                                onDrillClick = { drill -> navigator.push(DrillDetailsScreen(drill.id)) },
+                                onDrillClick = { drill ->
+                                    if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                                        navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                    } else {
+                                        navigator.push(DrillDetailsScreen(drill.id))
+                                    }
+                                },
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxWidth()
