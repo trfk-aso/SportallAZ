@@ -3,6 +3,7 @@ package com.sportall.az.repositories
 interface FavoritesRepository {
     fun toggleFavorite(id: Int)
     fun getFavorites(): List<Int>
+    fun clear()
 }
 
 class DefaultFavoritesRepository(
@@ -19,4 +20,8 @@ class DefaultFavoritesRepository(
 
     override fun getFavorites(): List<Int> =
         prefs.getIntList(KEY)
+
+    override fun clear() {
+        prefs.putIntList(KEY, emptyList())
+    }
 }

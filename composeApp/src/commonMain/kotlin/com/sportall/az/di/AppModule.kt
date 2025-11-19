@@ -48,6 +48,8 @@ val appModule = module {
     factory { IsExportUnlockedUseCase(get()) }
     factory { IsWipeUnlockedUseCase(get()) }
     factory { IsExclusiveUnlockedUseCase(get()) }
+    factory { WipeDataUseCase(get(), get()) }
+    factory { ExportDataUseCase(get(), get()) }
 
     factory { IsFirstLaunchUseCase(get()) }
     factory { CompleteOnboardingUseCase(get()) }
@@ -59,7 +61,7 @@ val appModule = module {
     factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get()) }
     factory { com.sportall.az.ui.favorites.FavoritesViewModel(get(), get()) }
     factory { com.sportall.az.ui.history.HistoryViewModel(get(), get()) }
-    factory { com.sportall.az.ui.settings.SettingsViewModel(get(), get(), get(), get()) }
+    factory { com.sportall.az.ui.settings.SettingsViewModel(get(), get(), get(), get(), get(), get()) }
     factory { com.sportall.az.ui.practice.PracticeViewModel() }
 }
 

@@ -392,7 +392,7 @@ fun StarRatingSelector(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        (1..5).forEach { rating ->
+        (1..3).forEach { rating ->
             Icon(
                 imageVector = if (selectedRating != null && rating <= selectedRating) {
                     Icons.Default.Star

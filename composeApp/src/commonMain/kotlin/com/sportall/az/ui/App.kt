@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.sportall.az.di.ProvideKoin
 import com.sportall.az.ui.splash.SplashScreen
 import com.sportall.az.ui.home.HomeScreen
+import com.sportall.az.ui.settings.SettingsScreen
 
 @Composable
 fun App() {
@@ -167,4 +168,3 @@ object SettingsTab : IconTab {
 @Composable fun SearchScreen() {}
 @Composable fun FavoritesScreen() {}
 @Composable fun HistoryScreen() {}
-@Composable fun SettingsScreen() {}

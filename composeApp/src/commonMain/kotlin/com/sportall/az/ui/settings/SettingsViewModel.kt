@@ -5,6 +5,8 @@ import com.sportall.az.domain.usecases.IsExportUnlockedUseCase
 import com.sportall.az.domain.usecases.IsWipeUnlockedUseCase
 import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.PurchaseUnlockUseCase
+import com.sportall.az.domain.usecases.WipeDataUseCase
+import com.sportall.az.domain.usecases.ExportDataUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -18,7 +20,9 @@ class SettingsViewModel(
     private val isExportUnlocked: IsExportUnlockedUseCase,
     private val isWipeUnlocked: IsWipeUnlockedUseCase,
     private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase,
-    private val purchaseUnlock: PurchaseUnlockUseCase
+    private val purchaseUnlock: PurchaseUnlockUseCase,
+    private val wipeDataUseCase: WipeDataUseCase,
+    private val exportDataUseCase: ExportDataUseCase
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -45,5 +49,13 @@ class SettingsViewModel(
     fun unlockExclusive() {
         purchaseUnlock.unlockExclusive()
         refresh()
+    }
+
+    fun wipeData() {
+        wipeDataUseCase()
+    }
+
+    fun exportData(): String {
+        return exportDataUseCase()
     }
 }
