@@ -21,6 +21,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.models.Drill
+import com.sportall.az.ui.practice.PracticeScreen
 import org.koin.compose.koinInject
 
 data class DrillDetailsScreen(val drillId: Int) : Screen {
@@ -118,6 +119,7 @@ fun DrillDetailsContent(
 ) {
     var selectedRating by remember { mutableStateOf<Int?>(null) }
     val scrollState = rememberScrollState()
+    val navigator = LocalNavigator.currentOrThrow
 
     Column(
         modifier = Modifier
@@ -207,6 +209,27 @@ fun DrillDetailsContent(
                     )
                 }
             }
+        }
+
+        // Practice Button
+        Button(
+            onClick = { navigator.push(PracticeScreen(drill)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 8.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFB4FF39) // Lime green
+            )
+        ) {
+            Text(
+                text = "Start Practice",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(vertical = 4.dp)
+            )
         }
 
         // Mark as Done Button (Fixed at bottom)
