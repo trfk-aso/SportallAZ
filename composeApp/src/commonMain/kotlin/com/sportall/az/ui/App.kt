@@ -14,6 +14,7 @@ import com.sportall.az.ui.splash.SplashScreen
 import com.sportall.az.ui.home.HomeScreen
 import com.sportall.az.ui.settings.SettingsScreen
 import com.sportall.az.ui.history.StatisticsScreen
+import com.sportall.az.ui.favorites.FavoritesScreen
 
 @Composable
 fun App() {
@@ -167,4 +168,3 @@ object SettingsTab : IconTab {
 }
 
 @Composable fun SearchScreen() {}
-@Composable fun FavoritesScreen() {}
