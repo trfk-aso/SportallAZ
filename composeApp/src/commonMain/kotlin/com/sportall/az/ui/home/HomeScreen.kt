@@ -75,7 +75,7 @@ fun HomeScreen() {
                     ) {
                         // Continue Card
                         if (state.stats != null && state.stats!!.mostUsed.isNotEmpty()) {
-                            val lastDrillId = state.stats!!.mostUsed.first()
+                            val lastDrillId = state.stats!!.mostUsed.first().drillId
                             val lastDrill = state.drills.firstOrNull { it.id == lastDrillId }
                             if (lastDrill != null) {
                                 ContinueCard(

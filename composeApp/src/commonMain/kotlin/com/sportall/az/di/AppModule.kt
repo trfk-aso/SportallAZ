@@ -60,7 +60,7 @@ val appModule = module {
     factory { com.sportall.az.ui.search.SearchViewModel(get(), get(), get(), get()) }
     factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get()) }
     factory { com.sportall.az.ui.favorites.FavoritesViewModel(get(), get()) }
-    factory { com.sportall.az.ui.history.HistoryViewModel(get(), get()) }
+    factory { com.sportall.az.ui.history.HistoryViewModel(get(), get(), get()) }
     factory { com.sportall.az.ui.settings.SettingsViewModel(get(), get(), get(), get(), get(), get()) }
     factory { com.sportall.az.ui.practice.PracticeViewModel() }
 }

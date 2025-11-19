@@ -13,6 +13,7 @@ import com.sportall.az.di.ProvideKoin
 import com.sportall.az.ui.splash.SplashScreen
 import com.sportall.az.ui.home.HomeScreen
 import com.sportall.az.ui.settings.SettingsScreen
+import com.sportall.az.ui.history.StatisticsScreen
 
 @Composable
 fun App() {
@@ -87,7 +88,7 @@ data object FavoritesScreenObj : Screen {
 
 data object HistoryScreenObj : Screen {
     @Composable
-    override fun Content() { HistoryScreen() }
+    override fun Content() { StatisticsScreen() }
 }
 
 data object SettingsScreenObj : Screen {
@@ -167,4 +168,3 @@ object SettingsTab : IconTab {
 
 @Composable fun SearchScreen() {}
 @Composable fun FavoritesScreen() {}
-@Composable fun HistoryScreen() {}
