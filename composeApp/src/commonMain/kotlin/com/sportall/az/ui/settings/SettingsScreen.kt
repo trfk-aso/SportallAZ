@@ -46,10 +46,8 @@ fun SettingsScreen() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Language Section
             LanguageSection()
 
-            // Data Section
             DataSection(
                 exportUnlocked = state.exportUnlocked,
                 wipeUnlocked = state.wipeUnlocked,
@@ -71,14 +69,12 @@ fun SettingsScreen() {
                 }
             )
 
-            // Other Section
             OtherSection(
                 onAboutClick = { navigator.push(AboutScreen) },
                 onRateClick = { /* TODO: Open app store */ }
             )
         }
 
-        // Wipe Confirmation Dialog
         if (showWipeDialog) {
             WipeConfirmationDialog(
                 onConfirm = {
@@ -146,7 +142,6 @@ fun DataSection(
             color = Color.White
         )
 
-        // Wipe Data Button
         Button(
             onClick = onWipeClick,
             modifier = Modifier
@@ -155,9 +150,9 @@ fun DataSection(
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (wipeUnlocked) {
-                    Color(0xFFFF6B6B) // Red
+                    Color(0xFFFF6B6B)
                 } else {
-                    Color(0xFF8B0000).copy(alpha = 0.7f) // Dark red (locked)
+                    Color(0xFF8B0000).copy(alpha = 0.7f)
                 }
             )
         ) {
@@ -183,7 +178,6 @@ fun DataSection(
             }
         }
 
-        // Export Data Button
         Button(
             onClick = onExportClick,
             modifier = Modifier
@@ -192,9 +186,9 @@ fun DataSection(
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (exportUnlocked) {
-                    Color(0xFFB4FF39) // Lime green
+                    Color(0xFFB4FF39)
                 } else {
-                    Color(0xFF4CAF50).copy(alpha = 0.7f) // Darker green (locked)
+                    Color(0xFF4CAF50).copy(alpha = 0.7f)
                 }
             )
         ) {
@@ -237,13 +231,11 @@ fun OtherSection(
             color = Color.White
         )
 
-        // About Row
         SettingsRow(
             title = "About",
             onClick = onAboutClick
         )
 
-        // Rate App Row
         SettingsRow(
             title = "Rate app",
             onClick = onRateClick
@@ -310,7 +302,7 @@ fun WipeConfirmationDialog(
             Button(
                 onClick = onConfirm,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF6B6B) // Red
+                    containerColor = Color(0xFFFF6B6B)
                 )
             ) {
                 Text(

@@ -78,7 +78,6 @@ data class PaywallScreen(val type: PaywallType) : Screen {
             containerColor = com.sportall.az.ui.theme.DeepBlue,
             contentColor = Color.White,
             dragHandle = {
-                // Custom drag handle at top
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -106,7 +105,6 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
 
-                // Title
                 Text(
                     text = content.title,
                     style = MaterialTheme.typography.headlineMedium,
@@ -115,7 +113,6 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                     color = Color.White
                 )
 
-                // Description
                 Text(
                     text = content.description,
                     style = MaterialTheme.typography.bodyLarge,
@@ -125,7 +122,6 @@ data class PaywallScreen(val type: PaywallType) : Screen {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Features List
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -147,7 +143,6 @@ data class PaywallScreen(val type: PaywallType) : Screen {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Price
                 Text(
                     text = content.price,
                     style = MaterialTheme.typography.displaySmall,
@@ -157,10 +152,8 @@ data class PaywallScreen(val type: PaywallType) : Screen {
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // Purchase Button
                 Button(
                     onClick = {
-                        // Mock purchase - just unlock the feature
                         when (type) {
                             PaywallType.EXCLUSIVE -> purchaseUnlock.unlockExclusive()
                             PaywallType.EXPORT -> purchaseUnlock.unlockExport()

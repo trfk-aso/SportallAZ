@@ -39,7 +39,6 @@ fun SearchScreen() {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Search Bar
         SearchTextField(
             query = state.query,
             onQueryChange = { viewModel.onQueryChange(it) },
@@ -53,7 +52,6 @@ fun SearchScreen() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Category Filters
             Text(
                 text = "Categories",
                 style = MaterialTheme.typography.titleLarge,
@@ -67,7 +65,6 @@ fun SearchScreen() {
                 onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
             )
 
-            // Difficulty Filters
             Text(
                 text = "Difficulty",
                 style = MaterialTheme.typography.titleLarge,
@@ -81,7 +78,6 @@ fun SearchScreen() {
                 onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
             )
 
-            // Recent Queries
             if (state.history.isNotEmpty() && state.query.isEmpty()) {
                 Text(
                     text = "Recent queries",
@@ -99,7 +95,6 @@ fun SearchScreen() {
                 }
             }
 
-            // Results or Empty State
             when {
                 state.loading -> {
                     Box(
@@ -212,7 +207,6 @@ fun CategoryFilters(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // First row
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
@@ -248,7 +242,6 @@ fun CategoryFilters(
             )
         }
 
-        // Second row
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
@@ -278,7 +271,6 @@ fun CategoryFilters(
             )
         }
 
-        // Third row
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
@@ -299,7 +291,6 @@ fun CategoryFilters(
                 label = { Text("Recovery", color = Color.White) }
             )
 
-            // Exclusive chip with lock icon
             FilterChip(
                 selected = false,
                 onClick = onExclusiveClick,

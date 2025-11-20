@@ -33,14 +33,12 @@ data object OnboardingScreen : Screen {
         val pagerState = rememberPagerState(pageCount = { 3 })
         val coroutineScope = rememberCoroutineScope()
 
-        // Navigate when onboarding is completed
         LaunchedEffect(state.isCompleted) {
             if (state.isCompleted) {
                 navigator.replace(MainTabsScreen)
             }
         }
 
-        // Sync pager state with ViewModel state
         LaunchedEffect(state.currentPage) {
             if (pagerState.currentPage != state.currentPage) {
                 pagerState.animateScrollToPage(state.currentPage)
@@ -75,7 +73,6 @@ data object OnboardingScreen : Screen {
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Page indicator
                     Text(
                         text = "${pagerState.currentPage + 1}/3",
                         style = MaterialTheme.typography.bodyMedium,
@@ -83,7 +80,6 @@ data object OnboardingScreen : Screen {
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                    // Next / Get Started button
                     Button(
                         onClick = {
                             if (pagerState.currentPage < 2) {
@@ -154,7 +150,6 @@ fun OnboardingPage(page: Int) {
                 .fillMaxWidth()
                 .padding(32.dp)
         ) {
-            // Title text
             Text(
                 text = content.title,
                 style = MaterialTheme.typography.headlineMedium,
@@ -166,7 +161,6 @@ fun OnboardingPage(page: Int) {
                     .padding(bottom = 24.dp)
             )
 
-            // White descriptive text below
             Text(
                 text = content.description,
                 style = MaterialTheme.typography.bodyLarge,

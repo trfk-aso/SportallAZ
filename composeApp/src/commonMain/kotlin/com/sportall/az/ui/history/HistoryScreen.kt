@@ -84,7 +84,6 @@ data object HistoryScreen : Screen {
                                 ),
                             verticalArrangement = Arrangement.spacedBy(24.dp)
                         ) {
-                            // Today section
                             if (state.groupedHistory.today.isNotEmpty()) {
                                 HistorySection(
                                     title = "Today",
@@ -97,7 +96,6 @@ data object HistoryScreen : Screen {
                                 )
                             }
 
-                            // Yesterday section
                             if (state.groupedHistory.yesterday.isNotEmpty()) {
                                 HistorySection(
                                     title = "Yesterday",
@@ -110,7 +108,6 @@ data object HistoryScreen : Screen {
                                 )
                             }
 
-                            // Earlier section
                             if (state.groupedHistory.earlier.isNotEmpty()) {
                                 HistorySection(
                                     title = "Earlier",
@@ -218,7 +215,6 @@ fun HistoryItemCard(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Category chip
                     item.drill?.let { drill ->
                         AssistChip(
                             onClick = {},
@@ -236,7 +232,6 @@ fun HistoryItemCard(
                         )
                     }
 
-                    // Timestamp
                     Text(
                         text = formatTime(item.record.date),
                         style = MaterialTheme.typography.bodySmall,
@@ -245,7 +240,6 @@ fun HistoryItemCard(
                 }
             }
 
-            // Rating stars
             Row(
                 horizontalArrangement = Arrangement.spacedBy(2.dp)
             ) {

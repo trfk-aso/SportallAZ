@@ -149,7 +149,6 @@ fun DrillDetailsContent(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Visual Area
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,7 +171,6 @@ fun DrillDetailsContent(
                     modifier = Modifier.padding(16.dp)
                 )
 
-                // Lock icon for exclusive drills
                 if (drill.isExclusive) {
                     Icon(
                         imageVector = Icons.Default.Lock,
@@ -186,7 +184,6 @@ fun DrillDetailsContent(
                 }
             }
 
-            // Metadata Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -212,7 +209,6 @@ fun DrillDetailsContent(
                 }
             }
 
-            // Steps Section or Locked State
             if (drill.isExclusive && !state.isExclusiveUnlocked) {
                 LockedContent(
                     onUnlockClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
@@ -221,7 +217,6 @@ fun DrillDetailsContent(
                 StepsContent(drill)
             }
 
-            // Self Rating Section
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -257,9 +252,7 @@ fun DrillDetailsContent(
             }
         }
 
-        // Practice and Mark as Done buttons - only show if drill is not locked
         if (!(drill.isExclusive && !state.isExclusiveUnlocked)) {
-            // Practice Button
             Button(
                 onClick = { navigator.push(PracticeScreen(drill)) },
                 modifier = Modifier
@@ -280,7 +273,6 @@ fun DrillDetailsContent(
                 )
             }
 
-            // Mark as Done Button (Fixed at bottom)
             Button(
                 onClick = { onMarkAsDone(selectedRating) },
                 modifier = Modifier
@@ -325,7 +317,6 @@ fun MetadataRow(label: String, value: String) {
 @Composable
 fun StepsContent(drill: Drill) {
     if (drill.setup.isEmpty() && drill.execution.isEmpty() && drill.coachingPoints.isEmpty()) {
-        // No steps provided
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp)

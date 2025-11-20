@@ -35,14 +35,12 @@ fun FavoritesScreen() {
         viewModel.load()
     }
 
-    // Filter drills by selected category
     val filteredDrills = if (selectedCategory == null) {
         state.drills
     } else {
         state.drills.filter { it.category == selectedCategory }
     }
 
-    // Get available categories from favorite drills
     val availableCategories = state.drills.map { it.category }.distinct()
 
     Scaffold(
@@ -77,7 +75,6 @@ fun FavoritesScreen() {
                     Column(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        // Category Filter Chips
                         if (availableCategories.isNotEmpty()) {
                             CategoryChips(
                                 categories = availableCategories,
@@ -87,7 +84,6 @@ fun FavoritesScreen() {
                             Spacer(modifier = Modifier.height(16.dp))
                         }
 
-                        // Drills Grid
                         if (filteredDrills.isEmpty()) {
                             Text(
                                 text = "No drills in this category",

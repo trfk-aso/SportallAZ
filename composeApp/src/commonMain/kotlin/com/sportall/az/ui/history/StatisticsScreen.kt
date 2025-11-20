@@ -73,24 +73,20 @@ fun StatisticsScreenContent() {
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp)
                     ) {
-                        // Time Filter Chips
                         TimeFilterChips(
                             selectedFilter = state.selectedFilter,
                             onFilterSelected = { viewModel.setTimeFilter(it) }
                         )
 
-                        // Summary Cards
                         SummaryCards(
                             totalDrills = state.statistics!!.total,
                             avgRating = state.statistics!!.avgStars
                         )
 
-                        // Category Breakdown
                         CategoryBreakdown(
                             categoryStats = state.statistics!!.byCategory
                         )
 
-                        // Most Used Drills
                         MostUsedDrills(
                             drills = state.statistics!!.mostUsed
                         )
@@ -182,7 +178,6 @@ fun SummaryCards(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // Total Drills Done Card
         Card(
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(12.dp),
@@ -211,7 +206,6 @@ fun SummaryCards(
             }
         }
 
-        // Avg Rating Card
         Card(
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(12.dp),
@@ -371,7 +365,6 @@ fun DrillUsageRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Stars based on avg rating
             val avgRating = drill.avgRating ?: 0.0
             val fullStars = avgRating.toInt().coerceIn(0, 3)
             repeat(fullStars) {

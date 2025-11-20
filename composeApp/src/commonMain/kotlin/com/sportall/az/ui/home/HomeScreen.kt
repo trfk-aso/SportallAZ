@@ -78,7 +78,6 @@ fun HomeScreen() {
                     Column(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        // Continue Card
                         if (state.stats != null && state.stats!!.mostUsed.isNotEmpty()) {
                             val lastDrillId = state.stats!!.mostUsed.first().drillId
                             val lastDrill = state.drills.firstOrNull { it.id == lastDrillId }
@@ -96,7 +95,6 @@ fun HomeScreen() {
                             }
                         }
 
-                        // Categories
                         Text(
                             text = "Categories",
                             style = MaterialTheme.typography.titleLarge,
@@ -116,7 +114,6 @@ fun HomeScreen() {
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // Featured / Popular drills
                         Text(
                             text = "Featured / Popular drills",
                             style = MaterialTheme.typography.titleLarge,
@@ -125,7 +122,6 @@ fun HomeScreen() {
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp)
                         )
 
-                        // Drills Grid
                         if (state.drills.isEmpty()) {
                             EmptyState(
                                 modifier = Modifier
@@ -317,7 +313,6 @@ fun CategoryChips(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        // All chip
         item {
             FilterChip(
                 selected = selectedCategory == null,
@@ -332,7 +327,6 @@ fun CategoryChips(
             )
         }
 
-        // Category chips
         items(categories) { category ->
             FilterChip(
                 selected = selectedCategory == category,
@@ -396,16 +390,15 @@ fun DrillCard(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Visual placeholder
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(140.dp)
                     .background(
                         color = if (drill.isExclusive) {
-                            Gold.copy(alpha = 0.4f) // Gold overlay
+                            Gold.copy(alpha = 0.4f)
                         } else {
-                            DrillCardBlue // Brand blue for standard drills
+                            DrillCardBlue
                         }
                     ),
                 contentAlignment = Alignment.Center
@@ -419,7 +412,6 @@ fun DrillCard(
                     modifier = Modifier.padding(12.dp)
                 )
 
-                // Lock icon for exclusive
                 if (drill.isExclusive) {
                     Icon(
                         imageVector = Icons.Default.Lock,
@@ -432,7 +424,6 @@ fun DrillCard(
                     )
                 }
 
-                // Favorite star overlay
                 Icon(
                     imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",

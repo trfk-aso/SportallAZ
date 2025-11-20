@@ -85,12 +85,10 @@ class HistoryViewModel(
         val now = Clock.System.now()
         val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
         val yesterday = LocalDate(today.year, today.monthNumber, today.dayOfMonth).let {
-            // Simple yesterday calculation
             val daysBefore = it.dayOfMonth - 1
             if (daysBefore > 0) {
                 LocalDate(it.year, it.monthNumber, daysBefore)
             } else {
-                // Previous month logic (simplified)
                 LocalDate(it.year, it.monthNumber - 1, 1)
             }
         }

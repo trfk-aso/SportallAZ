@@ -59,14 +59,12 @@ data class PracticeScreen(val drill: Drill) : Screen {
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(24.dp)
                     ) {
-                        // Duration Selection
                         DurationSelection(
                             selectedDuration = state.selectedDurationMinutes,
                             onDurationSelected = { viewModel.selectDuration(it) },
                             enabled = state.timerState == TimerState.IDLE
                         )
 
-                        // Timer Display
                         TimerDisplay(
                             remainingSeconds = state.remainingSeconds,
                             timerState = state.timerState,
@@ -75,11 +73,9 @@ data class PracticeScreen(val drill: Drill) : Screen {
                             onResumeClick = { viewModel.resumeTimer() }
                         )
 
-                        // Short Steps
                         ShortSteps(drill = drill)
                     }
 
-                    // Done Button (Fixed at bottom)
                     Button(
                         onClick = { viewModel.completePractice() },
                         modifier = Modifier
@@ -101,7 +97,6 @@ data class PracticeScreen(val drill: Drill) : Screen {
                     }
                 }
 
-                // Rating Dialog
                 if (state.showRatingDialog) {
                     RatingDialog(
                         onSave = { rating ->
@@ -257,7 +252,6 @@ fun ShortSteps(drill: Drill) {
             fontWeight = FontWeight.Bold
         )
 
-        // Show abbreviated steps - combine setup + execution, take first 4
         val shortSteps = (drill.setup + drill.execution).take(4)
 
         shortSteps.forEach { step ->
@@ -309,7 +303,6 @@ fun RatingDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Star Rating Selector
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,

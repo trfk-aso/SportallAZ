@@ -34,7 +34,6 @@ class GetStatisticsUseCase(
             .groupingBy { it }
             .eachCount()
 
-        // Calculate usage counts and drill details
         val usageCounts = filteredRecords.groupingBy { it.drillId }.eachCount()
         val drillRatings = filteredRecords
             .filter { it.stars != null }
