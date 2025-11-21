@@ -1,5 +1,6 @@
 package com.sportall.az.ui.catalog
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,8 @@ import com.sportall.az.ui.theme.DrillCardBlue
 import com.sportall.az.ui.theme.Gold
 import com.sportall.az.ui.theme.LimeGreen
 import com.sportall.az.ui.theme.SurfaceBlue
+import com.sportall.az.ui.utils.getDrillImageResource
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 data class DrillDetailsScreen(val drillId: Int) : Screen {
@@ -152,24 +156,59 @@ fun DrillDetailsContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-                    .background(
-                        color = if (drill.isExclusive) {
-                            Gold.copy(alpha = 0.4f)
-                        } else {
-                            DrillCardBlue
-                        },
-                        shape = RoundedCornerShape(16.dp)
-                    ),
+                    .height(200.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = drill.visualDescription,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    color = if (drill.isExclusive) Color.Black else Color.White,
-                    modifier = Modifier.padding(16.dp)
-                )
+                val imageResource = getDrillImageResource(drill.id)
+                if (imageResource != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = DrillCardBlue,
+                                shape = RoundedCornerShape(16.dp)
+                            )
+                    ) {
+                        Image(
+                            painter = painterResource(imageResource),
+                            contentDescription = drill.name,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        // Overlay for exclusive drills
+                        if (drill.isExclusive) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Gold.copy(alpha = 0.3f))
+                            )
+                        }
+                    }
+                } else {
+                    // Fallback to text if image not found
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = if (drill.isExclusive) {
+                                    Gold.copy(alpha = 0.4f)
+                                } else {
+                                    DrillCardBlue
+                                },
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = drill.visualDescription,
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center,
+                            color = if (drill.isExclusive) Color.Black else Color.White,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
 
                 if (drill.isExclusive) {
                     Icon(

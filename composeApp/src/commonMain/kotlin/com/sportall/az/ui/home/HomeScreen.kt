@@ -1,5 +1,6 @@
 package com.sportall.az.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.logo_sportall
+import org.jetbrains.compose.resources.painterResource
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
@@ -33,7 +37,9 @@ import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
 import com.sportall.az.ui.theme.DrillCardBlue
 import com.sportall.az.ui.theme.Gold
+import com.sportall.az.ui.utils.getDrillImageResource
 import org.koin.compose.koinInject
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun HomeScreen() {
@@ -165,18 +171,10 @@ fun HomeTopBar(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "SPORTALL",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "AZ",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = com.sportall.az.ui.theme.LimeGreen
+                Image(
+                    painter = painterResource(Res.drawable.logo_sportall),
+                    contentDescription = "Sportall AZ Logo",
+                    modifier = Modifier.height(350.dp)
                 )
             }
         },
@@ -261,24 +259,46 @@ fun ContinueCard(
                 }
             }
 
-            // Visual placeholder
+            // Drill image or visual placeholder
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .background(
-                        color = DrillCardBlue,
-                        shape = RoundedCornerShape(12.dp)
-                    ),
+                    .size(80.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = drill.visualDescription.take(15),
-                    style = MaterialTheme.typography.labelSmall,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    fontSize = 9.sp,
-                    modifier = Modifier.padding(4.dp)
-                )
+                val imageResource = getDrillImageResource(drill.id)
+                if (imageResource != null) {
+                    Image(
+                        painter = painterResource(imageResource),
+                        contentDescription = drill.name,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = DrillCardBlue,
+                                shape = RoundedCornerShape(12.dp)
+                            ),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    // Fallback to text if image not found
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = DrillCardBlue,
+                                shape = RoundedCornerShape(12.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = drill.visualDescription.take(15),
+                            style = MaterialTheme.typography.labelSmall,
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            fontSize = 9.sp,
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+                }
             }
         }
 
@@ -393,24 +413,50 @@ fun DrillCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(140.dp)
-                    .background(
-                        color = if (drill.isExclusive) {
-                            Gold.copy(alpha = 0.4f)
-                        } else {
-                            DrillCardBlue
-                        }
-                    ),
+                    .height(140.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = drill.visualDescription.take(40),
-                    style = MaterialTheme.typography.bodySmall,
-                    textAlign = TextAlign.Center,
-                    color = if (drill.isExclusive) Color.Black else Color.White,
-                    fontSize = 11.sp,
-                    modifier = Modifier.padding(12.dp)
-                )
+                val imageResource = getDrillImageResource(drill.id)
+                if (imageResource != null) {
+                    Image(
+                        painter = painterResource(imageResource),
+                        contentDescription = drill.name,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    // Overlay for exclusive drills
+                    if (drill.isExclusive) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Gold.copy(alpha = 0.3f))
+                        )
+                    }
+                } else {
+                    // Fallback to text if image not found
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = if (drill.isExclusive) {
+                                    Gold.copy(alpha = 0.4f)
+                                } else {
+                                    DrillCardBlue
+                                }
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = drill.visualDescription.take(40),
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            color = if (drill.isExclusive) Color.Black else Color.White,
+                            fontSize = 11.sp,
+                            modifier = Modifier.padding(12.dp)
+                        )
+                    }
+                }
 
                 if (drill.isExclusive) {
                     Icon(

@@ -5,13 +5,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place 4 cones in a circle, about 5 meters apart",
+      "Put one player in the center with a ball",
+      "Have other players stand at each cone",
+      "Make sure everyone has enough space to move"
+    ],
+    "execution": [
+      "Center player passes to any cone player",
+      "Receive the pass back and pass to next cone",
+      "Keep the ball moving around the circle",
+      "Start slowly, then speed up as you warm up",
+      "Switch the center player every minute"
+    ],
+    "coachingPoints": [
+      "Use the inside of your foot for accurate passes",
+      "Call for the ball so your teammate knows you're ready",
+      "Keep your body loose and relaxed",
+      "Focus on good first touches",
+      "Encourage teammates with positive words"
+    ],
     "visualDescription": "Draw: 4 cones in a circle, 1 player in center",
-    "steps": ["Form a circle", "Pass clockwise", "Increase tempo"],
+    "steps": [
+      "Form a circle",
+      "Pass clockwise",
+      "Increase tempo"
+    ],
     "recommendation": "Great for starting sessions",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_1"
   },
   {
     "id": 2,
@@ -19,13 +41,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up 3-4 cones in a straight line",
+      "Space them about 10 meters apart",
+      "Line up all players at the starting cone",
+      "Make sure the path is clear and safe"
+    ],
+    "execution": [
+      "Jog to the first cone doing high knees",
+      "At each cone, do a different movement (butt kicks, side shuffle, etc.)",
+      "Walk back to recover between runs",
+      "Do 2-3 rounds with different movements",
+      "Stay light on your feet the whole time"
+    ],
+    "coachingPoints": [
+      "Keep your movements controlled, not sloppy",
+      "Breathe normally and don't hold your breath",
+      "Listen to your body as it warms up",
+      "Stretch any tight muscles gently",
+      "Have fun with different movement patterns"
+    ],
     "visualDescription": "Draw: 3-4 cones in a line forming a track",
-    "steps": ["Line up at start", "Run through cones", "Dynamic stretches"],
+    "steps": [
+      "Line up at start",
+      "Run through cones",
+      "Dynamic stretches"
+    ],
     "recommendation": "Warms up legs and joints",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_2"
   },
   {
     "id": 3,
@@ -33,13 +77,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Find a partner and grab one ball",
+      "Stand facing each other about 5-7 meters apart",
+      "Make sure you have plenty of room around you",
+      "Both players should be ready to move"
+    ],
+    "execution": [
+      "Pass the ball back and forth with your partner",
+      "After each pass, do a gentle leg stretch",
+      "Try hamstring stretches, quad stretches, and calf raises",
+      "Keep passing while you stretch",
+      "Switch legs every few passes"
+    ],
+    "coachingPoints": [
+      "Make accurate passes so your partner can stretch safely",
+      "Don't stretch too hard - just gentle movements",
+      "Talk to your partner and work together",
+      "Keep the ball moving even during stretches",
+      "Smile and encourage each other"
+    ],
     "visualDescription": "Draw: 2 players facing each other, ball between them",
-    "steps": ["Stand facing partner", "Pass and stretch", "Switch legs"],
+    "steps": [
+      "Stand facing partner",
+      "Pass and stretch",
+      "Switch legs"
+    ],
     "recommendation": "Combines passing with flexibility",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_3"
   },
   {
     "id": 4,
@@ -47,13 +113,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a speed ladder or make 6 squares with cones",
+      "Each square should be about one step wide",
+      "Have players line up at one end",
+      "Show them the pattern before they start"
+    ],
+    "execution": [
+      "Start with simple one-foot-per-square steps",
+      "Then try two feet in each square",
+      "Next, try side-to-side patterns",
+      "Increase your speed as you get comfortable",
+      "Walk back and go again"
+    ],
+    "coachingPoints": [
+      "Quick feet are more important than big steps",
+      "Look ahead, not down at your feet",
+      "Stay on the balls of your feet",
+      "Keep your knees slightly bent",
+      "Challenge yourself with new patterns"
+    ],
     "visualDescription": "Draw: 6 small squares in a row (cone ladder)",
-    "steps": ["Quick feet through squares", "Various patterns", "Increase speed"],
+    "steps": [
+      "Quick feet through squares",
+      "Various patterns",
+      "Increase speed"
+    ],
     "recommendation": "Footwork and coordination",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_4"
   },
   {
     "id": 5,
@@ -61,13 +149,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a straight line with cones about 10 meters long",
+      "Give each player their own line to work on",
+      "Show the proper hip opening technique",
+      "Make sure there's space between players"
+    ],
+    "execution": [
+      "Walk forward and step out to the side with one leg",
+      "Open your hip outward like opening a door",
+      "Return to center and step with the other leg",
+      "Keep alternating sides as you move forward",
+      "Do 2-3 rounds up and back"
+    ],
+    "coachingPoints": [
+      "Focus on opening your hips wide",
+      "This movement helps you change direction quickly",
+      "Keep your upper body steady",
+      "Don't rush - quality over speed",
+      "Feel the stretch in your inner thighs"
+    ],
     "visualDescription": "Draw: Player with lateral step arrows",
-    "steps": ["Lateral steps", "Open hips outward", "Return to center"],
+    "steps": [
+      "Lateral steps",
+      "Open hips outward",
+      "Return to center"
+    ],
     "recommendation": "Hip mobility essential for football",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_5"
   },
   {
     "id": 6,
@@ -75,13 +185,35 @@
     "category": "WarmUp",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place two cones exactly 10 meters apart",
+      "Make several lanes if you have many players",
+      "Check that the running surface is safe",
+      "Have players start at the same cone"
+    ],
+    "execution": [
+      "Sprint as fast as you can to the far cone",
+      "Touch the cone and jog slowly back",
+      "Take a few breaths and go again",
+      "Do 5 sprints total",
+      "Push yourself a little more each time"
+    ],
+    "coachingPoints": [
+      "Drive your arms to help you run faster",
+      "Push off hard from your back foot",
+      "Sprint at about 70-80% speed during warmup",
+      "Jogging back helps your muscles recover",
+      "You should feel energized, not exhausted"
+    ],
     "visualDescription": "Draw: 2 points 10m apart with arrow",
-    "steps": ["Sprint to cone", "Jog back", "Repeat 5 times"],
+    "steps": [
+      "Sprint to cone",
+      "Jog back",
+      "Repeat 5 times"
+    ],
     "recommendation": "Activates fast-twitch muscles",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_6"
   },
   {
     "id": 7,
@@ -89,13 +221,35 @@
     "category": "Passing",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up two cones about 15 meters apart",
+      "One player at each cone - one is the 'wall'",
+      "The moving player starts with the ball",
+      "Mark the area where the return pass should go"
+    ],
+    "execution": [
+      "Pass the ball to your partner (the wall)",
+      "Immediately sprint forward into space",
+      "Your partner passes the ball back to you in front",
+      "Control the ball and repeat",
+      "Switch roles after 5-10 passes"
+    ],
+    "coachingPoints": [
+      "Time your run after you pass",
+      "The 'wall' should pass the ball first-time if possible",
+      "Call for the ball so your partner knows where you are",
+      "This is how you beat defenders in a game",
+      "Practice with both feet"
+    ],
     "visualDescription": "Draw: Player passes to wall (partner), receives return pass",
-    "steps": ["Pass to partner", "Sprint forward", "Receive return pass"],
+    "steps": [
+      "Pass to partner",
+      "Sprint forward",
+      "Receive return pass"
+    ],
     "recommendation": "Classic give-and-go",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_7"
   },
   {
     "id": 8,
@@ -103,13 +257,35 @@
     "category": "Passing",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place 3 cones in a triangle shape",
+      "Make each side about 8-10 meters long",
+      "Put one player at each cone",
+      "Start with one ball"
+    ],
+    "execution": [
+      "Pass the ball clockwise around the triangle",
+      "After you pass, be ready to receive from the other side",
+      "After a minute, switch to counterclockwise",
+      "Try to keep a steady rhythm",
+      "Add a second ball once you're comfortable"
+    ],
+    "coachingPoints": [
+      "Pass to your teammate's front foot",
+      "Use proper passing technique every time",
+      "Move your feet to receive the ball properly",
+      "Communicate with your teammates",
+      "Keep your head up to see the whole triangle"
+    ],
     "visualDescription": "Draw: Triangle shape with 3 players, arrows clockwise",
-    "steps": ["Form triangle", "Pass clockwise", "Switch direction"],
+    "steps": [
+      "Form triangle",
+      "Pass clockwise",
+      "Switch direction"
+    ],
     "recommendation": "Fundamental passing shape",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_8"
   },
   {
     "id": 9,
@@ -117,13 +293,35 @@
     "category": "Passing",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Make a square with 4 cones about 10 meters apart",
+      "Place one or two players at each corner",
+      "Start with one ball at any corner",
+      "Make sure everyone knows the pattern"
+    ],
+    "execution": [
+      "Pass diagonally across the square",
+      "After you pass, follow your pass to that corner",
+      "The next player receives, then passes diagonally",
+      "Keep the pattern going smoothly",
+      "Try not to let the ball stop"
+    ],
+    "coachingPoints": [
+      "Your pass should be firm but accurate",
+      "Move quickly after you pass",
+      "Call out the receiver's name",
+      "Control the ball with your first touch",
+      "This teaches you to move after passing in games"
+    ],
     "visualDescription": "Draw: Square with 4 players, diagonal arrows",
-    "steps": ["Form square", "Pass diagonally", "Follow your pass"],
+    "steps": [
+      "Form square",
+      "Pass diagonally",
+      "Follow your pass"
+    ],
     "recommendation": "Movement after passing",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_9"
   },
   {
     "id": 10,
@@ -131,13 +329,35 @@
     "category": "Passing",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Have players form a single line",
+      "Coach or target player stands 8-10 meters away",
+      "First player in line has a ball",
+      "Set up a return path to the back of the line"
+    ],
+    "execution": [
+      "First player passes to the coach with one touch",
+      "Coach passes back immediately",
+      "Player controls and goes to the back of the line",
+      "Next player goes right away",
+      "Keep the drill moving quickly"
+    ],
+    "coachingPoints": [
+      "Strike through the center of the ball",
+      "Plant your standing foot next to the ball",
+      "Follow through toward your target",
+      "This prepares you for quick game situations",
+      "Stay focused even when waiting in line"
+    ],
     "visualDescription": "Draw: Line of players, arrow to coach/target",
-    "steps": ["Queue in line", "One touch to coach", "Return to end of line"],
+    "steps": [
+      "Queue in line",
+      "One touch to coach",
+      "Return to end of line"
+    ],
     "recommendation": "Quick passing under pressure",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_10"
   },
   {
     "id": 11,
@@ -145,13 +365,35 @@
     "category": "Passing",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create 3 stations in a line, about 12 meters apart",
+      "Put several players at the first two stations",
+      "One player at the third station",
+      "Start with 2 balls at the first station"
+    ],
+    "execution": [
+      "Pass from station 1 to station 2, then follow your pass",
+      "Station 2 receives, passes to station 3, and follows",
+      "Station 3 passes back to station 1 and follows",
+      "Keep the pattern going continuously",
+      "Control every ball before passing"
+    ],
+    "coachingPoints": [
+      "Don't run before you pass - pass first",
+      "Run at good speed to the next station",
+      "Be ready to receive as soon as you arrive",
+      "Keep your passes on the ground",
+      "This is how football should flow"
+    ],
     "visualDescription": "Draw: 3 players in line, arrow shows pass and movement",
-    "steps": ["Pass to next station", "Follow your pass", "Receive at next spot"],
+    "steps": [
+      "Pass to next station",
+      "Follow your pass",
+      "Receive at next spot"
+    ],
     "recommendation": "Passing with movement",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_11"
   },
   {
     "id": 12,
@@ -159,13 +401,35 @@
     "category": "Passing",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Partner up with one ball per pair",
+      "Stand about 10 meters apart facing each other",
+      "Mark turning space behind each player",
+      "Make sure you have room to turn safely"
+    ],
+    "execution": [
+      "Receive the pass from your partner",
+      "Take a good first touch to the side",
+      "Turn with the ball to face your partner",
+      "Pass back and they do the same",
+      "Alternate turning left and right"
+    ],
+    "coachingPoints": [
+      "Check over your shoulder before the ball arrives",
+      "Use the inside or outside of your foot to turn",
+      "Your first touch sets up everything else",
+      "Turn away from imaginary pressure",
+      "In games, this move creates space"
+    ],
     "visualDescription": "Draw: Player receives ball, turn arrow shown",
-    "steps": ["Receive pass", "Control and turn", "Pass back"],
+    "steps": [
+      "Receive pass",
+      "Control and turn",
+      "Pass back"
+    ],
     "recommendation": "Technical receiving",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_12"
   },
   {
     "id": 13,
@@ -173,13 +437,35 @@
     "category": "Passing",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create 4-6 small gates using pairs of cones",
+      "Make each gate about 2 meters wide",
+      "Spread them around a playing area",
+      "Partners start on opposite sides with one ball"
+    ],
+    "execution": [
+      "Pass the ball through any gate to your partner",
+      "Partner controls and passes back through a different gate",
+      "Count how many successful gate passes you make",
+      "Try to hit all the gates",
+      "Challenge yourselves to beat your score"
+    ],
+    "coachingPoints": [
+      "Aim for the center of the gate",
+      "Use the right amount of power",
+      "Look before you pass to pick the best gate",
+      "Celebrate when you're accurate",
+      "This improves your passing precision"
+    ],
     "visualDescription": "Draw: 2 cones forming gate, arrow through them",
-    "steps": ["Set up gates", "Pass through gates", "Score points for accuracy"],
+    "steps": [
+      "Set up gates",
+      "Pass through gates",
+      "Score points for accuracy"
+    ],
     "recommendation": "Accuracy training",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_13"
   },
   {
     "id": 14,
@@ -187,13 +473,35 @@
     "category": "Passing",
     "difficulty": "Hard",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark two areas about 25-30 meters apart",
+      "Create a target zone at one end (use cones)",
+      "Partner up - one at each end",
+      "Need several balls to keep the drill flowing"
+    ],
+    "execution": [
+      "Strike a long pass toward your partner's zone",
+      "Partner controls the ball and passes back",
+      "Focus on hitting the target area",
+      "Try different techniques - lofted and driven passes",
+      "Count how many land in the target"
+    ],
+    "coachingPoints": [
+      "For long passes, lean back slightly and strike under the ball",
+      "Follow through high for lofted passes",
+      "Use your laces for power and distance",
+      "Watch the ball all the way to your foot",
+      "Long passes are important for switching play"
+    ],
     "visualDescription": "Draw: Long distance with target zone marked",
-    "steps": ["Long ball to target", "Partner controls", "Switch roles"],
+    "steps": [
+      "Long ball to target",
+      "Partner controls",
+      "Switch roles"
+    ],
     "recommendation": "Range and accuracy",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_14"
   },
   {
     "id": 15,
@@ -201,13 +509,35 @@
     "category": "Dribbling",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place 5-6 cones in a zigzag pattern",
+      "Space them about 2 meters apart",
+      "Create multiple lanes if you have many players",
+      "Each player needs a ball"
+    ],
+    "execution": [
+      "Dribble through the cones using small touches",
+      "Weave in and out of each cone",
+      "Use both feet as you go",
+      "At the end, turn around and come back",
+      "Try to go faster each time"
+    ],
+    "coachingPoints": [
+      "Keep the ball close to your feet",
+      "Look up between touches to see where you're going",
+      "Use the inside and outside of both feet",
+      "Stay balanced with knees slightly bent",
+      "Good dribbling takes practice - keep trying"
+    ],
     "visualDescription": "Draw: Snake/zigzag pattern of cones",
-    "steps": ["Dribble through cones", "Alternate feet", "Increase speed"],
+    "steps": [
+      "Dribble through cones",
+      "Alternate feet",
+      "Increase speed"
+    ],
     "recommendation": "Basic close control",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_15"
   },
   {
     "id": 16,
@@ -215,13 +545,35 @@
     "category": "Dribbling",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up 4-5 cones in a slalom pattern",
+      "Place a goal or target at the end",
+      "Make a line of players with balls at the start",
+      "Have someone collect balls after shots"
+    ],
+    "execution": [
+      "Dribble through the cones quickly",
+      "After the last cone, take 1-2 touches toward goal",
+      "Shoot to score",
+      "Collect your ball and go to the back of the line",
+      "Focus on both dribbling and shooting"
+    ],
+    "coachingPoints": [
+      "Don't just dribble - be ready to shoot",
+      "Look up at the goal before you shoot",
+      "Place your shot, don't just blast it",
+      "This is what happens in real games",
+      "Strikers need to dribble and finish"
+    ],
     "visualDescription": "Draw: Slalom pattern ending at goal",
-    "steps": ["Dribble slalom", "Approach goal", "Shoot to finish"],
+    "steps": [
+      "Dribble slalom",
+      "Approach goal",
+      "Shoot to finish"
+    ],
     "recommendation": "Dribbling into shooting",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_16"
   },
   {
     "id": 17,
@@ -229,13 +581,35 @@
     "category": "Dribbling",
     "difficulty": "Hard",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Each player gets two balls",
+      "Mark out a safe dribbling area with cones",
+      "Make sure players have plenty of space",
+      "Start in a smaller area, expand as they improve"
+    ],
+    "execution": [
+      "Dribble both balls at the same time",
+      "Use one foot on each ball",
+      "Try to keep them close together",
+      "Move around the area without losing control",
+      "This is really challenging - laugh when you mess up"
+    ],
+    "coachingPoints": [
+      "This drill is super hard - that's okay",
+      "It improves your coordination with one ball too",
+      "Use very small touches",
+      "Look ahead, trust your feet",
+      "Even professionals find this tricky"
+    ],
     "visualDescription": "Draw: Player with 2 balls",
-    "steps": ["Dribble 2 balls simultaneously", "Alternate touches", "Advanced coordination"],
+    "steps": [
+      "Dribble 2 balls simultaneously",
+      "Alternate touches",
+      "Advanced coordination"
+    ],
     "recommendation": "Coordination challenge",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_17"
   },
   {
     "id": 18,
@@ -243,13 +617,35 @@
     "category": "Dribbling",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a rectangular area about 15x10 meters",
+      "Each player has their own ball",
+      "Coach stands where everyone can see",
+      "Make sure the area is open and safe"
+    ],
+    "execution": [
+      "Dribble around the area at medium speed",
+      "When coach calls 'left' or 'right', change direction",
+      "Use moves like cuts, turns, or step-overs",
+      "Keep your head up to hear the coach",
+      "React as quickly as you can"
+    ],
+    "coachingPoints": [
+      "Push the ball ahead with the outside of your foot",
+      "Cut the ball with the inside to change direction",
+      "Explode into your new direction",
+      "Keep the ball under control even when you turn",
+      "Changing direction beats defenders"
+    ],
     "visualDescription": "Draw: Arrows showing left and right changes",
-    "steps": ["Dribble forward", "Sharp cuts", "Change direction on signal"],
+    "steps": [
+      "Dribble forward",
+      "Sharp cuts",
+      "Change direction on signal"
+    ],
     "recommendation": "Agility with ball",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_18"
   },
   {
     "id": 19,
@@ -257,13 +653,35 @@
     "category": "Dribbling",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up pairs of cones to act as defenders",
+      "Space them about 5 meters apart",
+      "Players line up with balls at the start",
+      "Show the rollover move before starting"
+    ],
+    "execution": [
+      "Dribble toward the cone",
+      "Roll the bottom of your foot over the ball",
+      "Drag it to the side and accelerate past the cone",
+      "Practice with both feet",
+      "Go back and forth several times"
+    ],
+    "coachingPoints": [
+      "Sell the fake by looking one way first",
+      "Roll your foot over the ball smoothly",
+      "Explode away after the move",
+      "This move creates space in 1v1 situations",
+      "Messi uses this move all the time"
+    ],
     "visualDescription": "Draw: Ball with circular arrow indicating rollover",
-    "steps": ["Practice rollover move", "Accelerate away", "Repeat both sides"],
+    "steps": [
+      "Practice rollover move",
+      "Accelerate away",
+      "Repeat both sides"
+    ],
     "recommendation": "Useful 1v1 move",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_19"
   },
   {
     "id": 20,
@@ -271,13 +689,35 @@
     "category": "Dribbling",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a simple slalom pattern of 3-4 cones",
+      "Coach stands at the end with no ball",
+      "Players line up at the start with balls",
+      "Keep extra balls ready for quick rotation"
+    ],
+    "execution": [
+      "Dribble through the pattern toward the coach",
+      "When you reach the coach, pass the ball to them",
+      "Coach passes back to you",
+      "Control the return pass and dribble back",
+      "Next player goes when you're halfway through"
+    ],
+    "coachingPoints": [
+      "Combine your dribbling and passing skills",
+      "Make an accurate pass to the coach",
+      "Be ready for the return pass",
+      "Say 'thank you' to the coach",
+      "Keep the drill moving quickly"
+    ],
     "visualDescription": "Draw: Slalom pattern then pass to coach",
-    "steps": ["Dribble through pattern", "Pass to coach", "Coach returns ball"],
+    "steps": [
+      "Dribble through pattern",
+      "Pass to coach",
+      "Coach returns ball"
+    ],
     "recommendation": "Combination drill",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_20"
   },
   {
     "id": 21,
@@ -285,13 +725,35 @@
     "category": "Shooting",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a goal (or two cones as a goal)",
+      "Create a passing station to the side, about 10 meters away",
+      "Line of shooters stands centrally in front of goal",
+      "Passers have several balls ready"
+    ],
+    "execution": [
+      "Passer sends the ball to the shooter's feet",
+      "Shooter takes one touch to set up",
+      "Shooter strikes the ball toward goal",
+      "Collect the ball and switch roles",
+      "Practice shooting with both feet"
+    ],
+    "coachingPoints": [
+      "Your first touch should set up your shot",
+      "Keep your shot low and on target",
+      "Strike through the center of the ball",
+      "Place your standing foot next to the ball",
+      "Celebrate your goals - but stay focused"
+    ],
     "visualDescription": "Draw: Pass from side, goal straight ahead",
-    "steps": ["Receive pass from side", "One touch to goal", "Repeat both feet"],
+    "steps": [
+      "Receive pass from side",
+      "One touch to goal",
+      "Repeat both feet"
+    ],
     "recommendation": "Basic finishing",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_21"
   },
   {
     "id": 22,
@@ -299,13 +761,35 @@
     "category": "Shooting",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place a cone about 12 meters from goal",
+      "Shooter stands at the cone with back to goal",
+      "Passer stands behind the shooter with balls",
+      "A goalkeeper or target makes it realistic"
+    ],
+    "execution": [
+      "Passer plays ball to the shooter's feet",
+      "Shooter receives with back to goal",
+      "Turn quickly toward goal",
+      "Shoot within 2 touches",
+      "Rotate positions after 5 shots each"
+    ],
+    "coachingPoints": [
+      "Check your shoulder to see where the goal is",
+      "Take your first touch away from pressure",
+      "Turn into space, not toward defenders",
+      "Shoot quickly before imaginary defenders recover",
+      "Strikers must be good at turning and shooting"
+    ],
     "visualDescription": "Draw: Player back to goal, turn arrow shown",
-    "steps": ["Receive with back to goal", "Turn quickly", "Shoot on goal"],
+    "steps": [
+      "Receive with back to goal",
+      "Turn quickly",
+      "Shoot on goal"
+    ],
     "recommendation": "Striker training",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_22"
   },
   {
     "id": 23,
@@ -313,13 +797,35 @@
     "category": "Shooting",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a goal with a goalkeeper or wall",
+      "Shooter starts about 15 meters from goal",
+      "Have lots of balls ready",
+      "Mark where rebounds usually land"
+    ],
+    "execution": [
+      "Take your first shot on goal",
+      "Immediately follow your shot",
+      "If the ball rebounds, shoot again quickly",
+      "Keep shooting until you score or ball goes out",
+      "Get ready for the next turn"
+    ],
+    "coachingPoints": [
+      "Always follow your shot in case of rebounds",
+      "Stay alert and ready for second chances",
+      "Many goals come from rebounds in real games",
+      "Keep your shots on target to create rebounds",
+      "Be first to the ball - be hungry for goals"
+    ],
     "visualDescription": "Draw: Shot, bounce back arrow, follow-up shot",
-    "steps": ["First shot", "Follow rebound", "Second touch finish"],
+    "steps": [
+      "First shot",
+      "Follow rebound",
+      "Second touch finish"
+    ],
     "recommendation": "Anticipation training",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_23"
   },
   {
     "id": 24,
@@ -327,13 +833,35 @@
     "category": "Shooting",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place a goal with a cone in the middle as a keeper",
+      "Mark a starting point about 10 meters from goal",
+      "Players line up with balls at the start",
+      "Have someone collect balls from behind the goal"
+    ],
+    "execution": [
+      "Dribble toward the goal at speed",
+      "As you get close, pick a side (left or right of cone)",
+      "Shoot past the cone-keeper",
+      "Try to score every time",
+      "Next player goes when the shooter is halfway"
+    ],
+    "coachingPoints": [
+      "Make your decision early - left or right",
+      "Keep the ball close as you approach",
+      "Shoot with confidence to the side you chose",
+      "This teaches you to finish in 1v1 situations",
+      "Imagine the cone is a real keeper moving around"
+    ],
     "visualDescription": "Draw: Goal with cone representing keeper",
-    "steps": ["Dribble at cone keeper", "Pick side to shoot", "Score past cone"],
+    "steps": [
+      "Dribble at cone keeper",
+      "Pick side to shoot",
+      "Score past cone"
+    ],
     "recommendation": "Decision making",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_24"
   },
   {
     "id": 25,
@@ -341,13 +869,35 @@
     "category": "Shooting",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a wing position on the side of the field",
+      "Set up a goal with a goalkeeper if possible",
+      "Striker starts near the penalty spot",
+      "Wingers line up with balls on the side"
+    ],
+    "execution": [
+      "Winger dribbles toward the goal line",
+      "Winger crosses the ball into the box",
+      "Striker runs to meet the cross",
+      "Striker finishes with head or foot",
+      "Rotate roles every 5 crosses"
+    ],
+    "coachingPoints": [
+      "Wingers should look up before crossing",
+      "Put the cross where the striker can reach it",
+      "Strikers should attack the ball, not wait",
+      "Time your run to meet the ball at full speed",
+      "Crosses lead to many goals in real games"
+    ],
     "visualDescription": "Draw: Wing position, cross arrow to box",
-    "steps": ["Wing crosses ball", "Striker attacks box", "Finish cross"],
+    "steps": [
+      "Wing crosses ball",
+      "Striker attacks box",
+      "Finish cross"
+    ],
     "recommendation": "Crossing and heading",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_25"
   },
   {
     "id": 26,
@@ -355,13 +905,35 @@
     "category": "Shooting",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create a slalom of 4-5 cones leading to goal",
+      "Place the last cone about 16 meters from goal",
+      "Set up a goal with targets in the corners",
+      "Players line up with balls at the start"
+    ],
+    "execution": [
+      "Dribble through the cones at good speed",
+      "After the last cone, take 1-2 touches",
+      "Shoot on goal aiming for the corners",
+      "Jog to collect your ball",
+      "Repeat 5 times, then rest"
+    ],
+    "coachingPoints": [
+      "This drill makes you tired like in a real game",
+      "Focus on technique even when you're tired",
+      "Lift your head before shooting",
+      "Accuracy is more important than power",
+      "Great players can still finish when they're exhausted"
+    ],
     "visualDescription": "Draw: Slalom pattern leading to goal",
-    "steps": ["Dribble through cones", "Approach shooting zone", "Strike on goal"],
+    "steps": [
+      "Dribble through cones",
+      "Approach shooting zone",
+      "Strike on goal"
+    ],
     "recommendation": "Shooting under fatigue",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_26"
   },
   {
     "id": 27,
@@ -369,13 +941,35 @@
     "category": "Rondo",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a small square, about 7x7 meters",
+      "Four players stand around the outside",
+      "One player (defender) goes in the middle",
+      "Start with one ball on the outside"
+    ],
+    "execution": [
+      "Four outside players keep possession by passing",
+      "Defender tries to win the ball or touch it",
+      "If defender touches the ball, they switch with who made the mistake",
+      "Count how many passes you complete",
+      "Challenge yourself to beat your record"
+    ],
+    "coachingPoints": [
+      "Make quick, accurate passes",
+      "Move to create passing angles for your teammates",
+      "If you're the defender, be patient and wait for mistakes",
+      "Communicate with your teammates",
+      "This teaches game awareness and quick thinking"
+    ],
     "visualDescription": "Draw: Small square with 4 players outside, 1 defender inside",
-    "steps": ["4 keep possession", "1 defender pressures", "Switch on turnover"],
+    "steps": [
+      "4 keep possession",
+      "1 defender pressures",
+      "Switch on turnover"
+    ],
     "recommendation": "Classic possession drill",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_27"
   },
   {
     "id": 28,
@@ -383,13 +977,35 @@
     "category": "Rondo",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Make a circle about 10 meters wide",
+      "Five players stand around the outside",
+      "Two defenders work together in the middle",
+      "One ball starts on the outside"
+    ],
+    "execution": [
+      "Five players pass to keep possession",
+      "Two defenders work as a team to win the ball",
+      "If defenders win it, last two touches go in the middle",
+      "Try to make 10 passes in a row",
+      "Defenders should communicate with each other"
+    ],
+    "coachingPoints": [
+      "With two defenders, you need quick passing",
+      "Support your teammates by showing for the ball",
+      "Defenders should work together, not chase alone",
+      "This is harder than 4v1 - that's good",
+      "Stay positive and encourage each other"
+    ],
     "visualDescription": "Draw: Larger square with 5 players outside, 2 defenders inside",
-    "steps": ["5 players keep ball", "2 defenders work together", "Quick passing required"],
+    "steps": [
+      "5 players keep ball",
+      "2 defenders work together",
+      "Quick passing required"
+    ],
     "recommendation": "Team possession",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_28"
   },
   {
     "id": 29,
@@ -397,13 +1013,35 @@
     "category": "Rondo",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a rectangular zone, about 15x10 meters",
+      "Split into two teams (3v3 or 4v4 works well)",
+      "Both teams stay inside the zone",
+      "One team starts with the ball"
+    ],
+    "execution": [
+      "Team with ball tries to keep possession",
+      "Other team tries to win it back",
+      "Count consecutive passes out loud",
+      "When ball is won, counting starts over",
+      "Play for 2 minutes, then see which team passed more"
+    ],
+    "coachingPoints": [
+      "Move into space to help your teammates",
+      "Keep the ball moving with quick passes",
+      "If you lose the ball, work hard to win it back",
+      "Stay inside the zone no matter what",
+      "This is great practice for keeping the ball in games"
+    ],
     "visualDescription": "Draw: Rectangular zone marked out",
-    "steps": ["Teams keep possession in zone", "Count consecutive passes", "Switch on loss"],
+    "steps": [
+      "Teams keep possession in zone",
+      "Count consecutive passes",
+      "Switch on loss"
+    ],
     "recommendation": "Possession under pressure",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_29"
   },
   {
     "id": 30,
@@ -411,13 +1049,35 @@
     "category": "Rondo",
     "difficulty": "Hard",
     "estimatedTime": 15,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create a square playing area, about 12x12 meters",
+      "2v2 in the middle - mark teams with different colors",
+      "Place 2 neutral players on opposite sides (jokers)",
+      "The jokers always help whoever has the ball"
+    ],
+    "execution": [
+      "Team in possession has a 4v2 advantage (2 + 2 jokers)",
+      "Try to make as many passes as possible",
+      "When the other team wins the ball, jokers switch to help them",
+      "Jokers can only play one-touch",
+      "Count passes and compete"
+    ],
+    "coachingPoints": [
+      "Use the jokers to help when you're under pressure",
+      "The team without the ball must work twice as hard",
+      "Jokers should always be ready to help",
+      "This teaches you to use extra players wisely",
+      "Very advanced drill - focus and communicate"
+    ],
     "visualDescription": "Draw: 2v2 in center, neutral players on sides (EXCLUSIVE)",
-    "steps": ["2v2 possession", "Neutral always helps ball team", "Advanced positioning"],
+    "steps": [
+      "2v2 possession",
+      "Neutral always helps ball team",
+      "Advanced positioning"
+    ],
     "recommendation": "Complex possession game",
-    "isExclusive": true
+    "isExclusive": true,
+    "imageResourceName": "drill_30"
   },
   {
     "id": 31,
@@ -425,13 +1085,35 @@
     "category": "Rondo",
     "difficulty": "Hard",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a square or circle, about 8x8 meters",
+      "4-5 players on the outside, 1-2 in the middle",
+      "Make the rule clear: only one touch allowed",
+      "Have an extra ball ready in case it goes out"
+    ],
+    "execution": [
+      "Pass the ball with only one touch",
+      "Defender tries to intercept or touch the ball",
+      "If you take two touches, you become the defender",
+      "This is very challenging - stay focused",
+      "Count passes to track improvement"
+    ],
+    "coachingPoints": [
+      "This is one of the hardest drills - be patient",
+      "Your first touch is also your pass",
+      "Position your body before the ball arrives",
+      "Look where you'll pass before you receive",
+      "Top players can do this - you can too with practice"
+    ],
     "visualDescription": "Draw: Square with '1' indicating one-touch rule",
-    "steps": ["Rondo with one-touch only", "Quick thinking", "High difficulty"],
+    "steps": [
+      "Rondo with one-touch only",
+      "Quick thinking",
+      "High difficulty"
+    ],
     "recommendation": "Advanced rondo variation",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_31"
   },
   {
     "id": 32,
@@ -439,13 +1121,35 @@
     "category": "Rondo",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark two squares side by side, each about 10x10 meters",
+      "Split players into groups of 4-5 per zone",
+      "Each zone has defenders and attackers",
+      "Start with a ball in zone 1"
+    ],
+    "execution": [
+      "Keep possession in zone 1 with 4v2",
+      "When you hear 'switch', pass to zone 2",
+      "Team follows the ball to zone 2 and continues playing",
+      "Defenders sprint across too",
+      "Practice moving as a team"
+    ],
+    "coachingPoints": [
+      "Look for the right moment to switch zones",
+      "The switch pass needs to be accurate and strong",
+      "Move together as a team when switching",
+      "This teaches you how to switch play in real games",
+      "Communication is super important"
+    ],
     "visualDescription": "Draw: 2 zones with arrow showing zone transition",
-    "steps": ["Possess in zone 1", "Switch ball to zone 2", "Team follows"],
+    "steps": [
+      "Possess in zone 1",
+      "Switch ball to zone 2",
+      "Team follows"
+    ],
     "recommendation": "Switching play",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_32"
   },
   {
     "id": 33,
@@ -453,13 +1157,35 @@
     "category": "Agility",
     "difficulty": "Medium",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place cones in a T-shape: one vertical line and one horizontal",
+      "Make the vertical line 10 meters, horizontal 5 meters each way",
+      "Start at the bottom of the T",
+      "Show players the pattern before starting"
+    ],
+    "execution": [
+      "Sprint forward to the middle cone",
+      "Shuffle sideways to the right cone",
+      "Shuffle left all the way to the left cone",
+      "Shuffle right back to middle",
+      "Backpedal to the start - that's one rep"
+    ],
+    "coachingPoints": [
+      "Stay low when you shuffle sideways",
+      "Don't cross your feet when shuffling",
+      "Keep your chest facing forward",
+      "This trains movements you use in games",
+      "Push yourself but keep good form"
+    ],
     "visualDescription": "Draw: T-shape made of cones",
-    "steps": ["Sprint forward", "Shuffle left and right", "Backpedal to start"],
+    "steps": [
+      "Sprint forward",
+      "Shuffle left and right",
+      "Backpedal to start"
+    ],
     "recommendation": "Multidirectional speed",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_33"
   },
   {
     "id": 34,
@@ -467,13 +1193,35 @@
     "category": "Agility",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place 3 cones in a line: center, 5m left, 5m right",
+      "Start at the center cone",
+      "Make sure surface is safe for sprinting and turning",
+      "Have multiple lanes for team competition"
+    ],
+    "execution": [
+      "Sprint 5 meters to the right, touch the cone",
+      "Sprint 10 meters to the left cone, touch it",
+      "Sprint 5 meters back to center",
+      "Rest for 30 seconds",
+      "Repeat 3-5 times"
+    ],
+    "coachingPoints": [
+      "Touch the cone with your hand each time",
+      "Use quick, choppy steps to change direction",
+      "This builds agility for defending and attacking",
+      "Drive your arms to help you accelerate",
+      "This drill is tough but really effective"
+    ],
     "visualDescription": "Draw: 3 lines showing 5m, 10m, 5m distances",
-    "steps": ["Sprint 5m and back", "Sprint 10m and back", "Sprint 5m and back"],
+    "steps": [
+      "Sprint 5m and back",
+      "Sprint 10m and back",
+      "Sprint 5m and back"
+    ],
     "recommendation": "Classic agility drill",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_34"
   },
   {
     "id": 35,
@@ -481,13 +1229,35 @@
     "category": "Agility",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark two lines about 10 meters apart",
+      "Each player has a ball",
+      "Stand at one line facing sideways",
+      "Show proper form before starting"
+    ],
+    "execution": [
+      "Side-step to the other line while controlling the ball",
+      "Push the ball with the outside of your foot",
+      "When you reach the line, face the other way and return",
+      "Keep your body low and balanced",
+      "Do this 5 times each direction"
+    ],
+    "coachingPoints": [
+      "Keep the ball close during side movements",
+      "Use quick, small touches",
+      "This helps with shielding the ball in games",
+      "Stay on the balls of your feet",
+      "Defenders especially need this skill"
+    ],
     "visualDescription": "Draw: Side-to-side arrows with ball",
-    "steps": ["Lateral movement with ball", "Quick feet", "Both directions"],
+    "steps": [
+      "Lateral movement with ball",
+      "Quick feet",
+      "Both directions"
+    ],
     "recommendation": "Lateral quickness",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_35"
   },
   {
     "id": 36,
@@ -495,13 +1265,35 @@
     "category": "Agility",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a distance of 15-20 meters with cones",
+      "Players start at one end",
+      "Make sure the area is flat and safe",
+      "This drill is great for defenders"
+    ],
+    "execution": [
+      "Sprint forward to the far cone",
+      "Immediately turn and backpedal to the start",
+      "Keep your hips low when backpedaling",
+      "Repeat 6-8 times",
+      "Rest between reps"
+    ],
+    "coachingPoints": [
+      "Backpedaling is important for defenders",
+      "Stay on your toes when going backward",
+      "Don't turn your back - backpedal facing forward",
+      "Pump your arms even when going backward",
+      "This movement happens constantly in games"
+    ],
     "visualDescription": "Draw: Forward arrow solid, backward arrow dotted",
-    "steps": ["Sprint forward", "Backpedal to start", "Repeat intervals"],
+    "steps": [
+      "Sprint forward",
+      "Backpedal to start",
+      "Repeat intervals"
+    ],
     "recommendation": "Defensive movement",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_36"
   },
   {
     "id": 37,
@@ -509,13 +1301,35 @@
     "category": "Agility",
     "difficulty": "Medium",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place 4-5 cones in different colors around a center point",
+      "Each cone should be about 5 meters from center",
+      "Player stands in the middle",
+      "Coach needs to see all the cones"
+    ],
+    "execution": [
+      "Coach calls out a color",
+      "Player sprints to that colored cone and touches it",
+      "Sprint back to center and wait for next call",
+      "Coach varies the timing and colors",
+      "Do 10 sprints total"
+    ],
+    "coachingPoints": [
+      "React as fast as you can when you hear the color",
+      "This trains your brain and body together",
+      "Always return to center in a ready position",
+      "Football requires constant quick reactions",
+      "Stay focused even when you're tired"
+    ],
     "visualDescription": "Draw: Multiple cones in different colors",
-    "steps": ["Coach calls color", "Sprint to that cone", "Quick reaction training"],
+    "steps": [
+      "Coach calls color",
+      "Sprint to that cone",
+      "Quick reaction training"
+    ],
     "recommendation": "Reaction speed",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_37"
   },
   {
     "id": 38,
@@ -523,13 +1337,35 @@
     "category": "Agility",
     "difficulty": "Hard",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Set up a small hurdle or cone to jump over",
+      "Place a sprint cone 15 meters away",
+      "Have players start behind the hurdle",
+      "Make sure landing area is safe and clear"
+    ],
+    "execution": [
+      "Jump over the hurdle with both feet",
+      "Land and immediately sprint to the far cone",
+      "Walk back to recover",
+      "Repeat 8-10 times",
+      "Focus on quick transition from jump to sprint"
+    ],
+    "coachingPoints": [
+      "Explode up in your jump",
+      "Land softly with bent knees",
+      "Don't pause - sprint right after landing",
+      "This builds explosive power for the game",
+      "Professional athletes train like this"
+    ],
     "visualDescription": "Draw: Small obstacle and sprint arrow (EXCLUSIVE)",
-    "steps": ["Jump over obstacle", "Immediate sprint", "Advanced plyometrics"],
+    "steps": [
+      "Jump over obstacle",
+      "Immediate sprint",
+      "Advanced plyometrics"
+    ],
     "recommendation": "Explosive power training",
-    "isExclusive": true
+    "isExclusive": true,
+    "imageResourceName": "drill_38"
   },
   {
     "id": 39,
@@ -537,13 +1373,35 @@
     "category": "Goalkeeper",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Goalkeeper stands in goal or marked area",
+      "Coach or server stands 5-8 meters away with balls",
+      "Have plenty of balls ready",
+      "Start with gentle throws, then harder"
+    ],
+    "execution": [
+      "Server throws balls to different heights",
+      "Goalkeeper catches high balls above the head",
+      "Catch medium balls at chest height",
+      "Scoop low balls safely",
+      "Focus on proper catching technique every time"
+    ],
+    "coachingPoints": [
+      "Form a 'W' with your hands for high catches",
+      "Bring the ball into your chest after catching",
+      "Get your body behind the ball",
+      "Call 'keeper' so others know you're catching it",
+      "Good handling keeps your team safe"
+    ],
     "visualDescription": "Draw: Goalkeeper with ball thrown from above",
-    "steps": ["Catch high balls", "Catch low balls", "Secure technique"],
+    "steps": [
+      "Catch high balls",
+      "Catch low balls",
+      "Secure technique"
+    ],
     "recommendation": "GK fundamentals",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_39"
   },
   {
     "id": 40,
@@ -551,13 +1409,35 @@
     "category": "Goalkeeper",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Goalkeeper starts with a ball in the goal area",
+      "Place two target players 10-15 meters away at angles",
+      "Mark where the targets should stand",
+      "Have several balls ready"
+    ],
+    "execution": [
+      "Goalkeeper rolls or throws ball to target 1",
+      "Target 1 passes back to the goalkeeper",
+      "Goalkeeper throws to target 2",
+      "Keep rotating between targets",
+      "Practice different types of throws"
+    ],
+    "coachingPoints": [
+      "Roll the ball on the ground for short passes",
+      "Throw overarm for longer distance",
+      "Always aim for your teammate's feet",
+      "Good distribution starts your team's attacks",
+      "Look before you throw to find open teammates"
+    ],
     "visualDescription": "Draw: Goalkeeper with 2 target players",
-    "steps": ["Roll out to targets", "Throw to targets", "Accuracy focus"],
+    "steps": [
+      "Roll out to targets",
+      "Throw to targets",
+      "Accuracy focus"
+    ],
     "recommendation": "Distribution practice",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_40"
   },
   {
     "id": 41,
@@ -565,13 +1445,35 @@
     "category": "Goalkeeper",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Goalkeeper stands in the center of the goal",
+      "Server stands 8-10 meters away",
+      "Use a soft surface if possible for safety",
+      "Start with gentle shots, increase difficulty"
+    ],
+    "execution": [
+      "Server shoots to the goalkeeper's left",
+      "Goalkeeper dives to make the save",
+      "Get up and reset to center",
+      "Server shoots to the right",
+      "Alternate sides for 10-15 saves total"
+    ],
+    "coachingPoints": [
+      "Take a small step toward the ball before diving",
+      "Extend your arms fully to reach",
+      "Land on your side, not flat on your stomach",
+      "Get up quickly like in a real game",
+      "Diving takes courage - be brave"
+    ],
     "visualDescription": "Draw: Goalkeeper with left and right dive arrows",
-    "steps": ["Dive left", "Dive right", "Proper technique"],
+    "steps": [
+      "Dive left",
+      "Dive right",
+      "Proper technique"
+    ],
     "recommendation": "Shot stopping",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_41"
   },
   {
     "id": 42,
@@ -579,13 +1481,35 @@
     "category": "Goalkeeper",
     "difficulty": "Medium",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a small square in the goal area (about 4x4 meters)",
+      "Place 4 cones at the corners",
+      "Goalkeeper starts in the center",
+      "Coach stands outside with instructions"
+    ],
+    "execution": [
+      "Quick side steps to each cone",
+      "Forward and backward movements",
+      "Stay low in goalkeeper stance",
+      "Coach calls which cone to touch",
+      "Return to center after each movement"
+    ],
+    "coachingPoints": [
+      "Stay on the balls of your feet",
+      "Keep your hands ready to save",
+      "Good footwork helps you cover the goal",
+      "Quick feet = quick saves",
+      "Goalkeepers need to be fast in small spaces"
+    ],
     "visualDescription": "Draw: Small square showing GK movement zone",
-    "steps": ["Quick steps in box", "Positioning drills", "Agility for keepers"],
+    "steps": [
+      "Quick steps in box",
+      "Positioning drills",
+      "Agility for keepers"
+    ],
     "recommendation": "GK movement",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_42"
   },
   {
     "id": 43,
@@ -593,13 +1517,35 @@
     "category": "TeamGames",
     "difficulty": "Easy",
     "estimatedTime": 15,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create a small field, about 20x15 meters",
+      "Set up two small goals or use cones",
+      "Make two teams of 3 players each",
+      "Decide on simple rules (kickoffs, throw-ins, etc.)"
+    ],
+    "execution": [
+      "Play a regular game with 3v3",
+      "First team to 3 goals wins",
+      "Everyone must touch the ball before scoring (optional rule)",
+      "No goalkeepers - everyone plays",
+      "Switch teams after each game"
+    ],
+    "coachingPoints": [
+      "In small games, everyone touches the ball a lot",
+      "Support your teammates by moving into space",
+      "Defend as a team, attack as a team",
+      "Small games teach you real football",
+      "Have fun and be creative"
+    ],
     "visualDescription": "Draw: Small field with 3 player markers per team",
-    "steps": ["Set boundaries", "Play 3v3", "Small goals"],
+    "steps": [
+      "Set boundaries",
+      "Play 3v3",
+      "Small goals"
+    ],
     "recommendation": "Game situation",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_43"
   },
   {
     "id": 44,
@@ -607,13 +1553,35 @@
     "category": "TeamGames",
     "difficulty": "Easy",
     "estimatedTime": 15,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Place a ball in the center of a square area",
+      "Put 4 cones in the corners",
+      "Assign each player a number (1, 2, 3, etc.)",
+      "Two teams stand at opposite corners"
+    ],
+    "execution": [
+      "Coach calls out a number",
+      "Players with that number sprint to win the ball",
+      "Try to score on the opposite goal",
+      "First to score wins that round",
+      "Coach can call multiple numbers for 2v2 or 3v3"
+    ],
+    "coachingPoints": [
+      "React quickly when your number is called",
+      "This trains your speed and reaction time",
+      "Be ready even when waiting",
+      "Compete hard but fairly",
+      "Celebrate your wins and learn from losses"
+    ],
     "visualDescription": "Draw: 4 markers in corners, arrow to center",
-    "steps": ["Players assigned numbers", "Coach calls number", "Called players compete for ball"],
+    "steps": [
+      "Players assigned numbers",
+      "Coach calls number",
+      "Called players compete for ball"
+    ],
     "recommendation": "Competition and reaction",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_44"
   },
   {
     "id": 45,
@@ -621,13 +1589,35 @@
     "category": "TeamGames",
     "difficulty": "Easy",
     "estimatedTime": 10,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a circular or square area (about 20x20 meters)",
+      "Every player has their own ball",
+      "Choose one player to be 'it' to start",
+      "Stay inside the boundaries"
+    ],
+    "execution": [
+      "Everyone dribbles around the area",
+      "The player who is 'it' tries to tag someone",
+      "If you're tagged, you become 'it'",
+      "Keep dribbling while you play",
+      "If your ball goes out, you're automatically 'it'"
+    ],
+    "coachingPoints": [
+      "Keep your head up to avoid being tagged",
+      "Control your ball even when running away",
+      "This makes dribbling fun and competitive",
+      "Use your body to shield the ball",
+      "Laugh and enjoy this drill"
+    ],
     "visualDescription": "Draw: Circle with chasing arrow",
-    "steps": ["One player is 'it'", "Dribble away", "Tagged player becomes 'it'"],
+    "steps": [
+      "One player is 'it'",
+      "Dribble away",
+      "Tagged player becomes 'it'"
+    ],
     "recommendation": "Fun and conditioning",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_45"
   },
   {
     "id": 46,
@@ -635,13 +1625,35 @@
     "category": "TeamGames",
     "difficulty": "Hard",
     "estimatedTime": 15,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Create a field with a goal on each end",
+      "Two teams of 4-5 players each",
+      "Both goals are always active",
+      "Teams can score on either goal"
+    ],
+    "execution": [
+      "Team in possession attacks one goal",
+      "If they score or lose the ball, other team attacks opposite goal",
+      "Teams must transition quickly",
+      "This is very challenging and game-like",
+      "Play for 10 minutes, most goals wins"
+    ],
+    "coachingPoints": [
+      "When you win the ball, think attack immediately",
+      "When you lose the ball, think defend immediately",
+      "This is exactly like real games",
+      "Communication is critical",
+      "Very advanced - stay focused and work as a team"
+    ],
     "visualDescription": "Draw: Field with goals on opposite sides (EXCLUSIVE)",
-    "steps": ["Attack one goal", "Transition to defend other", "Advanced game flow"],
+    "steps": [
+      "Attack one goal",
+      "Transition to defend other",
+      "Advanced game flow"
+    ],
     "recommendation": "Transition training",
-    "isExclusive": true
+    "isExclusive": true,
+    "imageResourceName": "drill_46"
   },
   {
     "id": 47,
@@ -649,13 +1661,35 @@
     "category": "Recovery",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Mark a path or use the sideline",
+      "Each player has a ball",
+      "Walk in a line or spread out",
+      "This is a cooldown activity"
+    ],
+    "execution": [
+      "Walk slowly while gently touching the ball",
+      "Use very light touches to control it",
+      "Breathe deeply and relax",
+      "Take your time - no rushing",
+      "Walk for 5 minutes as you cool down"
+    ],
+    "coachingPoints": [
+      "This helps your body recover after hard work",
+      "Focus on soft touches",
+      "Let your heart rate come down gradually",
+      "Think about what you learned today",
+      "Recovery is important for getting better"
+    ],
     "visualDescription": "Draw: Player walking slowly with ball",
-    "steps": ["Walk with ball", "Light touches", "Cool down gradually"],
+    "steps": [
+      "Walk with ball",
+      "Light touches",
+      "Cool down gradually"
+    ],
     "recommendation": "Active recovery",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_47"
   },
   {
     "id": 48,
@@ -663,13 +1697,35 @@
     "category": "Recovery",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Find a partner",
+      "Sit on the ground in a comfortable spot",
+      "Both players should know which muscles to stretch",
+      "Take turns helping each other"
+    ],
+    "execution": [
+      "Partner helps you stretch your hamstrings",
+      "Hold each stretch for 30 seconds",
+      "Switch legs and repeat",
+      "Then help your partner stretch",
+      "Try hamstrings, quads, calves, and hips"
+    ],
+    "coachingPoints": [
+      "Never stretch so hard it hurts",
+      "Gentle stretching prevents injuries",
+      "Talk to your partner about how it feels",
+      "Breathe slowly and relax",
+      "Stretching after training is very important"
+    ],
     "visualDescription": "Draw: 2 players doing partner stretches",
-    "steps": ["Partner assists stretch", "Hold 30 seconds", "Switch sides"],
+    "steps": [
+      "Partner assists stretch",
+      "Hold 30 seconds",
+      "Switch sides"
+    ],
     "recommendation": "Flexibility and recovery",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_48"
   },
   {
     "id": 49,
@@ -677,13 +1733,35 @@
     "category": "Recovery",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Find a quiet space on the field",
+      "Each player sits or stands with a ball",
+      "Get into a comfortable position",
+      "This is about calming down"
+    ],
+    "execution": [
+      "Take slow, deep breaths",
+      "Gently tap the ball with your feet",
+      "Breathe in for 4 seconds, out for 4 seconds",
+      "Keep making light touches on the ball",
+      "Focus on relaxing your whole body"
+    ],
+    "coachingPoints": [
+      "Your mind needs to recover too, not just your body",
+      "Deep breathing helps you calm down",
+      "Light ball touches keep you connected to the game",
+      "This is a peaceful end to training",
+      "Great players know how to relax"
+    ],
     "visualDescription": "Draw: Lungs icon and ball",
-    "steps": ["Control breathing", "Light ball touches", "Relax body"],
+    "steps": [
+      "Control breathing",
+      "Light ball touches",
+      "Relax body"
+    ],
     "recommendation": "Mindful cooldown",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_49"
   },
   {
     "id": 50,
@@ -691,12 +1769,34 @@
     "category": "Recovery",
     "difficulty": "Easy",
     "estimatedTime": 5,
-    "setup": ["Content to be added by football coach"],
-    "execution": ["Content to be added by football coach"],
-    "coachingPoints": ["Content to be added by football coach"],
+    "setup": [
+      "Find a clean, flat area",
+      "Everyone gets into plank position",
+      "Make sure everyone knows proper form",
+      "Have a timer or watch ready"
+    ],
+    "execution": [
+      "Get into plank position on your forearms",
+      "Keep your body in a straight line",
+      "Hold for 30 seconds",
+      "Rest for 30 seconds",
+      "Repeat 2-3 times to finish training"
+    ],
+    "coachingPoints": [
+      "Your core helps you with everything in football",
+      "Don't let your hips sag down",
+      "Breathe normally - don't hold your breath",
+      "If 30 seconds is too easy, go for 45 or 60",
+      "End every training with core work"
+    ],
     "visualDescription": "Draw: Plank position icon",
-    "steps": ["Plank position", "Hold 30 seconds", "Core engagement"],
+    "steps": [
+      "Plank position",
+      "Hold 30 seconds",
+      "Core engagement"
+    ],
     "recommendation": "Core strength to finish",
-    "isExclusive": false
+    "isExclusive": false,
+    "imageResourceName": "drill_50"
   }
 ]

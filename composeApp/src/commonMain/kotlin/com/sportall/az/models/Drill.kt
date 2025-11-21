@@ -15,5 +15,6 @@ data class Drill(
     val visualDescription: String,
     val steps: List<String>,
     val recommendation: String? = null,
-    val isExclusive: Boolean = false
+    val isExclusive: Boolean = false,
+    val imageResourceName: String? = null
 )
