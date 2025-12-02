@@ -1,7 +1,9 @@
 package com.sportall.az.ui.onboarding
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -11,16 +13,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
+import com.sportall.az.generated.resources.ic_skip
+import com.sportall.az.generated.resources.onb_page_0
+import com.sportall.az.generated.resources.onb_page_1
+import com.sportall.az.generated.resources.onb_page_2
 import com.sportall.az.ui.MainTabsScreen
 import com.sportall.az.ui.theme.DeepBlue
 import com.sportall.az.ui.theme.LimeGreen
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 data object OnboardingScreen : Screen {
@@ -45,75 +56,84 @@ data object OnboardingScreen : Screen {
             }
         }
 
-        Scaffold(
-            containerColor = DeepBlue,
-            topBar = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.TopEnd
-                ) {
-                    OutlinedButton(
-                        onClick = { viewModel.skipOnboarding() },
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = LimeGreen
-                        ),
-                        border = BorderStroke(1.dp, LimeGreen),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text("Skip")
-                    }
-                }
-            },
-            bottomBar = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "${pagerState.currentPage + 1}/3",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.White,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+        Box(modifier = Modifier.fillMaxSize()) {
 
-                    Button(
-                        onClick = {
-                            if (pagerState.currentPage < 2) {
-                                coroutineScope.launch {
-                                    viewModel.nextPage()
-                                }
-                            } else {
-                                viewModel.skipOnboarding() // "Get started" = finish onboarding
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = LimeGreen,
-                            contentColor = Color.Black
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 55.dp, end = 25.dp),
+                        contentAlignment = Alignment.TopEnd
+                    ) {
+                        Image(
+                            painter = painterResource(Res.drawable.ic_skip),
+                            contentDescription = "Skip",
+                            modifier = Modifier
+                                .size(70.dp)
+                                .clickable { viewModel.skipOnboarding() }
                         )
+                    }
+                },
+                bottomBar = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(30.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = if (pagerState.currentPage < 2) "Next" else "Get started",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                            text = "${pagerState.currentPage + 1}/3",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.White,
+                            modifier = Modifier.padding(bottom = 16.dp)
                         )
+
+                        Button(
+                            onClick = {
+                                if (pagerState.currentPage < 2) {
+                                    coroutineScope.launch {
+                                        viewModel.nextPage()
+                                    }
+                                } else {
+                                    viewModel.skipOnboarding()
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = LimeGreen,
+                                contentColor = Color.Black
+                            )
+                        ) {
+                            Text(
+                                text = if (pagerState.currentPage < 2) "Next" else "Get started",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
                 }
-            }
-        ) { paddingValues ->
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) { page ->
-                OnboardingPage(page = page)
+            ) { paddingValues ->
+
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) { page ->
+                    OnboardingPage(page = page)
+                }
+
             }
         }
     }
@@ -122,57 +142,28 @@ data object OnboardingScreen : Screen {
 @Composable
 fun OnboardingPage(page: Int) {
     val content = when (page) {
-        0 -> OnboardingPageContent(
-            title = "50 ready-to-use drills",
-            description = "Warm-up, passing, rondo, shooting — no internet required."
-        )
-        1 -> OnboardingPageContent(
-            title = "Visual cards first",
-            description = "See the drill layout on the card, details inside."
-        )
-        2 -> OnboardingPageContent(
-            title = "Track what you did",
-            description = "Mark drills as done and rate 1–3 stars."
-        )
-        else -> OnboardingPageContent("", "")
+        0 -> OnboardingPageContent(Res.drawable.onb_page_0) 
+        1 -> OnboardingPageContent(Res.drawable.onb_page_1)
+        2 -> OnboardingPageContent(Res.drawable.onb_page_2)
+        else -> OnboardingPageContent(Res.drawable.onb_page_0)
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepBlue),
+            .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+        Image(
+            painter = painterResource(content.image),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(32.dp)
-        ) {
-            Text(
-                text = content.title,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
-            )
-
-            Text(
-                text = content.description,
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        )
     }
 }
 
 data class OnboardingPageContent(
-    val title: String,
-    val description: String
+    val image: DrawableResource
 )

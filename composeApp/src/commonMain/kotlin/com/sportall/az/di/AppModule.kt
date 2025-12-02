@@ -14,6 +14,9 @@ import com.sportall.az.repositories.SearchRepository
 import com.sportall.az.sources.DefaultLocalDataSource
 import com.sportall.az.sources.LocalDataSource
 import com.sportall.az.domain.usecases.*
+import com.sportall.az.export.BuildExportPayloadUseCase
+import com.sportall.az.export.ExportViewer
+import com.sportall.az.export.PdfExporter
 import org.koin.dsl.module
 
 val appModule = module {
@@ -53,6 +56,9 @@ val appModule = module {
 
     factory { IsFirstLaunchUseCase(get()) }
     factory { CompleteOnboardingUseCase(get()) }
+    single { PdfExporter() }
+    single { ExportViewer() }
+    factory { BuildExportPayloadUseCase(get(), get()) }
 
     factory { com.sportall.az.ui.splash.SplashViewModel(get()) }
     factory { com.sportall.az.ui.onboarding.OnboardingViewModel(get()) }
@@ -61,7 +67,18 @@ val appModule = module {
     factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get(), get()) }
     factory { com.sportall.az.ui.favorites.FavoritesViewModel(get(), get(), get()) }
     factory { com.sportall.az.ui.history.HistoryViewModel(get(), get(), get(), get(), get(), get()) }
-    factory { com.sportall.az.ui.settings.SettingsViewModel(get(), get(), get(), get(), get(), get()) }
+    factory {
+        com.sportall.az.ui.settings.SettingsViewModel(
+            isExportUnlocked = get(),
+            isWipeUnlocked = get(),
+            isExclusiveUnlocked = get(),
+            purchaseUnlock = get(),
+            wipeDataUseCase = get(),
+            buildExportPayloadUseCase = get(),
+            pdfExporter = get(),
+            exportViewer = get()
+        )
+    }
     factory { com.sportall.az.ui.practice.PracticeViewModel(get()) }
 }
 

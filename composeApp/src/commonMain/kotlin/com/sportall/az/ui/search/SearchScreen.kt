@@ -1,5 +1,6 @@
 package com.sportall.az.ui.search
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,12 +13,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.models.Category
 import com.sportall.az.models.Difficulty
 import com.sportall.az.ui.catalog.DrillDetailsScreen
@@ -26,6 +30,7 @@ import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
 import com.sportall.az.ui.theme.Gold
 import com.sportall.az.ui.theme.LimeGreen
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -34,95 +39,120 @@ fun SearchScreen() {
     val state by viewModel.state.collectAsState()
     val navigator = LocalNavigator.currentOrThrow
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        SearchTextField(
-            query = state.query,
-            onQueryChange = { viewModel.onQueryChange(it) },
-            onSearch = { viewModel.submitSearch() },
-            onClear = { viewModel.clearSearch() }
+    LaunchedEffect(navigator.lastEvent) {
+        viewModel.reloadExclusiveState()
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        Image(
+            painter = painterResource(Res.drawable.bg_dark),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(0.dp)
         ) {
-            Text(
-                text = "Categories",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
+
+            SearchTextField(
+                query = state.query,
+                onQueryChange = { viewModel.onQueryChange(it) },
+                onSearch = { viewModel.submitSearch() },
+                onClear = { viewModel.clearSearch() }
             )
 
-            CategoryFilters(
-                selectedCategory = state.selectedCategory,
-                onCategorySelected = { viewModel.selectCategory(it) },
-                onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
 
-            Text(
-                text = "Difficulty",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-
-            DifficultyFilters(
-                selectedDifficulty = state.selectedDifficulty,
-                onDifficultySelected = { viewModel.selectDifficulty(it) },
-                onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) }
-            )
-
-            if (state.history.isNotEmpty() && state.query.isEmpty()) {
                 Text(
-                    text = "Recent queries",
+                    text = "Categories",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
 
-                state.history.forEach { query ->
-                    RecentQueryItem(
-                        query = query,
-                        onQueryClick = { viewModel.selectHistoryQuery(query) },
-                        onRemoveClick = { viewModel.removeHistoryItem(query) }
-                    )
-                }
-            }
+                CategoryFilters(
+                    selectedCategory = state.selectedCategory,
+                    onCategorySelected = { viewModel.selectCategory(it) },
+                    onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) },
+                    isExclusiveUnlocked = state.isExclusiveUnlocked
+                )
 
-            when {
-                state.loading -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(32.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+                Text(
+                    text = "Difficulty",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+
+                DifficultyFilters(
+                    selectedDifficulty = state.selectedDifficulty,
+                    onDifficultySelected = { viewModel.selectDifficulty(it) },
+                    onExclusiveClick = { navigator.push(PaywallScreen(PaywallType.EXCLUSIVE)) },
+                    isExclusiveUnlocked = state.isExclusiveUnlocked
+                )
+
+                if (state.history.isNotEmpty() && state.query.isEmpty()) {
+                    Text(
+                        text = "Recent queries",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+
+                    state.history.forEach { query ->
+                        RecentQueryItem(
+                            query = query,
+                            onQueryClick = { viewModel.selectHistoryQuery(query) },
+                            onRemoveClick = { viewModel.removeHistoryItem(query) }
+                        )
                     }
                 }
-                state.results.isEmpty() && (state.query.isNotEmpty() || state.selectedCategory != null || state.selectedDifficulty != null) -> {
-                    EmptySearchState(
-                        onBackToAll = { viewModel.backToAllDrills() }
-                    )
-                }
-                state.results.isNotEmpty() -> {
-                    DrillsGrid(
-                        drills = state.results,
-                        favorites = state.favorites,
-                        onDrillClick = { drill ->
-                            if (drill.isExclusive && !state.isExclusiveUnlocked) {
-                                navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
-                            } else {
-                                navigator.push(DrillDetailsScreen(drill.id))
-                            }
+
+                when {
+                    state.loading -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(32.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
                         }
-                    )
+                    }
+
+                    state.results.isEmpty() &&
+                            (state.query.isNotEmpty()
+                                    || state.selectedCategory != null
+                                    || state.selectedDifficulty != null) -> {
+
+                        EmptySearchState(
+                            onBackToAll = { viewModel.backToAllDrills() }
+                        )
+                    }
+
+                    state.results.isNotEmpty() -> {
+                        DrillsGrid(
+                            drills = state.results,
+                            favorites = state.favorites,
+                            isExclusiveUnlocked = state.isExclusiveUnlocked,
+                            onDrillClick = { drill ->
+                                if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                                    navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                } else {
+                                    navigator.push(DrillDetailsScreen(drill.id))
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -139,7 +169,7 @@ fun SearchTextField(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
+            .padding(top = 65.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
         shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
         shadowElevation = 2.dp
@@ -202,11 +232,13 @@ fun SearchTextField(
 fun CategoryFilters(
     selectedCategory: Category?,
     onCategorySelected: (Category?) -> Unit,
-    onExclusiveClick: () -> Unit
+    onExclusiveClick: () -> Unit,
+    isExclusiveUnlocked: Boolean
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxWidth()
@@ -220,7 +252,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.WarmUp,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.WarmUp) null else Category.WarmUp)
+                    onCategorySelected(
+                        if (selectedCategory == Category.WarmUp) null else Category.WarmUp
+                    )
                 },
                 label = { Text("Warm-up", color = Color.White) }
             )
@@ -228,7 +262,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Passing,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Passing) null else Category.Passing)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Passing) null else Category.Passing
+                    )
                 },
                 label = { Text("Passing", color = Color.White) }
             )
@@ -236,7 +272,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Dribbling,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Dribbling) null else Category.Dribbling)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Dribbling) null else Category.Dribbling
+                    )
                 },
                 label = { Text("Dribbling", color = Color.White) }
             )
@@ -249,7 +287,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Shooting,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Shooting) null else Category.Shooting)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Shooting) null else Category.Shooting
+                    )
                 },
                 label = { Text("Shooting", color = Color.White) }
             )
@@ -257,7 +297,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Rondo,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Rondo) null else Category.Rondo)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Rondo) null else Category.Rondo
+                    )
                 },
                 label = { Text("Rondo / Possession", color = Color.White) }
             )
@@ -265,7 +307,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Agility,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Agility) null else Category.Agility)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Agility) null else Category.Agility
+                    )
                 },
                 label = { Text("Agility", color = Color.White) }
             )
@@ -278,7 +322,9 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Goalkeeper,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Goalkeeper) null else Category.Goalkeeper)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Goalkeeper) null else Category.Goalkeeper
+                    )
                 },
                 label = { Text("Goalkeeper", color = Color.White) }
             )
@@ -286,26 +332,39 @@ fun CategoryFilters(
             FilterChip(
                 selected = selectedCategory == Category.Recovery,
                 onClick = {
-                    onCategorySelected(if (selectedCategory == Category.Recovery) null else Category.Recovery)
+                    onCategorySelected(
+                        if (selectedCategory == Category.Recovery) null else Category.Recovery
+                    )
                 },
                 label = { Text("Recovery", color = Color.White) }
             )
 
             FilterChip(
-                selected = false,
-                onClick = onExclusiveClick,
+                selected = selectedCategory == Category.Exclusive,
+                onClick = {
+                    if (isExclusiveUnlocked) {
+                        onCategorySelected(
+                            if (selectedCategory == Category.Exclusive) null else Category.Exclusive
+                        )
+                    } else {
+                        onExclusiveClick()
+                    }
+                },
                 label = {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("Exclusive", color = Color.White)
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = Gold
-                        )
+
+                        if (!isExclusiveUnlocked) {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp),
+                                tint = Gold
+                            )
+                        }
                     }
                 }
             )
@@ -317,7 +376,8 @@ fun CategoryFilters(
 fun DifficultyFilters(
     selectedDifficulty: Difficulty?,
     onDifficultySelected: (Difficulty?) -> Unit,
-    onExclusiveClick: () -> Unit
+    onExclusiveClick: () -> Unit,
+    isExclusiveUnlocked: Boolean
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -325,7 +385,9 @@ fun DifficultyFilters(
         FilterChip(
             selected = selectedDifficulty == Difficulty.Easy,
             onClick = {
-                onDifficultySelected(if (selectedDifficulty == Difficulty.Easy) null else Difficulty.Easy)
+                onDifficultySelected(
+                    if (selectedDifficulty == Difficulty.Easy) null else Difficulty.Easy
+                )
             },
             label = { Text("Easy", color = Color.White) }
         )
@@ -333,7 +395,9 @@ fun DifficultyFilters(
         FilterChip(
             selected = selectedDifficulty == Difficulty.Medium,
             onClick = {
-                onDifficultySelected(if (selectedDifficulty == Difficulty.Medium) null else Difficulty.Medium)
+                onDifficultySelected(
+                    if (selectedDifficulty == Difficulty.Medium) null else Difficulty.Medium
+                )
             },
             label = { Text("Medium", color = Color.White) }
         )
@@ -341,26 +405,40 @@ fun DifficultyFilters(
         FilterChip(
             selected = selectedDifficulty == Difficulty.Hard,
             onClick = {
-                onDifficultySelected(if (selectedDifficulty == Difficulty.Hard) null else Difficulty.Hard)
+                onDifficultySelected(
+                    if (selectedDifficulty == Difficulty.Hard) null else Difficulty.Hard
+                )
             },
             label = { Text("Hard", color = Color.White) }
         )
 
         FilterChip(
-            selected = false,
-            onClick = onExclusiveClick,
+            selected = selectedDifficulty == Difficulty.Exclusive,
+            onClick = {
+                if (isExclusiveUnlocked) {
+                    onDifficultySelected(
+                        if (selectedDifficulty == Difficulty.Exclusive)
+                            null else Difficulty.Exclusive
+                    )
+                } else {
+                    onExclusiveClick()
+                }
+            },
             label = {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Exclusive", color = Color.White)
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp),
-                        tint = Gold
-                    )
+
+                    if (!isExclusiveUnlocked) {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = Gold
+                        )
+                    }
                 }
             }
         )

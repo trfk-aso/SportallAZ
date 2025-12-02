@@ -66,6 +66,7 @@ kotlin {
                 implementation(compose.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation("androidx.preference:preference-ktx:1.2.1")
+                implementation("com.android.billingclient:billing-ktx:6.0.1")
 
             }
         }

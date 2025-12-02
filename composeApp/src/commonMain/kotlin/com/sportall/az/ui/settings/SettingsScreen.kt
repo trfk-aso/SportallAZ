@@ -1,5 +1,7 @@
 package com.sportall.az.ui.settings
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,13 +13,21 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -33,57 +43,101 @@ fun SettingsScreen() {
         viewModel.refresh()
     }
 
-    Scaffold(
-        topBar = {
-            SettingsTopBar()
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        Image(
+            painter = painterResource(Res.drawable.bg_dark),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                SettingsTopBar()
+            }
+        ) { paddingValues ->
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .verticalScroll(scrollState)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+
+                LanguageSection()
+
+                DataSection(
+                    exportUnlocked = state.exportUnlocked,
+                    wipeUnlocked = state.wipeUnlocked,
+                    onWipeClick = {
+                        if (state.wipeUnlocked) {
+                            showWipeDialog = true
+                        } else {
+                            navigator.push(PaywallScreen(PaywallType.WIPE))
+                        }
+                    },
+                    onExportClick = {
+                        if (state.exportUnlocked) {
+                            viewModel.exportPdf()
+                        } else {
+                            navigator.push(PaywallScreen(PaywallType.EXPORT))
+                        }
+                    }
+                )
+
+                RestorePurchasesSection(
+                    onRestoreClick = {
+                        viewModel.restorePurchases()
+                    }
+                )
+
+                OtherSection(
+                    onAboutClick = { navigator.push(AboutScreen) },
+                    onRateClick = { /* TODO */ }
+                )
+            }
+
+            if (showWipeDialog) {
+                WipeConfirmationDialog(
+                    onConfirm = {
+                        viewModel.wipeData()
+                        showWipeDialog = false
+                    },
+                    onDismiss = { showWipeDialog = false }
+                )
+            }
         }
-    ) { paddingValues ->
-        Column(
+    }
+}
+
+@Composable
+fun RestorePurchasesSection(onRestoreClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(
+            text = "Restore Purchases",
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .verticalScroll(scrollState)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            LanguageSection()
+                .clickable(onClick = onRestoreClick)
+                .padding(8.dp)
+        )
 
-            DataSection(
-                exportUnlocked = state.exportUnlocked,
-                wipeUnlocked = state.wipeUnlocked,
-                onWipeClick = {
-                    if (state.wipeUnlocked) {
-                        showWipeDialog = true
-                    } else {
-                        navigator.push(PaywallScreen(PaywallType.WIPE))
-                    }
-                },
-                onExportClick = {
-                    if (state.exportUnlocked) {
-                        val data = viewModel.exportData()
-                        // TODO: Save to file / share
-                        println("Exported data: $data")
-                    } else {
-                        navigator.push(PaywallScreen(PaywallType.EXPORT))
-                    }
-                }
-            )
-
-            OtherSection(
-                onAboutClick = { navigator.push(AboutScreen) },
-                onRateClick = { /* TODO: Open app store */ }
-            )
-        }
-
-        if (showWipeDialog) {
-            WipeConfirmationDialog(
-                onConfirm = {
-                    viewModel.wipeData()
-                    showWipeDialog = false
-                },
-                onDismiss = { showWipeDialog = false }
-            )
-        }
+        Divider(
+            color = Color.White.copy(alpha = 0.3f),
+            thickness = 1.dp,
+            modifier = Modifier.padding(horizontal = 32.dp)
+        )
     }
 }
 
@@ -94,13 +148,13 @@ fun SettingsTopBar() {
         title = {
             Text(
                 text = "Settings",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = com.sportall.az.ui.theme.DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }
@@ -150,7 +204,7 @@ fun DataSection(
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (wipeUnlocked) {
-                    Color(0xFFFF6B6B)
+                    Color(0xFFFF3A3A)
                 } else {
                     Color(0xFF8B0000).copy(alpha = 0.7f)
                 }
@@ -283,47 +337,84 @@ fun WipeConfirmationDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = "Wipe data (IAP)",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        text = {
-            Text(
-                text = "You are about to wipe all training history. Continue?",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        },
-        confirmButton = {
-            Button(
-                onClick = onConfirm,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF6B6B)
+    Dialog(onDismissRequest = onDismiss) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF345DED),
+                            Color(0xFF0E1E63)
+                        )
+                    ),
+                    shape = RoundedCornerShape(26.dp)
                 )
+                .padding(24.dp)
+        ) {
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
+
                 Text(
-                    text = "Wipe",
+                    text = "Wipe data (IAP)",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    textAlign = TextAlign.Center
                 )
-            }
-        },
-        dismissButton = {
-            Button(
-                onClick = onDismiss,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray.copy(alpha = 0.3f)
-                )
-            ) {
+
                 Text(
-                    text = "Cancel",
-                    fontWeight = FontWeight.Medium
+                    text = "You are about to wipe all training history.\nContinue?",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xCCFFFFFF),
+                    textAlign = TextAlign.Center
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+
+                    Button(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0x668A96B0)
+                        ),
+                        shape = RoundedCornerShape(14.dp),
+                        contentPadding = PaddingValues(vertical = 14.dp)
+                    ) {
+                        Text(
+                            text = "Cancel",
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        )
+                    }
+
+                    Button(
+                        onClick = onConfirm,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF3A3A)
+                        ),
+                        shape = RoundedCornerShape(14.dp),
+                        contentPadding = PaddingValues(vertical = 14.dp)
+                    ) {
+                        Text(
+                            text = "Wipe",
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
-    )
+    }
 }

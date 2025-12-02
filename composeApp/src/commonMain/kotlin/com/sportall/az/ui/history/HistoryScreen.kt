@@ -1,5 +1,6 @@
 package com.sportall.az.ui.history
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,18 +14,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 data object HistoryScreen : Screen {
@@ -39,85 +44,96 @@ data object HistoryScreen : Screen {
             viewModel.load()
         }
 
-        Scaffold(
-            topBar = {
-                HistoryTopBar(
-                    onStatsClick = { navigator.push(com.sportall.az.ui.history.StatisticsScreen) }
-                )
-            }
-        ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                when {
-                    state.loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    state.error != null -> {
-                        ErrorState(
-                            message = state.error ?: "Unknown error",
-                            onRetry = { viewModel.load() },
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    state.groupedHistory.today.isEmpty() &&
-                    state.groupedHistory.yesterday.isEmpty() &&
-                    state.groupedHistory.earlier.isEmpty() -> {
-                        EmptyHistoryState(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    else -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 16.dp,
-                                    bottom = 96.dp
-                                ),
-                            verticalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                            if (state.groupedHistory.today.isNotEmpty()) {
-                                HistorySection(
-                                    title = "Today",
-                                    items = state.groupedHistory.today,
-                                    onItemClick = { item ->
-                                        item.drill?.let {
-                                            navigator.push(DrillDetailsScreen(it.id))
-                                        }
-                                    }
-                                )
-                            }
+        Box(modifier = Modifier.fillMaxSize()) {
 
-                            if (state.groupedHistory.yesterday.isNotEmpty()) {
-                                HistorySection(
-                                    title = "Yesterday",
-                                    items = state.groupedHistory.yesterday,
-                                    onItemClick = { item ->
-                                        item.drill?.let {
-                                            navigator.push(DrillDetailsScreen(it.id))
-                                        }
-                                    }
-                                )
-                            }
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
 
-                            if (state.groupedHistory.earlier.isNotEmpty()) {
-                                HistorySection(
-                                    title = "Earlier",
-                                    items = state.groupedHistory.earlier,
-                                    onItemClick = { item ->
-                                        item.drill?.let {
-                                            navigator.push(DrillDetailsScreen(it.id))
+            Scaffold(
+                topBar = {
+                    HistoryTopBar(
+                        onStatsClick = { navigator.push(com.sportall.az.ui.history.StatisticsScreen) }
+                    )
+                },
+                containerColor = Color.Transparent
+            ) { paddingValues ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) {
+                    when {
+                        state.loading -> {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        state.error != null -> {
+                            ErrorState(
+                                message = state.error ?: "Unknown error",
+                                onRetry = { viewModel.load() },
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        state.groupedHistory.today.isEmpty() &&
+                                state.groupedHistory.yesterday.isEmpty() &&
+                                state.groupedHistory.earlier.isEmpty() -> {
+                            EmptyHistoryState(
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        else -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(rememberScrollState())
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        top = 16.dp,
+                                        bottom = 96.dp
+                                    ),
+                                verticalArrangement = Arrangement.spacedBy(24.dp)
+                            ) {
+                                if (state.groupedHistory.today.isNotEmpty()) {
+                                    HistorySection(
+                                        title = "Today",
+                                        items = state.groupedHistory.today,
+                                        onItemClick = { item ->
+                                            item.drill?.let {
+                                                navigator.push(DrillDetailsScreen(it.id))
+                                            }
                                         }
-                                    }
-                                )
+                                    )
+                                }
+
+                                if (state.groupedHistory.yesterday.isNotEmpty()) {
+                                    HistorySection(
+                                        title = "Yesterday",
+                                        items = state.groupedHistory.yesterday,
+                                        onItemClick = { item ->
+                                            item.drill?.let {
+                                                navigator.push(DrillDetailsScreen(it.id))
+                                            }
+                                        }
+                                    )
+                                }
+
+                                if (state.groupedHistory.earlier.isNotEmpty()) {
+                                    HistorySection(
+                                        title = "Earlier",
+                                        items = state.groupedHistory.earlier,
+                                        onItemClick = { item ->
+                                            item.drill?.let {
+                                                navigator.push(DrillDetailsScreen(it.id))
+                                            }
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -149,7 +165,7 @@ fun HistoryTopBar(onStatsClick: () -> Unit) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = com.sportall.az.ui.theme.DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }
@@ -276,7 +292,7 @@ fun EmptyHistoryState(modifier: Modifier = Modifier) {
             imageVector = Icons.Default.History,
             contentDescription = null,
             modifier = Modifier.size(80.dp),
-            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+            tint = Color.White
         )
 
         Spacer(modifier = Modifier.height(16.dp))

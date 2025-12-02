@@ -19,6 +19,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.domain.usecases.PurchaseUnlockUseCase
+import com.sportall.az.iap.IAPProductIds
+import com.sportall.az.iap.ProcessingPurchaseScreen
+import com.sportall.az.iap.createIAPManager
 import org.koin.compose.koinInject
 
 enum class PaywallType {
@@ -154,12 +157,11 @@ data class PaywallScreen(val type: PaywallType) : Screen {
 
                 Button(
                     onClick = {
-                        when (type) {
-                            PaywallType.EXCLUSIVE -> purchaseUnlock.unlockExclusive()
-                            PaywallType.EXPORT -> purchaseUnlock.unlockExport()
-                            PaywallType.WIPE -> purchaseUnlock.unlockWipe()
-                        }
-                        navigator.pop()
+                        val iap = createIAPManager()
+
+                        val productId = IAPProductIds.fromPaywall(type)
+
+                        navigator.push(ProcessingPurchaseScreen(productId))
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),

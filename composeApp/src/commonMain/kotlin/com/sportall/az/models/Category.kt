@@ -9,6 +9,7 @@ enum class Category(val displayName: String) {
     Agility("Agility"),
     Goalkeeper("Goalkeeper"),
     TeamGames("Team Games"),
-    Recovery("Recovery")
+    Recovery("Recovery"),
+    Exclusive("Exclusive")
 }
 

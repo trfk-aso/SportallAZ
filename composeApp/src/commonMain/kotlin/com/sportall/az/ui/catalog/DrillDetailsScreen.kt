@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.models.Drill
 import com.sportall.az.ui.practice.PracticeScreen
 import com.sportall.az.ui.paywall.PaywallScreen
@@ -47,43 +49,54 @@ data class DrillDetailsScreen(val drillId: Int) : Screen {
             viewModel.load(drillId)
         }
 
-        Scaffold(
-            topBar = {
-                DrillDetailsTopBar(
-                    drillName = state.drill?.name ?: "",
-                    isFavorite = state.isFavorite,
-                    onBackClick = { navigator.pop() },
-                    onFavoriteClick = { viewModel.toggleFavorite() }
-                )
-            }
-        ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                when {
-                    state.loading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    state.error != null -> {
-                        ErrorState(
-                            message = state.error ?: "Unknown error",
-                            onRetry = { viewModel.load(drillId) },
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    state.drill != null -> {
-                        DrillDetailsContent(
-                            drill = state.drill!!,
-                            state = state,
-                            onMarkAsDone = { rating ->
-                                viewModel.completeWithRating(rating)
-                                navigator.pop()
-                            }
-                        )
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Scaffold(
+                topBar = {
+                    DrillDetailsTopBar(
+                        drillName = state.drill?.name ?: "",
+                        isFavorite = state.isFavorite,
+                        onBackClick = { navigator.pop() },
+                        onFavoriteClick = { viewModel.toggleFavorite() }
+                    )
+                },
+                containerColor = Color.Transparent
+            ) { paddingValues ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                ) {
+                    when {
+                        state.loading -> {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        state.error != null -> {
+                            ErrorState(
+                                message = state.error ?: "Unknown error",
+                                onRetry = { viewModel.load(drillId) },
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        state.drill != null -> {
+                            DrillDetailsContent(
+                                drill = state.drill!!,
+                                state = state,
+                                onMarkAsDone = { rating ->
+                                    viewModel.completeWithRating(rating)
+                                    navigator.pop()
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -103,7 +116,7 @@ fun DrillDetailsTopBar(
         title = {
             Text(
                 text = drillName,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
@@ -127,7 +140,7 @@ fun DrillDetailsTopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }
@@ -208,18 +221,6 @@ fun DrillDetailsContent(
                             modifier = Modifier.padding(16.dp)
                         )
                     }
-                }
-
-                if (drill.isExclusive) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Exclusive",
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(12.dp)
-                            .size(24.dp),
-                        tint = Color(0xFF8B7500)
-                    )
                 }
             }
 

@@ -1798,5 +1798,144 @@
     "recommendation": "Core strength to finish",
     "isExclusive": false,
     "imageResourceName": "drill_50"
+  },
+  {
+    "id": 51,
+    "name": "Exclusive – Golden First Touch Box",
+    "category": "Exclusive",
+    "difficulty": "Easy",
+    "estimatedTime": 8,
+    "setup": [
+      "Create a 10x10 meter square",
+      "Place 4 cones in the corners",
+      "Player starts in the center with ball"
+    ],
+    "execution": [
+      "Coach points to a random corner",
+      "Player takes one perfect first touch into that corner",
+      "Dribble around the cone and return to the center",
+      "Repeat with different corners"
+    ],
+    "coachingPoints": [
+      "Soft first touch",
+      "Open body when receiving",
+      "Accelerate after the touch"
+    ],
+    "visualDescription": "Square with player receiving and touching toward corners",
+    "steps": ["Receive", "Touch", "Accelerate"],
+    "recommendation": "Perfect for warm-up control",
+    "isExclusive": true,
+    "imageResourceName": "drill_51"
+  },
+  {
+    "id": 52,
+    "name": "Exclusive – Elite Dribble Gates",
+    "category": "Exclusive",
+    "difficulty": "Medium",
+    "estimatedTime": 12,
+    "setup": [
+      "Place 8–10 small gates randomly",
+      "Each gate 1–2 meters wide",
+      "Player dribbles freely"
+    ],
+    "execution": [
+      "Player must dribble through as many gates as possible",
+      "Use different turns at each gate",
+      "Change pace often",
+      "30-second intervals with rest"
+    ],
+    "coachingPoints": [
+      "Touch every step",
+      "Keep head up",
+      "Explode after each gate"
+    ],
+    "visualDescription": "Many dribble gates scattered",
+    "steps": ["Dribble", "Turn", "Explode"],
+    "recommendation": "Dribbling intensity training",
+    "isExclusive": true,
+    "imageResourceName": "drill_52"
+  },
+  {
+    "id": 53,
+    "name": "Exclusive – Two-Goal Chaos Mini Game",
+    "category": "Exclusive",
+    "difficulty": "Hard",
+    "estimatedTime": 15,
+    "setup": [
+      "Two mini goals, one on each side",
+      "3v3 or 4v4",
+      "Both goals are active"
+    ],
+    "execution": [
+      "Teams attack any goal",
+      "Immediate transition when losing the ball",
+      "Play with high intensity",
+      "Rotate every 4 minutes"
+    ],
+    "coachingPoints": [
+      "Fast transition decisions",
+      "Compact shape when defending",
+      "Quick finishing"
+    ],
+    "visualDescription": "Two goals on opposite sides",
+    "steps": ["Attack", "Transition", "Defend"],
+    "recommendation": "Very game-like and intense",
+    "isExclusive": true,
+    "imageResourceName": "drill_53"
+  },
+  {
+    "id": 54,
+    "name": "Exclusive – Pro Triangle Passing Circuit",
+    "category": "Exclusive",
+    "difficulty": "Medium",
+    "estimatedTime": 10,
+    "setup": [
+      "Create a triangle of 8 meters each side",
+      "Player at each cone"
+    ],
+    "execution": [
+      "One-touch passing around the triangle",
+      "Switch directions on coach signal",
+      "Add bounce passes",
+      "Add third-man runs"
+    ],
+    "coachingPoints": [
+      "Body orientation",
+      "Communication",
+      "One-touch rhythm"
+    ],
+    "visualDescription": "Triangle with players passing",
+    "steps": ["Pass", "Move", "Rotate"],
+    "recommendation": "For advanced technical groups",
+    "isExclusive": true,
+    "imageResourceName": "drill_54"
+  },
+  {
+    "id": 55,
+    "name": "Exclusive – Finishing Under Pressure",
+    "category": "Exclusive",
+    "difficulty": "Hard",
+    "estimatedTime": 12,
+    "setup": [
+      "One goal, goalkeeper",
+      "Cone at 20 meters",
+      "Defender starts behind attacker"
+    ],
+    "execution": [
+      "Coach plays ball to attacker",
+      "Defender chases immediately",
+      "Attacker must finish quickly",
+      "Repeat from different angles"
+    ],
+    "coachingPoints": [
+      "Quick decision before defender catches",
+      "Shoot low and early",
+      "Use weak foot sometimes"
+    ],
+    "visualDescription": "Attacker sprinting while defender chases",
+    "steps": ["Sprint", "Control", "Finish"],
+    "recommendation": "Great realism and pressure",
+    "isExclusive": true,
+    "imageResourceName": "drill_55"
   }
 ]

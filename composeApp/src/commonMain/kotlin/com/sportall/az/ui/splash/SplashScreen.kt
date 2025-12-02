@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sportall.az.generated.resources.Res
@@ -17,6 +18,7 @@ import org.jetbrains.compose.resources.painterResource
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.ui.MainTabsScreen
 import com.sportall.az.ui.onboarding.OnboardingScreen
 import com.sportall.az.ui.theme.DeepBlue
@@ -39,26 +41,36 @@ data object SplashScreen : Screen {
             }
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(DeepBlue),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(Res.drawable.logo_sportall),
-                    contentDescription = "Sportall AZ Logo",
-                    modifier = Modifier.height(450.dp)
-                )
-                Text(
-                    text = "50 offline football drills",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = LimeGreen
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Image(
+                        painter = painterResource(Res.drawable.logo_sportall),
+                        contentDescription = "Sportall AZ Logo",
+                        modifier = Modifier.height(450.dp)
+                    )
+
+                    Text(
+                        text = "50 offline football drills",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = LimeGreen
+                    )
+                }
             }
         }
     }

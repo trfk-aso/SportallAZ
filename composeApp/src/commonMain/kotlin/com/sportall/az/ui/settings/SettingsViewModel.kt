@@ -7,8 +7,15 @@ import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.PurchaseUnlockUseCase
 import com.sportall.az.domain.usecases.WipeDataUseCase
 import com.sportall.az.domain.usecases.ExportDataUseCase
+import com.sportall.az.export.BuildExportPayloadUseCase
+import com.sportall.az.export.ExportResult
+import com.sportall.az.export.ExportViewer
+import com.sportall.az.export.PdfExporter
+import com.sportall.az.iap.PurchaseResult
+import com.sportall.az.iap.createIAPManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 data class SettingsState(
     val exportUnlocked: Boolean = false,
@@ -22,7 +29,9 @@ class SettingsViewModel(
     private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase,
     private val purchaseUnlock: PurchaseUnlockUseCase,
     private val wipeDataUseCase: WipeDataUseCase,
-    private val exportDataUseCase: ExportDataUseCase
+    private val buildExportPayloadUseCase: BuildExportPayloadUseCase,
+    private val pdfExporter: PdfExporter,
+    private val exportViewer: ExportViewer
 ) : BaseViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -55,7 +64,28 @@ class SettingsViewModel(
         wipeDataUseCase()
     }
 
-    fun exportData(): String {
-        return exportDataUseCase()
+    fun restorePurchases() {
+        viewModelScope.launch {
+            val iap = createIAPManager()
+            val result = iap.restorePurchases()
+
+            when (result) {
+                is PurchaseResult.Success -> {
+                    println("Purchases restored!")
+                }
+                is PurchaseResult.Error -> println("Restore error: ${result.message}")
+                is PurchaseResult.Cancelled -> println("Restore cancelled")
+            }
+        }
+    }
+
+    fun exportPdf() {
+        viewModelScope.launch {
+            val payload = buildExportPayloadUseCase()
+            when (val result = pdfExporter.export(payload)) {
+                is ExportResult.Ok -> exportViewer.view(result.location)
+                is ExportResult.Error -> println("Export error: ${result.message}")
+            }
+        }
     }
 }

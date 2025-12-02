@@ -1,5 +1,6 @@
 package com.sportall.az.ui.favorites
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -10,17 +11,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.models.Category
 import com.sportall.az.ui.catalog.DrillDetailsScreen
 import com.sportall.az.ui.home.CategoryChips
 import com.sportall.az.ui.home.DrillsGrid
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -43,72 +48,85 @@ fun FavoritesScreen() {
 
     val availableCategories = state.drills.map { it.category }.distinct()
 
-    Scaffold(
-        topBar = {
-            FavoritesTopBar()
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when {
-                state.loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                state.error != null -> {
-                    ErrorState(
-                        message = state.error ?: "Unknown error",
-                        onRetry = { viewModel.load() },
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                state.drills.isEmpty() -> {
-                    EmptyFavoritesState(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                else -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        if (availableCategories.isNotEmpty()) {
-                            CategoryChips(
-                                categories = availableCategories,
-                                selectedCategory = selectedCategory,
-                                onCategorySelected = { selectedCategory = it }
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
+    Box(modifier = Modifier.fillMaxSize()) {
 
-                        if (filteredDrills.isEmpty()) {
-                            Text(
-                                text = "No drills in this category",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(32.dp),
-                                textAlign = TextAlign.Center
-                            )
-                        } else {
-                            DrillsGrid(
-                                drills = filteredDrills,
-                                favorites = state.drills.map { it.id }.toSet(),
-                                onDrillClick = { drill ->
-                                    if (drill.isExclusive && !state.isExclusiveUnlocked) {
-                                        navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
-                                    } else {
-                                        navigator.push(DrillDetailsScreen(drill.id))
-                                    }
-                                },
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .fillMaxWidth()
-                            )
+        Image(
+            painter = painterResource(Res.drawable.bg_dark),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Scaffold(
+            topBar = {
+                FavoritesTopBar()
+            },
+            containerColor = Color.Transparent
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                when {
+                    state.loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    state.error != null -> {
+                        ErrorState(
+                            message = state.error ?: "Unknown error",
+                            onRetry = { viewModel.load() },
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    state.drills.isEmpty() -> {
+                        EmptyFavoritesState(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    else -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            if (availableCategories.isNotEmpty()) {
+                                CategoryChips(
+                                    categories = availableCategories,
+                                    selectedCategory = selectedCategory,
+                                    onCategorySelected = { selectedCategory = it },
+                                    isExclusiveUnlocked = state.isExclusiveUnlocked
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                            }
+
+                            if (filteredDrills.isEmpty()) {
+                                Text(
+                                    text = "No drills in this category",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(32.dp),
+                                    textAlign = TextAlign.Center
+                                )
+                            } else {
+                                DrillsGrid(
+                                    drills = filteredDrills,
+                                    favorites = state.drills.map { it.id }.toSet(),
+                                    isExclusiveUnlocked = state.isExclusiveUnlocked,
+                                    onDrillClick = { drill ->
+                                        if (drill.isExclusive && !state.isExclusiveUnlocked) {
+                                            navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                        } else {
+                                            navigator.push(DrillDetailsScreen(drill.id))
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
@@ -124,13 +142,13 @@ fun FavoritesTopBar() {
         title = {
             Text(
                 text = "Favorites",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = com.sportall.az.ui.theme.DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }
@@ -157,27 +175,6 @@ fun EmptyFavoritesState(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-                tint = Color(0xFFFFD700)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "Add to Favorites.",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-        }
     }
 }
 

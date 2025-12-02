@@ -1,5 +1,6 @@
 package com.sportall.az.ui.practice
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,12 +16,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.models.Drill
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 data class PracticeScreen(val drill: Drill) : Screen {
@@ -36,75 +41,88 @@ data class PracticeScreen(val drill: Drill) : Screen {
             viewModel.initialize(drill.id)
         }
 
-        Scaffold(
-            topBar = {
-                PracticeTopBar(
-                    drillName = drill.name,
-                    onBackClick = { navigator.pop() }
-                )
-            }
-        ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                Column(
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    PracticeTopBar(
+                        drillName = drill.name,
+                        onBackClick = { navigator.pop() }
+                    )
+                }
+            ) { paddingValues ->
+
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(paddingValues)
                 ) {
+
                     Column(
-                        modifier = Modifier
-                            .verticalScroll(scrollState)
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(24.dp)
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        DurationSelection(
-                            selectedDuration = state.selectedDurationMinutes,
-                            onDurationSelected = { viewModel.selectDuration(it) },
-                            enabled = state.timerState == TimerState.IDLE
-                        )
 
-                        TimerDisplay(
-                            remainingSeconds = state.remainingSeconds,
-                            timerState = state.timerState,
-                            onStartClick = { viewModel.startTimer() },
-                            onPauseClick = { viewModel.pauseTimer() },
-                            onResumeClick = { viewModel.resumeTimer() }
-                        )
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(scrollState)
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(24.dp)
+                        ) {
+                            DurationSelection(
+                                selectedDuration = state.selectedDurationMinutes,
+                                onDurationSelected = { viewModel.selectDuration(it) },
+                                enabled = state.timerState == TimerState.IDLE
+                            )
 
-                        ShortSteps(drill = drill)
+                            TimerDisplay(
+                                remainingSeconds = state.remainingSeconds,
+                                timerState = state.timerState,
+                                onStartClick = { viewModel.startTimer() },
+                                onPauseClick = { viewModel.pauseTimer() },
+                                onResumeClick = { viewModel.resumeTimer() }
+                            )
+
+                            ShortSteps(drill = drill)
+                        }
+
+                        Button(
+                            onClick = { viewModel.completePractice() },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(bottom = 16.dp, top = 8.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB4FF39)
+                            )
+                        ) {
+                            Text(
+                                text = "Done",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier.padding(vertical = 8.dp)
+                            )
+                        }
                     }
 
-                    Button(
-                        onClick = { viewModel.completePractice() },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 16.dp, top = 8.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFB4FF39)
-                        )
-                    ) {
-                        Text(
-                            text = "Done",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black,
-                            modifier = Modifier.padding(vertical = 8.dp)
+                    if (state.showRatingDialog) {
+                        RatingDialog(
+                            onSave = { rating ->
+                                viewModel.saveToHistory(rating)
+                                navigator.pop()
+                            },
+                            onCancel = { viewModel.cancelRating() }
                         )
                     }
-                }
-
-                if (state.showRatingDialog) {
-                    RatingDialog(
-                        onSave = { rating ->
-                            viewModel.saveToHistory(rating)
-                            navigator.pop()
-                        },
-                        onCancel = { viewModel.cancelRating() }
-                    )
                 }
             }
         }
@@ -121,7 +139,7 @@ fun PracticeTopBar(
         title = {
             Text(
                 text = drillName,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
         },
@@ -129,7 +147,10 @@ fun PracticeTopBar(
             IconButton(onClick = onBackClick) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        )
     )
 }
 

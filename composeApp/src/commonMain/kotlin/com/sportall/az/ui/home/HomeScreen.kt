@@ -40,6 +40,8 @@ import com.sportall.az.ui.theme.Gold
 import com.sportall.az.ui.utils.getDrillImageResource
 import org.koin.compose.koinInject
 import androidx.compose.ui.layout.ContentScale
+import com.sportall.az.generated.resources.bg_dark
+import com.sportall.az.ui.theme.LimeGreen
 
 @Composable
 fun HomeScreen() {
@@ -54,102 +56,116 @@ fun HomeScreen() {
         viewModel.refresh()
     }
 
-    Scaffold(
-        topBar = {
-            HomeTopBar(
-                onSearchClick = { tabNavigator.current = SearchTab },
-                onSettingsClick = { tabNavigator.current = SettingsTab }
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when {
-                state.loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                state.error != null -> {
-                    ErrorState(
-                        message = state.error ?: "Unknown error",
-                        onRetry = { viewModel.refresh() },
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                else -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        if (state.stats != null && state.stats!!.mostUsed.isNotEmpty()) {
-                            val lastDrillId = state.stats!!.mostUsed.first().drillId
-                            val lastDrill = state.drills.firstOrNull { it.id == lastDrillId }
-                            if (lastDrill != null) {
-                                ContinueCard(
-                                    drill = lastDrill,
-                                    onClick = {
-                                        if (lastDrill.isExclusive && !state.isExclusiveUnlocked) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(Res.drawable.bg_dark),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Scaffold(
+            topBar = {
+                HomeTopBar(
+                    onSearchClick = { tabNavigator.current = SearchTab },
+                    onSettingsClick = { tabNavigator.current = SettingsTab }
+                )
+            },
+            containerColor = Color.Transparent
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                when {
+                    state.loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    state.error != null -> {
+                        ErrorState(
+                            message = state.error ?: "Unknown error",
+                            onRetry = { viewModel.refresh() },
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                    else -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            if (state.stats != null && state.stats!!.mostUsed.isNotEmpty()) {
+                                val lastDrillId = state.stats!!.mostUsed.first().drillId
+                                val lastDrill = state.drills.firstOrNull { it.id == lastDrillId }
+                                if (lastDrill != null) {
+                                    ContinueCard(
+                                        drill = lastDrill,
+                                        onClick = {
+                                            if (lastDrill.isExclusive && !state.isExclusiveUnlocked) {
+                                                navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                                            } else {
+                                                navigator.push(DrillDetailsScreen(lastDrill.id))
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+
+                            Text(
+                                text = "Categories",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
+                            )
+
+                            CategoryChips(
+                                categories = state.categories,
+                                selectedCategory = selectedCategory,
+                                onCategorySelected = { category ->
+                                    selectedCategory = category
+                                    viewModel.filterByCategory(category)
+                                },
+                                isExclusiveUnlocked = state.isExclusiveUnlocked
+                            )
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Text(
+                                text = "Featured / Popular drills",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp)
+                            )
+
+                            if (state.drills.isEmpty()) {
+                                EmptyState(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
+                                        .padding(32.dp)
+                                )
+                            } else {
+                                DrillsGrid(
+                                    drills = state.drills,
+                                    favorites = state.favorites,
+                                    isExclusiveUnlocked = state.isExclusiveUnlocked,
+                                    onDrillClick = { drill ->
+                                        if (drill.isExclusive && !state.isExclusiveUnlocked) {
                                             navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
                                         } else {
-                                            navigator.push(DrillDetailsScreen(lastDrill.id))
+                                            navigator.push(DrillDetailsScreen(drill.id))
                                         }
-                                    }
+                                    },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .fillMaxWidth()
                                 )
                             }
-                        }
-
-                        Text(
-                            text = "Categories",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 12.dp)
-                        )
-
-                        CategoryChips(
-                            categories = state.categories,
-                            selectedCategory = selectedCategory,
-                            onCategorySelected = { category ->
-                                selectedCategory = category
-                                viewModel.filterByCategory(category)
-                            }
-                        )
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Text(
-                            text = "Featured / Popular drills",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp)
-                        )
-
-                        if (state.drills.isEmpty()) {
-                            EmptyState(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .fillMaxWidth()
-                                    .padding(32.dp)
-                            )
-                        } else {
-                            DrillsGrid(
-                                drills = state.drills,
-                                favorites = state.favorites,
-                                onDrillClick = { drill ->
-                                    if (drill.isExclusive && !state.isExclusiveUnlocked) {
-                                        navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
-                                    } else {
-                                        navigator.push(DrillDetailsScreen(drill.id))
-                                    }
-                                },
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .fillMaxWidth()
-                            )
                         }
                     }
                 }
@@ -197,7 +213,7 @@ fun HomeTopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = com.sportall.az.ui.theme.DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }
@@ -326,8 +342,13 @@ fun ContinueCard(
 fun CategoryChips(
     categories: List<Category>,
     selectedCategory: Category?,
-    onCategorySelected: (Category?) -> Unit
+    onCategorySelected: (Category?) -> Unit,
+    isExclusiveUnlocked: Boolean
 ) {
+    val sortedCategories = remember(categories) {
+        categories.sortedByDescending { it == Category.Exclusive }
+    }
+
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -339,7 +360,7 @@ fun CategoryChips(
                 onClick = { onCategorySelected(null) },
                 label = { Text("All") },
                 colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = com.sportall.az.ui.theme.LimeGreen,
+                    selectedContainerColor = LimeGreen,
                     selectedLabelColor = Color.Black,
                     containerColor = Color.Transparent,
                     labelColor = Color.White
@@ -347,20 +368,29 @@ fun CategoryChips(
             )
         }
 
-        items(categories) { category ->
+        items(sortedCategories) { category ->
+            val showLock = category == Category.Exclusive && !isExclusiveUnlocked
+
             FilterChip(
                 selected = selectedCategory == category,
                 onClick = { onCategorySelected(category) },
                 label = { Text(category.displayName) },
-                leadingIcon = if (category.displayName == "Exclusive") {
-                    { Icon(Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(16.dp)) }
+                leadingIcon = if (showLock) {
+                    {
+                        Icon(
+                            Icons.Default.Lock,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = Gold
+                        )
+                    }
                 } else null,
                 colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = com.sportall.az.ui.theme.LimeGreen,
+                    selectedContainerColor = LimeGreen,
                     selectedLabelColor = Color.Black,
                     containerColor = Color.Transparent,
                     labelColor = Color.White,
-                    iconColor = if (category.displayName == "Exclusive") com.sportall.az.ui.theme.Gold else Color.White
+                    iconColor = if (showLock) Gold else Color.White
                 )
             )
         }
@@ -371,6 +401,7 @@ fun CategoryChips(
 fun DrillsGrid(
     drills: List<Drill>,
     favorites: Set<Int>,
+    isExclusiveUnlocked: Boolean,
     onDrillClick: (Drill) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -385,6 +416,7 @@ fun DrillsGrid(
             DrillCard(
                 drill = drill,
                 isFavorite = drill.id in favorites,
+                isExclusiveUnlocked = isExclusiveUnlocked,
                 onClick = { onDrillClick(drill) }
             )
         }
@@ -395,6 +427,7 @@ fun DrillsGrid(
 fun DrillCard(
     drill: Drill,
     isFavorite: Boolean,
+    isExclusiveUnlocked: Boolean,
     onClick: () -> Unit
 ) {
     Card(
@@ -410,6 +443,7 @@ fun DrillCard(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -417,6 +451,7 @@ fun DrillCard(
                 contentAlignment = Alignment.Center
             ) {
                 val imageResource = getDrillImageResource(drill.id)
+
                 if (imageResource != null) {
                     Image(
                         painter = painterResource(imageResource),
@@ -424,26 +459,13 @@ fun DrillCard(
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
                     )
-
-                    // Overlay for exclusive drills
-                    if (drill.isExclusive) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Gold.copy(alpha = 0.3f))
-                        )
-                    }
                 } else {
-                    // Fallback to text if image not found
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(
-                                color = if (drill.isExclusive) {
-                                    Gold.copy(alpha = 0.4f)
-                                } else {
-                                    DrillCardBlue
-                                }
+                                if (drill.isExclusive) Gold.copy(alpha = 0.4f)
+                                else DrillCardBlue
                             ),
                         contentAlignment = Alignment.Center
                     ) {
@@ -458,7 +480,14 @@ fun DrillCard(
                     }
                 }
 
-                if (drill.isExclusive) {
+                if (drill.isExclusive && !isExclusiveUnlocked) {
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Gold.copy(alpha = 0.3f))
+                    )
+
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = "Exclusive",
@@ -473,11 +502,11 @@ fun DrillCard(
                 Icon(
                     imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",
-                    tint = if (isFavorite) Gold else Color.White.copy(alpha = 0.7f),
+                    tint = if (isFavorite) Gold else Color.Black.copy(alpha = 0.7f),
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(10.dp)
-                        .size(20.dp)
+                        .size(32.dp)
                 )
             }
 
@@ -505,7 +534,7 @@ fun DrillCard(
                     },
                     modifier = Modifier.height(26.dp),
                     colors = AssistChipDefaults.assistChipColors(
-                        containerColor = com.sportall.az.ui.theme.DrillCardBlue,
+                        containerColor = DrillCardBlue,
                         labelColor = Color.White
                     )
                 )

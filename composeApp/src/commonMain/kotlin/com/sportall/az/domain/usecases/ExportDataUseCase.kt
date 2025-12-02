@@ -24,3 +24,4 @@ class ExportDataUseCase(
         return json.encodeToString(ExportData.serializer(), data)
     }
 }
+

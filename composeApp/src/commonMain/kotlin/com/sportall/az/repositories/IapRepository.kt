@@ -21,12 +21,21 @@ class DefaultIapRepository(
 
     override fun unlockWipe() { prefs.putBoolean(keyWipe, true) }
 
-    override fun unlockExclusive() { prefs.putBoolean(keyExclusive, true) }
+    override fun unlockExclusive() {
+        println("SAVE_EXCLUSIVE: saving true")
+        prefs.putBoolean(keyExclusive, true)
+        println("CHECK_EXCLUSIVE_AFTER_SAVE: " + prefs.getBoolean(keyExclusive))
+    }
 
     override fun isExportUnlocked(): Boolean = prefs.getBoolean(keyExport)
 
     override fun isWipeUnlocked(): Boolean = prefs.getBoolean(keyWipe)
 
-    override fun isExclusiveUnlocked(): Boolean = prefs.getBoolean(keyExclusive)
+    override fun isExclusiveUnlocked(): Boolean {
+        val value = prefs.getBoolean(keyExclusive)
+        println("READ_EXCLUSIVE: $value")
+        return value
+    }
 }
+
 

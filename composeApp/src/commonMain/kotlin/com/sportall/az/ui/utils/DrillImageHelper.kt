@@ -58,5 +58,10 @@ fun getDrillImageResource(drillId: Int): DrawableResource? = when(drillId) {
     48 -> Res.drawable.drill_48
     49 -> Res.drawable.drill_49
     50 -> Res.drawable.drill_50
+    51 -> Res.drawable.drill_51
+    52 -> Res.drawable.drill_52
+    53 -> Res.drawable.drill_53
+    54 -> Res.drawable.drill_54
+    55 -> Res.drawable.drill_55
     else -> null
 }

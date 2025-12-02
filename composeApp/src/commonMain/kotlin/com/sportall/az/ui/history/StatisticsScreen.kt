@@ -1,5 +1,6 @@
 package com.sportall.az.ui.history
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -20,7 +22,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.domain.usecases.DrillUsageStats
 import com.sportall.az.domain.usecases.TimeFilter
+import com.sportall.az.generated.resources.Res
+import com.sportall.az.generated.resources.bg_dark
 import com.sportall.az.models.Category
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
 data object StatisticsScreen : Screen {
@@ -41,55 +46,70 @@ fun StatisticsScreenContent() {
         viewModel.loadStatistics()
     }
 
-    Scaffold(
-        topBar = {
-            StatisticsTopBar(
-                onBackClick = { navigator.pop() }
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when {
-                state.loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                state.error != null -> {
-                    ErrorState(
-                        message = state.error ?: "Unknown error",
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                state.statistics != null -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(scrollState)
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
-                    ) {
-                        TimeFilterChips(
-                            selectedFilter = state.selectedFilter,
-                            onFilterSelected = { viewModel.setTimeFilter(it) }
-                        )
+    Box(modifier = Modifier.fillMaxSize()) {
 
-                        SummaryCards(
-                            totalDrills = state.statistics!!.total,
-                            avgRating = state.statistics!!.avgStars
-                        )
+        Image(
+            painter = painterResource(Res.drawable.bg_dark),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
 
-                        CategoryBreakdown(
-                            categoryStats = state.statistics!!.byCategory
-                        )
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                StatisticsTopBar(
+                    onBackClick = { navigator.pop() }
+                )
+            }
+        ) { paddingValues ->
 
-                        MostUsedDrills(
-                            drills = state.statistics!!.mostUsed
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+
+                when {
+                    state.loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
                         )
+                    }
+
+                    state.error != null -> {
+                        ErrorState(
+                            message = state.error ?: "Unknown error",
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+
+                    state.statistics != null -> {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(scrollState)
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        ) {
+                            TimeFilterChips(
+                                selectedFilter = state.selectedFilter,
+                                onFilterSelected = { viewModel.setTimeFilter(it) }
+                            )
+
+                            SummaryCards(
+                                totalDrills = state.statistics!!.total,
+                                avgRating = state.statistics!!.avgStars
+                            )
+
+                            CategoryBreakdown(
+                                categoryStats = state.statistics!!.byCategory
+                            )
+
+                            MostUsedDrills(
+                                drills = state.statistics!!.mostUsed
+                            )
+                        }
                     }
                 }
             }
@@ -104,7 +124,7 @@ fun StatisticsTopBar(onBackClick: () -> Unit) {
         title = {
             Text(
                 text = "Statistics",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
@@ -119,7 +139,7 @@ fun StatisticsTopBar(onBackClick: () -> Unit) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = com.sportall.az.ui.theme.DeepBlue
+            containerColor = Color.Transparent
         )
     )
 }

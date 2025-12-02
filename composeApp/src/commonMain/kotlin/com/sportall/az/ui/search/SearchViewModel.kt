@@ -56,6 +56,10 @@ class SearchViewModel(
         }
     }
 
+    fun reloadExclusiveState() {
+        loadExclusiveUnlockStatus()
+    }
+
     fun onQueryChange(newQuery: String) {
         _state.value = _state.value.copy(query = newQuery)
         if (newQuery.isEmpty()) {

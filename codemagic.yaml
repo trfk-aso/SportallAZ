@@ -1,0 +1,63 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Golden
+
+    environment:
+      java: 17
+      groups:
+        - app_store_credentials
+      vars:
+        BUNDLE_ID: "com.billionsaop.app"
+        XCODE_PROJECT: "iosApp.xcodeproj"
+        XCODE_SCHEME: "iosApp"
+        APP_ID: 6755237788
+
+        GRADLE_OPTS: "-Xmx6144m -Dorg.gradle.jvmargs=-Xmx6144m -Dfile.encoding=UTF-8"
+
+    scripts:
+      - name: Set up keychain
+        script: |
+          keychain initialize
+
+      - name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_STORE --create
+
+      - name: Add certificates
+        script: |
+          keychain add-certificates
+
+      - name: Set up code signing settings
+        script: |
+          cd $CM_BUILD_DIR/iosApp
+          xcode-project use-profiles
+
+      - name: Build KMM framework
+        script: |
+          cd $CM_BUILD_DIR
+          echo ">>> Building Kotlin Multiplatform framework"
+          export GRADLE_OPTS="-Xmx6144m -Dkotlin.daemon.jvm.options=-Xmx6144m"
+          ./gradlew :composeApp:packForXcode --no-daemon --stacktrace \
+            -Pkotlin.native.cacheKind=none \
+            -Pkotlin.native.binary.memoryModel=experimental \
+            -Porg.gradle.jvmargs="-Xmx6144m"
+
+      - name: Build iOS app
+        script: |
+          cd $CM_BUILD_DIR/iosApp
+          echo ">>> Building iOS .ipa with Xcode"
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - iosApp/build/ios/ipa/*.ipa
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_app_store: true
