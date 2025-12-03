@@ -3,6 +3,8 @@ package com.sportall.az.ui.search
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -235,139 +237,79 @@ fun CategoryFilters(
     onExclusiveClick: () -> Unit,
     isExclusiveUnlocked: Boolean
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
+    val categories = listOf(
+        Category.WarmUp to "Warm-up",
+        Category.Passing to "Passing",
+        Category.Dribbling to "Dribbling",
+        Category.Shooting to "Shooting",
+        Category.Rondo to "Rondo / Possession",
+        Category.Agility to "Agility",
+        Category.Goalkeeper to "Goalkeeper",
+        Category.Recovery to "Recovery",
+        Category.Exclusive to "Exclusive"
+    )
 
-        Row(
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+        LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 0.dp)
         ) {
-            FilterChip(
-                selected = selectedCategory == null,
-                onClick = { onCategorySelected(null) },
-                label = { Text("All", color = Color.White) }
-            )
 
-            FilterChip(
-                selected = selectedCategory == Category.WarmUp,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.WarmUp) null else Category.WarmUp
-                    )
-                },
-                label = { Text("Warm-up", color = Color.White) }
-            )
+            item {
+                FilterChip(
+                    selected = selectedCategory == null,
+                    onClick = { onCategorySelected(null) },
+                    label = { Text("All", color = Color.White) }
+                )
+            }
 
-            FilterChip(
-                selected = selectedCategory == Category.Passing,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Passing) null else Category.Passing
-                    )
-                },
-                label = { Text("Passing", color = Color.White) }
-            )
+            items(categories) { (category, label) ->
 
-            FilterChip(
-                selected = selectedCategory == Category.Dribbling,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Dribbling) null else Category.Dribbling
-                    )
-                },
-                label = { Text("Dribbling", color = Color.White) }
-            )
-        }
+                val isSelected = selectedCategory == category
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            FilterChip(
-                selected = selectedCategory == Category.Shooting,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Shooting) null else Category.Shooting
-                    )
-                },
-                label = { Text("Shooting", color = Color.White) }
-            )
+                if (category == Category.Exclusive) {
+                    FilterChip(
+                        selected = isSelected,
+                        onClick = {
+                            if (isExclusiveUnlocked) {
+                                onCategorySelected(
+                                    if (isSelected) null else category
+                                )
+                            } else {
+                                onExclusiveClick()
+                            }
+                        },
+                        label = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(label, color = Color.White)
 
-            FilterChip(
-                selected = selectedCategory == Category.Rondo,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Rondo) null else Category.Rondo
-                    )
-                },
-                label = { Text("Rondo / Possession", color = Color.White) }
-            )
-
-            FilterChip(
-                selected = selectedCategory == Category.Agility,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Agility) null else Category.Agility
-                    )
-                },
-                label = { Text("Agility", color = Color.White) }
-            )
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            FilterChip(
-                selected = selectedCategory == Category.Goalkeeper,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Goalkeeper) null else Category.Goalkeeper
-                    )
-                },
-                label = { Text("Goalkeeper", color = Color.White) }
-            )
-
-            FilterChip(
-                selected = selectedCategory == Category.Recovery,
-                onClick = {
-                    onCategorySelected(
-                        if (selectedCategory == Category.Recovery) null else Category.Recovery
-                    )
-                },
-                label = { Text("Recovery", color = Color.White) }
-            )
-
-            FilterChip(
-                selected = selectedCategory == Category.Exclusive,
-                onClick = {
-                    if (isExclusiveUnlocked) {
-                        onCategorySelected(
-                            if (selectedCategory == Category.Exclusive) null else Category.Exclusive
-                        )
-                    } else {
-                        onExclusiveClick()
-                    }
-                },
-                label = {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("Exclusive", color = Color.White)
-
-                        if (!isExclusiveUnlocked) {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp),
-                                tint = Gold
-                            )
+                                if (!isExclusiveUnlocked) {
+                                    Icon(
+                                        imageVector = Icons.Default.Lock,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(20.dp),
+                                        tint = Gold
+                                    )
+                                }
+                            }
                         }
-                    }
+                    )
+                } else {
+
+                    FilterChip(
+                        selected = isSelected,
+                        onClick = {
+                            onCategorySelected(if (isSelected) null else category)
+                        },
+                        label = { Text(label, color = Color.White) }
+                    )
                 }
-            )
+            }
         }
     }
 }
@@ -379,69 +321,69 @@ fun DifficultyFilters(
     onExclusiveClick: () -> Unit,
     isExclusiveUnlocked: Boolean
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        FilterChip(
-            selected = selectedDifficulty == Difficulty.Easy,
-            onClick = {
-                onDifficultySelected(
-                    if (selectedDifficulty == Difficulty.Easy) null else Difficulty.Easy
-                )
-            },
-            label = { Text("Easy", color = Color.White) }
-        )
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 
-        FilterChip(
-            selected = selectedDifficulty == Difficulty.Medium,
-            onClick = {
-                onDifficultySelected(
-                    if (selectedDifficulty == Difficulty.Medium) null else Difficulty.Medium
-                )
-            },
-            label = { Text("Medium", color = Color.White) }
-        )
-
-        FilterChip(
-            selected = selectedDifficulty == Difficulty.Hard,
-            onClick = {
-                onDifficultySelected(
-                    if (selectedDifficulty == Difficulty.Hard) null else Difficulty.Hard
-                )
-            },
-            label = { Text("Hard", color = Color.White) }
-        )
-
-        FilterChip(
-            selected = selectedDifficulty == Difficulty.Exclusive,
-            onClick = {
-                if (isExclusiveUnlocked) {
+        item {
+            FilterChip(
+                selected = selectedDifficulty == Difficulty.Easy,
+                onClick = {
                     onDifficultySelected(
-                        if (selectedDifficulty == Difficulty.Exclusive)
-                            null else Difficulty.Exclusive
+                        if (selectedDifficulty == Difficulty.Easy) null else Difficulty.Easy
                     )
-                } else {
-                    onExclusiveClick()
-                }
-            },
-            label = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Exclusive", color = Color.White)
+                },
+                label = { Text("Easy", color = Color.White) }
+            )
+        }
 
-                    if (!isExclusiveUnlocked) {
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = Gold
+        item {
+            FilterChip(
+                selected = selectedDifficulty == Difficulty.Medium,
+                onClick = {
+                    onDifficultySelected(
+                        if (selectedDifficulty == Difficulty.Medium) null else Difficulty.Medium
+                    )
+                },
+                label = { Text("Medium", color = Color.White) }
+            )
+        }
+
+        item {
+            FilterChip(
+                selected = selectedDifficulty == Difficulty.Hard,
+                onClick = {
+                    onDifficultySelected(
+                        if (selectedDifficulty == Difficulty.Hard) null else Difficulty.Hard
+                    )
+                },
+                label = { Text("Hard", color = Color.White) }
+            )
+        }
+
+        item {
+            FilterChip(
+                selected = selectedDifficulty == Difficulty.Exclusive,
+                onClick = {
+                    if (isExclusiveUnlocked) {
+                        onDifficultySelected(
+                            if (selectedDifficulty == Difficulty.Exclusive) null else Difficulty.Exclusive
                         )
+                    } else onExclusiveClick()
+                },
+                label = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("Exclusive", color = Color.White)
+                        if (!isExclusiveUnlocked) {
+                            Icon(
+                                Icons.Default.Lock,
+                                contentDescription = null,
+                                tint = Gold,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 }
 

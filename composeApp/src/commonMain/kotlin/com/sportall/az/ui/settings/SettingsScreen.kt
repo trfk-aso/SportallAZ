@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -95,9 +96,13 @@ fun SettingsScreen() {
                     }
                 )
 
+                val uriHandler = LocalUriHandler.current
+
                 OtherSection(
                     onAboutClick = { navigator.push(AboutScreen) },
-                    onRateClick = { /* TODO */ }
+                    onRateClick = {
+                        uriHandler.openUri("https://apps.apple.com/us/app/sportall-az/id6756007920")
+                    }
                 )
             }
 

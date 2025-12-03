@@ -36,6 +36,7 @@ val appModule = module {
     factory { LoadCategoriesUseCase(get()) }
 
     factory { ToggleFavoriteUseCase(get()) }
+    factory { IsFavoriteUseCase(get()) }
     factory { GetFavoritesUseCase(get()) }
 
     factory { AddHistoryItemUseCase(get()) }
@@ -64,7 +65,7 @@ val appModule = module {
     factory { com.sportall.az.ui.onboarding.OnboardingViewModel(get()) }
     factory { com.sportall.az.ui.home.HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     factory { com.sportall.az.ui.search.SearchViewModel(get(), get(), get(), get(), get(), get()) }
-    factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get(), get()) }
+    factory { com.sportall.az.ui.catalog.DrillDetailsViewModel(get(), get(), get(), get(), get()) }
     factory { com.sportall.az.ui.favorites.FavoritesViewModel(get(), get(), get()) }
     factory { com.sportall.az.ui.history.HistoryViewModel(get(), get(), get(), get(), get(), get()) }
     factory {

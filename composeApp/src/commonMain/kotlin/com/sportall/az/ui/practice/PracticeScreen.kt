@@ -60,69 +60,60 @@ data class PracticeScreen(val drill: Drill) : Screen {
                 }
             ) { paddingValues ->
 
-                Box(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(scrollState)
                         .padding(paddingValues)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
 
-                    Column(
-                        modifier = Modifier.fillMaxSize()
+                    DurationSelection(
+                        selectedDuration = state.selectedDurationMinutes,
+                        onDurationSelected = { viewModel.selectDuration(it) },
+                        enabled = state.timerState == TimerState.IDLE
+                    )
+
+                    TimerDisplay(
+                        remainingSeconds = state.remainingSeconds,
+                        timerState = state.timerState,
+                        onStartClick = { viewModel.startTimer() },
+                        onPauseClick = { viewModel.pauseTimer() },
+                        onResumeClick = { viewModel.resumeTimer() }
+                    )
+
+                    ShortSteps(drill = drill)
+
+                    Button(
+                        onClick = { viewModel.completePractice() },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFB4FF39)
+                        )
                     ) {
-
-                        Column(
-                            modifier = Modifier
-                                .verticalScroll(scrollState)
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                            DurationSelection(
-                                selectedDuration = state.selectedDurationMinutes,
-                                onDurationSelected = { viewModel.selectDuration(it) },
-                                enabled = state.timerState == TimerState.IDLE
-                            )
-
-                            TimerDisplay(
-                                remainingSeconds = state.remainingSeconds,
-                                timerState = state.timerState,
-                                onStartClick = { viewModel.startTimer() },
-                                onPauseClick = { viewModel.pauseTimer() },
-                                onResumeClick = { viewModel.resumeTimer() }
-                            )
-
-                            ShortSteps(drill = drill)
-                        }
-
-                        Button(
-                            onClick = { viewModel.completePractice() },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(bottom = 16.dp, top = 8.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFB4FF39)
-                            )
-                        ) {
-                            Text(
-                                text = "Done",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                modifier = Modifier.padding(vertical = 8.dp)
-                            )
-                        }
-                    }
-
-                    if (state.showRatingDialog) {
-                        RatingDialog(
-                            onSave = { rating ->
-                                viewModel.saveToHistory(rating)
-                                navigator.pop()
-                            },
-                            onCancel = { viewModel.cancelRating() }
+                        Text(
+                            text = "Done",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+                }
+
+                if (state.showRatingDialog) {
+                    RatingDialog(
+                        onSave = { rating ->
+                            viewModel.saveToHistory(rating)
+                            navigator.pop()
+                        },
+                        onCancel = { viewModel.cancelRating() }
+                    )
                 }
             }
         }

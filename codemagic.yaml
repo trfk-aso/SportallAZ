@@ -4,17 +4,17 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     integrations:
-      app_store_connect: Golden
+      app_store_connect: SportallAZ
 
     environment:
       java: 17
       groups:
         - app_store_credentials
       vars:
-        BUNDLE_ID: "com.billionsaop.app"
+        BUNDLE_ID: "com.sportaldlaz.app"
         XCODE_PROJECT: "iosApp.xcodeproj"
         XCODE_SCHEME: "iosApp"
-        APP_ID: 6755237788
+        APP_ID: 6756007920
 
         GRADLE_OPTS: "-Xmx6144m -Dorg.gradle.jvmargs=-Xmx6144m -Dfile.encoding=UTF-8"
 

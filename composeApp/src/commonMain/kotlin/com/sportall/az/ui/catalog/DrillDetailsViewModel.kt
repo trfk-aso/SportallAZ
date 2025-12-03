@@ -4,6 +4,7 @@ import com.sportall.az.core.BaseViewModel
 import com.sportall.az.domain.usecases.AddHistoryItemUseCase
 import com.sportall.az.domain.usecases.GetDrillByIdUseCase
 import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
+import com.sportall.az.domain.usecases.IsFavoriteUseCase
 import com.sportall.az.domain.usecases.ToggleFavoriteUseCase
 import com.sportall.az.models.Drill
 import com.sportall.az.models.HistoryRecord
@@ -23,6 +24,7 @@ data class DrillDetailsState(
 class DrillDetailsViewModel(
     private val getDrillById: GetDrillByIdUseCase,
     private val toggleFavorite: ToggleFavoriteUseCase,
+    private val isFavorite: IsFavoriteUseCase,
     private val addHistoryItem: AddHistoryItemUseCase,
     private val isExclusiveUnlocked: IsExclusiveUnlockedUseCase
 ) : BaseViewModel() {
@@ -38,20 +40,27 @@ class DrillDetailsViewModel(
             _state.value = _state.value.copy(loading = true, error = null)
             runCatching { getDrillById(drillId) }
                 .onSuccess { d ->
+                    val fav = isFavorite(drillId)
+
                     _state.value = _state.value.copy(
                         loading = false,
                         drill = d,
+                        isFavorite = fav,
                         isExclusiveUnlocked = isExclusiveUnlocked()
                     )
                 }
-                .onFailure { e -> _state.value = _state.value.copy(loading = false, error = e.message) }
+                .onFailure { e ->
+                    _state.value = _state.value.copy(loading = false, error = e.message)
+                }
         }
     }
 
     fun toggleFavorite() {
         val id = currentId ?: state.value.drill?.id ?: return
         toggleFavorite(id)
-        _state.value = _state.value.copy(isFavorite = !_state.value.isFavorite)
+
+        val fav = isFavorite(id)
+        _state.value = _state.value.copy(isFavorite = fav)
     }
 
     fun completeWithRating(stars: Int?) {

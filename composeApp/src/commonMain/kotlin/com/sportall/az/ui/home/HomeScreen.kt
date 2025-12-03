@@ -380,7 +380,7 @@ fun CategoryChips(
                         Icon(
                             Icons.Default.Lock,
                             contentDescription = null,
-                            modifier = Modifier.size(16.dp),
+                            modifier = Modifier.size(30.dp),
                             tint = Gold
                         )
                     }
@@ -494,7 +494,7 @@ fun DrillCard(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(10.dp)
-                            .size(18.dp),
+                            .size(30.dp),
                         tint = Color(0xFF8B7500)
                     )
                 }
