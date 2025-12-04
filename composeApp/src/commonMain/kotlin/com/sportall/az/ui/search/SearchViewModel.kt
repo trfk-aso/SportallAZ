@@ -7,6 +7,8 @@ import com.sportall.az.domain.usecases.GetFavoritesUseCase
 import com.sportall.az.domain.usecases.GetSearchHistoryUseCase
 import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.SearchDrillsUseCase
+import com.sportall.az.iap.IAPProductIds
+import com.sportall.az.iap.createIAPManager
 import com.sportall.az.models.Category
 import com.sportall.az.models.Difficulty
 import com.sportall.az.models.Drill
@@ -44,6 +46,13 @@ class SearchViewModel(
         loadHistory()
         loadFavorites()
         loadExclusiveUnlockStatus()
+
+        viewModelScope.launch {
+            createIAPManager().purchaseState.collect { stateMap ->
+                val unlocked = stateMap[IAPProductIds.EXCLUSIVE] == true
+                _state.value = _state.value.copy(isExclusiveUnlocked = unlocked)
+            }
+        }
     }
 
     private fun loadAllDrills() {

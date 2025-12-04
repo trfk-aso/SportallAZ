@@ -1803,7 +1803,7 @@
     "id": 51,
     "name": "Exclusive – Golden First Touch Box",
     "category": "Exclusive",
-    "difficulty": "Easy",
+    "difficulty": "Exclusive",
     "estimatedTime": 8,
     "setup": [
       "Create a 10x10 meter square",
@@ -1831,7 +1831,7 @@
     "id": 52,
     "name": "Exclusive – Elite Dribble Gates",
     "category": "Exclusive",
-    "difficulty": "Medium",
+    "difficulty": "Exclusive",
     "estimatedTime": 12,
     "setup": [
       "Place 8–10 small gates randomly",

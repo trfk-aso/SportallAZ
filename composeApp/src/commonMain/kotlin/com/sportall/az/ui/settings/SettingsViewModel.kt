@@ -11,6 +11,7 @@ import com.sportall.az.export.BuildExportPayloadUseCase
 import com.sportall.az.export.ExportResult
 import com.sportall.az.export.ExportViewer
 import com.sportall.az.export.PdfExporter
+import com.sportall.az.iap.IAPProductIds
 import com.sportall.az.iap.PurchaseResult
 import com.sportall.az.iap.createIAPManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,18 @@ class SettingsViewModel(
 
     private val _state = MutableStateFlow(SettingsState())
     val state: StateFlow<SettingsState> = _state
+
+    init {
+        viewModelScope.launch {
+            createIAPManager().purchaseState.collect { stateMap ->
+                _state.value = SettingsState(
+                    exportUnlocked = stateMap[IAPProductIds.EXPORT] == true,
+                    wipeUnlocked = stateMap[IAPProductIds.WIPE] == true,
+                    exclusiveUnlocked = stateMap[IAPProductIds.EXCLUSIVE] == true
+                )
+            }
+        }
+    }
 
     fun refresh() {
         _state.value = SettingsState(

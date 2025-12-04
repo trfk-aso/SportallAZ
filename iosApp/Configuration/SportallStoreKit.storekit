@@ -1,0 +1,102 @@
+{
+  "identifier" : "SportallStoreKit",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "exclusive_pack",
+      "localizations" : [
+        {
+          "description" : "Unlock 20+ exclusive drills, advanced training techniques and professional coaching tips.",
+          "displayName" : "Exclusive Pack",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sportall.exclusive_pack",
+      "referenceName" : "Exclusive Pack",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "export",
+      "localizations" : [
+        {
+          "description" : "Export your training data and statistics for sharing or backup in CSV format.",
+          "displayName" : "Data Export",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sportall.export",
+      "referenceName" : "Data Export",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "wipe",
+      "localizations" : [
+        {
+          "description" : "Securely delete all training data, history and statistics. Start completely fresh.",
+          "displayName" : "Data Wipe",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sportall.wipe",
+      "referenceName" : "Data Wipe",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

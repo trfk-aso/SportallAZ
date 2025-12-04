@@ -39,6 +39,17 @@ data class PaywallScreen(val type: PaywallType) : Screen {
         val purchaseUnlock: PurchaseUnlockUseCase = koinInject()
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
+        val iap = createIAPManager()
+
+        LaunchedEffect(Unit) {
+            iap.purchaseState.collect { stateMap ->
+                val productId = IAPProductIds.fromPaywall(type)
+                if (stateMap[productId] == true) {
+                    navigator.pop()
+                }
+            }
+        }
+
         val content = when (type) {
             PaywallType.EXCLUSIVE -> PaywallContent(
                 title = "Unlock Exclusive Pack",

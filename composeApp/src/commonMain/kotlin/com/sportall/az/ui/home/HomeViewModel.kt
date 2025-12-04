@@ -9,6 +9,8 @@ import com.sportall.az.domain.usecases.GetStatisticsUseCase
 import com.sportall.az.domain.usecases.IsExclusiveUnlockedUseCase
 import com.sportall.az.domain.usecases.LoadCategoriesUseCase
 import com.sportall.az.domain.usecases.StatisticsResult
+import com.sportall.az.iap.IAPProductIds
+import com.sportall.az.iap.createIAPManager
 import com.sportall.az.models.Category
 import com.sportall.az.models.Difficulty
 import com.sportall.az.models.Drill
@@ -39,7 +41,19 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState> = _state
 
-    init { refresh() }
+    init {
+        refresh()
+
+        viewModelScope.launch {
+            createIAPManager().purchaseState.collect { stateMap ->
+                val unlocked = stateMap[IAPProductIds.EXCLUSIVE] == true
+
+                _state.value = _state.value.copy(
+                    isExclusiveUnlocked = unlocked
+                )
+            }
+        }
+    }
 
     fun refresh() {
         viewModelScope.launch {

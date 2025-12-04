@@ -10,8 +10,10 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.sportall.az.domain.usecases.PurchaseUnlockUseCase
 import com.sportall.az.ui.paywall.PaywallType
 import kotlinx.coroutines.flow.StateFlow
+import org.koin.compose.koinInject
 
 object IAPProductIds {
     const val EXCLUSIVE = "com.sportall.exclusive_pack"
@@ -68,11 +70,23 @@ data class ProcessingPurchaseScreen(val productId: String) : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val iap = createIAPManager()
 
+        val purchaseUnlock: PurchaseUnlockUseCase = koinInject()
+
         LaunchedEffect(productId) {
             val result = iap.purchase(productId)
 
             when (result) {
-                is PurchaseResult.Success -> navigator.pop()
+                is PurchaseResult.Success -> {
+
+                    when (productId) {
+                        IAPProductIds.EXCLUSIVE -> purchaseUnlock.unlockExclusive()
+                        IAPProductIds.EXPORT -> purchaseUnlock.unlockExport()
+                        IAPProductIds.WIPE -> purchaseUnlock.unlockWipe()
+                    }
+
+                    navigator.pop()
+                }
+
                 is PurchaseResult.Cancelled -> navigator.pop()
                 is PurchaseResult.Error -> navigator.pop()
             }
