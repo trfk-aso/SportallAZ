@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew :composeApp:compileKotlinMetadata:*)",
+      "Bash(./gradlew :composeApp:build:*)",
+      "Bash(./gradlew :composeApp:compileDebugKotlinAndroid:*)",
+      "Bash(./gradlew:*)",
+      "Bash(xcode-select:*)",
+      "Bash(xcrun xcodebuild:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
