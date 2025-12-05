@@ -50,12 +50,15 @@ data class PracticeScreen(val drill: Drill) : Screen {
                 contentScale = ContentScale.Crop
             )
 
+            val scrolled = scrollState.value > 10
+
             Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
                     PracticeTopBar(
                         drillName = drill.name,
-                        onBackClick = { navigator.pop() }
+                        onBackClick = { navigator.pop() },
+                        scrolled = scrolled
                     )
                 }
             ) { paddingValues ->
@@ -124,25 +127,43 @@ data class PracticeScreen(val drill: Drill) : Screen {
 @Composable
 fun PracticeTopBar(
     drillName: String,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    scrolled: Boolean
 ) {
-    TopAppBar(
-        title = {
-            Text(
-                text = drillName,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+    val backgroundPainter = painterResource(Res.drawable.bg_dark)
+
+    val barHeight = 75.dp
+
+    Box {
+        if (scrolled) {
+            Image(
+                painter = backgroundPainter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(barHeight)
             )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBackClick) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent
+        }
+
+        TopAppBar(
+            title = {
+                Text(
+                    text = drillName,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = onBackClick) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Transparent
+            )
         )
-    )
+    }
 }
 
 @Composable

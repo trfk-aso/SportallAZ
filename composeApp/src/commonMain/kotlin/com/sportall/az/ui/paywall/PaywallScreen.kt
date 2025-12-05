@@ -55,7 +55,7 @@ data class PaywallScreen(val type: PaywallType) : Screen {
                 title = "Unlock Exclusive Pack",
                 description = "Get access to premium drills designed by professional coaches",
                 features = listOf(
-                    "20+ exclusive drills",
+                    "5+ exclusive drills",
                     "Advanced training techniques",
                     "Professional coaching tips",
                     "Lifetime access"

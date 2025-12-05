@@ -32,13 +32,13 @@ actual class IAPManager : NSObject(),
     SKPaymentTransactionObserverProtocol {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
     private val _purchaseState = MutableStateFlow<Map<String, Boolean>>(emptyMap())
     actual val purchaseState: StateFlow<Map<String, Boolean>> = _purchaseState
 
-    private var productsCallback: ((List<SKProduct>) -> Unit)? = null
-    private var purchaseCallback: ((PurchaseResult) -> Unit)? = null
+    private val products = mutableMapOf<String, SKProduct>()
 
-    private var productRequest: SKProductsRequest? = null
+    private val callbacks = mutableMapOf<String, (PurchaseResult) -> Unit>()
 
     private val productIds = setOf(
         IAPProductIds.EXCLUSIVE,
@@ -49,103 +49,52 @@ actual class IAPManager : NSObject(),
     init {
         SKPaymentQueue.defaultQueue().addTransactionObserver(this)
         loadPurchasedProducts()
+        fetchProducts()
 
         PromotionConnector.onPromotionReceived = { productId ->
-            println(" IOSBillingDelegate processing promotion → $productId")
-            scope.launch {
-                autoPurchaseFromPromotion(productId)
-            }
-        }
-    }
-
-    private suspend fun autoPurchaseFromPromotion(productId: String) {
-        println("Promotion → auto-purchase triggered for: $productId")
-
-        withContext(Dispatchers.Main) {
-            suspendCoroutine { continuation ->
-                val request = SKProductsRequest(
-                    productIdentifiers = setOf(productId) as Set<Any>
+            println("PROMO → Received promotion for: $productId")
+            val product = products[productId]
+            if (product != null) {
+                SKPaymentQueue.defaultQueue().addPayment(
+                    SKPayment.paymentWithProduct(product)
                 )
-
-                request.delegate = object : NSObject(), SKProductsRequestDelegateProtocol {
-                    override fun productsRequest(
-                        request: SKProductsRequest,
-                        didReceiveResponse: SKProductsResponse
-                    ) {
-                        val products = didReceiveResponse.products as List<SKProduct>
-
-                        if (products.isEmpty()) {
-                            println("Promotion → Product not found in StoreKit: $productId")
-                            continuation.resume(Unit)
-                            return
-                        }
-
-                        val product = products.first()
-
-                        println("Promotion → Found product: ${product.productIdentifier}")
-                        println("Promotion → Starting payment...")
-
-                        SKPaymentQueue.defaultQueue().addPayment(
-                            SKPayment.paymentWithProduct(product)
-                        )
-
-                        continuation.resume(Unit)
-                    }
-
-                    override fun request(request: SKRequest, didFailWithError: NSError) {
-                        println("Promotion → Failed to load product: ${didFailWithError.localizedDescription}")
-                        continuation.resume(Unit)
-                    }
-                }
-
-                request.start()
+            } else {
+                println("PROMO → Product not loaded yet")
             }
         }
     }
 
-    actual fun initialize(context: Any?) {
+    private fun fetchProducts() {
+        val request = SKProductsRequest(productIdentifiers = productIds as Set<Any>)
+        request.delegate = this
+        request.start()
     }
 
-    actual suspend fun getProducts(): List<IAPProduct> = withContext(Dispatchers.Main) {
-        suspendCoroutine { cont ->
-            val request = SKProductsRequest(productIdentifiers = productIds as Set<Any>)
-            productRequest = request
-
-            productsCallback = { products ->
-                val mapped = products.map { p ->
-                    val formatter = NSNumberFormatter().apply {
-                        numberStyle = NSNumberFormatterCurrencyStyle
-                        locale = p.priceLocale
-                    }
-
-                    IAPProduct(
-                        id = p.productIdentifier,
-                        title = p.localizedTitle,
-                        description = p.localizedDescription,
-                        price = formatter.stringFromNumber(p.price) ?: "",
-                        isPurchased = isPurchased(p.productIdentifier)
-                    )
+    actual suspend fun getProducts(): List<IAPProduct> =
+        withContext(Dispatchers.Main) {
+            products.values.map { sk ->
+                val formatter = NSNumberFormatter().apply {
+                    numberStyle = NSNumberFormatterCurrencyStyle
+                    locale = sk.priceLocale
                 }
-
-                cont.resume(mapped)
+                IAPProduct(
+                    id = sk.productIdentifier,
+                    title = sk.localizedTitle,
+                    description = sk.localizedDescription,
+                    price = formatter.stringFromNumber(sk.price) ?: "",
+                    isPurchased = isPurchased(sk.productIdentifier)
+                )
             }
-
-            request.delegate = this@IAPManager
-            request.start()
         }
-    }
 
     override fun productsRequest(
         request: SKProductsRequest,
         didReceiveResponse: SKProductsResponse
     ) {
-        productsCallback?.invoke(didReceiveResponse.products as List<SKProduct>)
-        productsCallback = null
-    }
-
-    override fun request(request: SKRequest, didFailWithError: NSError) {
-        productsCallback?.invoke(emptyList())
-        productsCallback = null
+        (didReceiveResponse.products as List<SKProduct>).forEach { p ->
+            products[p.productIdentifier] = p
+        }
+        println("IAP → Loaded products: ${products.keys}")
     }
 
 
@@ -153,32 +102,19 @@ actual class IAPManager : NSObject(),
         withContext(Dispatchers.Main) {
             suspendCoroutine { cont ->
 
-                if (!SKPaymentQueue.canMakePayments()) {
-                    cont.resume(PurchaseResult.Error("Purchases disabled"))
+                val product = products[productId]
+                if (product == null) {
+                    cont.resume(PurchaseResult.Error("Product not loaded"))
                     return@suspendCoroutine
                 }
 
-                val request = SKProductsRequest(productIdentifiers = setOf(productId) as Set<Any>)
-                request.delegate = object : NSObject(), SKProductsRequestDelegateProtocol {
-
-                    override fun productsRequest(request: SKProductsRequest, didReceiveResponse: SKProductsResponse) {
-                        val products = didReceiveResponse.products as List<SKProduct>
-                        if (products.isEmpty()) {
-                            cont.resume(PurchaseResult.Error("Product not found"))
-                            return
-                        }
-
-                        val payment = SKPayment.paymentWithProduct(products.first())
-                        purchaseCallback = { result -> cont.resume(result) }
-                        SKPaymentQueue.defaultQueue().addPayment(payment)
-                    }
-
-                    override fun request(request: SKRequest, didFailWithError: NSError) {
-                        cont.resume(PurchaseResult.Error(didFailWithError.localizedDescription))
-                    }
+                callbacks[productId] = { result ->
+                    cont.resume(result)
                 }
 
-                request.start()
+                SKPaymentQueue.defaultQueue().addPayment(
+                    SKPayment.paymentWithProduct(product)
+                )
             }
         }
 
@@ -186,46 +122,41 @@ actual class IAPManager : NSObject(),
     actual suspend fun restorePurchases(): PurchaseResult =
         withContext(Dispatchers.Main) {
             suspendCoroutine { cont ->
-
-                purchaseCallback = { result -> cont.resume(result) }
-
+                callbacks["restore"] = { cont.resume(it) }
                 SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
             }
         }
 
 
     override fun paymentQueue(queue: SKPaymentQueue, updatedTransactions: List<*>) {
-        val txList = updatedTransactions as List< SKPaymentTransaction>
+        updatedTransactions.forEach { any ->
+            val tx = any as? SKPaymentTransaction ?: return@forEach
+            val id = tx.payment.productIdentifier
 
-        txList.forEach { tx ->
             when (tx.transactionState) {
 
                 SKPaymentTransactionState.SKPaymentTransactionStatePurchased -> {
-                    SKPaymentQueue.defaultQueue().finishTransaction(tx)
-
-                    val id = tx.payment.productIdentifier
                     savePurchased(id)
-
-                    purchaseCallback?.invoke(PurchaseResult.Success)
-                    purchaseCallback = null
+                    callbacks.remove(id)?.invoke(PurchaseResult.Success)
+                    SKPaymentQueue.defaultQueue().finishTransaction(tx)
                 }
 
                 SKPaymentTransactionState.SKPaymentTransactionStateFailed -> {
-                    SKPaymentQueue.defaultQueue().finishTransaction(tx)
-
                     val isCancelled = tx.error?.code == 2L
-                    val errorMsg = tx.error?.localizedDescription
+                    val msg = tx.error?.localizedDescription ?: "Purchase failed"
 
-                    purchaseCallback?.invoke(
+                    callbacks.remove(id)?.invoke(
                         if (isCancelled) PurchaseResult.Cancelled
-                        else PurchaseResult.Error(errorMsg ?: "Purchase failed")
+                        else PurchaseResult.Error(msg)
                     )
-                    purchaseCallback = null
+
+                    SKPaymentQueue.defaultQueue().finishTransaction(tx)
                 }
 
                 SKPaymentTransactionState.SKPaymentTransactionStateRestored -> {
+                    savePurchased(id)
+                    callbacks.remove("restore")?.invoke(PurchaseResult.Success)
                     SKPaymentQueue.defaultQueue().finishTransaction(tx)
-                    savePurchased(tx.payment.productIdentifier)
                 }
 
                 else -> {}
@@ -234,21 +165,20 @@ actual class IAPManager : NSObject(),
     }
 
     override fun paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
-        purchaseCallback?.invoke(PurchaseResult.Success)
-        purchaseCallback = null
+        callbacks.remove("restore")?.invoke(PurchaseResult.Success)
     }
 
     override fun paymentQueue(
         queue: SKPaymentQueue,
         restoreCompletedTransactionsFailedWithError: NSError
     ) {
-        purchaseCallback?.invoke(PurchaseResult.Error(restoreCompletedTransactionsFailedWithError.localizedDescription))
-        purchaseCallback = null
+        callbacks.remove("restore")?.invoke(
+            PurchaseResult.Error(restoreCompletedTransactionsFailedWithError.localizedDescription)
+        )
     }
 
-    actual fun isPurchased(productId: String): Boolean {
-        return _purchaseState.value[productId] ?: false
-    }
+    actual fun isPurchased(productId: String): Boolean =
+        _purchaseState.value[productId] ?: false
 
     private fun savePurchased(productId: String) {
         val map = _purchaseState.value.toMutableMap()
@@ -260,15 +190,17 @@ actual class IAPManager : NSObject(),
     }
 
     private fun loadPurchasedProducts() {
-        val map = mutableMapOf<String, Boolean>()
-
+        val result = mutableMapOf<String, Boolean>()
         productIds.forEach { id ->
-            val purchased = NSUserDefaults.standardUserDefaults.boolForKey("iap_$id")
-            if (purchased) map[id] = true
+            if (NSUserDefaults.standardUserDefaults.boolForKey("iap_$id")) {
+                result[id] = true
+            }
         }
-
-        _purchaseState.value = map
+        _purchaseState.value = result
     }
+
+    actual fun initialize(context: Any?) {}
 }
 
-actual fun createIAPManager(): IAPManager = IAPManager()
+private val sharedIAPManager = IAPManager()
+actual fun createIAPManager(): IAPManager = sharedIAPManager

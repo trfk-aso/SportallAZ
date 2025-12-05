@@ -2,6 +2,7 @@ package com.sportall.az.ui.settings
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,12 +14,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -26,8 +29,12 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.generated.resources.Res
 import com.sportall.az.generated.resources.bg_dark
+import com.sportall.az.iap.IAPProductIds
+import com.sportall.az.iap.createIAPManager
 import com.sportall.az.ui.paywall.PaywallScreen
 import com.sportall.az.ui.paywall.PaywallType
+import com.sportall.az.ui.theme.Gold
+import com.sportall.az.ui.theme.LimeGreen
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 
@@ -36,40 +43,48 @@ fun SettingsScreen() {
     val viewModel: SettingsViewModel = koinInject()
     val state by viewModel.state.collectAsState()
     val navigator = LocalNavigator.currentOrThrow
-    val scrollState = rememberScrollState()
 
+    val scrollState = rememberScrollState()
     var showWipeDialog by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        viewModel.refresh()
-    }
+    val bottomPadding = rememberBottomBarPadding()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Scaffold(
+        containerColor = Color.Transparent,
+        topBar = { SettingsTopBar() }
+    ) { paddingValues ->
 
-        Image(
-            painter = painterResource(Res.drawable.bg_dark),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        Box(modifier = Modifier.fillMaxSize()) {
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                SettingsTopBar()
-            }
-        ) { paddingValues ->
+            Image(
+                painter = painterResource(Res.drawable.bg_dark),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        bottom = bottomPadding
+                    )
                     .verticalScroll(scrollState)
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
 
                 LanguageSection()
+
+                ExclusiveSettingsSection(
+                    isUnlocked = state.exclusiveUnlocked,
+                    onClick = {
+                        if (!state.exclusiveUnlocked) {
+                            navigator.push(PaywallScreen(PaywallType.EXCLUSIVE))
+                        }
+                    }
+                )
 
                 DataSection(
                     exportUnlocked = state.exportUnlocked,
@@ -116,6 +131,84 @@ fun SettingsScreen() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun rememberBottomBarPadding(): Dp {
+    val insets = WindowInsets.navigationBars.asPaddingValues()
+    val bottomSystemInset = insets.calculateBottomPadding()
+
+    val bottomBarHeight = 70.dp
+
+    return bottomSystemInset + bottomBarHeight
+}
+
+@Composable
+fun ExclusiveSettingsSection(
+    isUnlocked: Boolean,
+    onClick: () -> Unit
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+
+        Text(
+            text = "Exclusive Pack",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+
+        ExclusiveSettingsButton(
+            isUnlocked = isUnlocked,
+            onClick = onClick
+        )
+    }
+}
+
+@Composable
+fun ExclusiveSettingsButton(
+    isUnlocked: Boolean,
+    onClick: () -> Unit
+) {
+    val height = 52.dp
+    val cornerRadius = 14.dp
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .clip(RoundedCornerShape(cornerRadius))
+            .border(
+                width = 2.dp,
+                color = Gold,
+                shape = RoundedCornerShape(cornerRadius)
+            )
+            .background(Color.Transparent)
+            .clickable { onClick() },
+        contentAlignment = Alignment.CenterStart
+    ) {
+
+        if (!isUnlocked) {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null,
+                tint = Gold,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 16.dp)
+                    .size(30.dp)
+            )
+        }
+
+        Text(
+            text = if (isUnlocked) "Exclusive (Unlocked)" else "Exclusive",
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 

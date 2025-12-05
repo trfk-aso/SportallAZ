@@ -1,5 +1,7 @@
 package com.sportall.az.repositories
 
+import com.sportall.az.iap.IAPProductIds
+
 interface IapRepository {
     fun unlockExport()
     fun unlockWipe()
@@ -13,9 +15,9 @@ class DefaultIapRepository(
     private val prefs: PreferencesRepository
 ) : IapRepository {
 
-    private val keyExport = "iap_export"
-    private val keyWipe = "iap_wipe"
-    private val keyExclusive = "iap_exclusive"
+    private val keyExport = IAPProductIds.EXPORT
+    private val keyWipe = IAPProductIds.WIPE
+    private val keyExclusive = IAPProductIds.EXCLUSIVE
 
     override fun unlockExport() { prefs.putBoolean(keyExport, true) }
 

@@ -226,59 +226,53 @@ fun ContinueCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 2.dp),
+        shape = RoundedCornerShape(14.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = com.sportall.az.ui.theme.SurfaceBlue
         )
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = drill.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    AssistChip(
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = drill.category.displayName,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        },
-                        modifier = Modifier.height(24.dp),
-                        colors = AssistChipDefaults.assistChipColors(
-                            containerColor = com.sportall.az.ui.theme.DrillCardBlue,
-                            labelColor = Color.White
+                AssistChip(
+                    onClick = {},
+                    label = {
+                        Text(
+                            text = drill.category.displayName,
+                            style = MaterialTheme.typography.labelSmall
                         )
+                    },
+                    modifier = Modifier.height(22.dp),
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = com.sportall.az.ui.theme.DrillCardBlue,
+                        labelColor = Color.White
                     )
-                }
+                )
             }
 
-            // Drill image or visual placeholder
             Box(
-                modifier = Modifier
-                    .size(80.dp),
+                modifier = Modifier.size(60.dp),
                 contentAlignment = Alignment.Center
             ) {
                 val imageResource = getDrillImageResource(drill.id)
@@ -290,28 +284,26 @@ fun ContinueCard(
                             .fillMaxSize()
                             .background(
                                 color = DrillCardBlue,
-                                shape = RoundedCornerShape(12.dp)
+                                shape = RoundedCornerShape(10.dp)
                             ),
                         contentScale = ContentScale.Crop
                     )
                 } else {
-                    // Fallback to text if image not found
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(
                                 color = DrillCardBlue,
-                                shape = RoundedCornerShape(12.dp)
+                                shape = RoundedCornerShape(10.dp)
                             ),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = drill.visualDescription.take(15),
+                            text = drill.visualDescription.take(12),
                             style = MaterialTheme.typography.labelSmall,
-                            textAlign = TextAlign.Center,
                             color = Color.White,
-                            fontSize = 9.sp,
-                            modifier = Modifier.padding(4.dp)
+                            fontSize = 8.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
@@ -322,15 +314,16 @@ fun ContinueCard(
             onClick = onClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            shape = RoundedCornerShape(12.dp),
+                .padding(horizontal = 16.dp, vertical = 6.dp),
+            shape = RoundedCornerShape(10.dp),
+            contentPadding = PaddingValues(vertical = 4.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = com.sportall.az.ui.theme.LimeGreen
             )
         ) {
             Text(
                 text = "Continue",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
@@ -346,7 +339,18 @@ fun CategoryChips(
     isExclusiveUnlocked: Boolean
 ) {
     val sortedCategories = remember(categories) {
-        categories.sortedByDescending { it == Category.Exclusive }
+        val exclusive = categories.firstOrNull { it == Category.Exclusive }
+        val others = categories.filter { it != Category.Exclusive }
+
+        if (exclusive != null) {
+            buildList {
+                addAll(others.take(1))
+                add(exclusive)
+                addAll(others.drop(1))
+            }
+        } else {
+            categories
+        }
     }
 
     LazyRow(
@@ -369,30 +373,39 @@ fun CategoryChips(
         }
 
         items(sortedCategories) { category ->
-            val showLock = category == Category.Exclusive && !isExclusiveUnlocked
 
-            FilterChip(
-                selected = selectedCategory == category,
-                onClick = { onCategorySelected(category) },
-                label = { Text(category.displayName) },
-                leadingIcon = if (showLock) {
-                    {
-                        Icon(
-                            Icons.Default.Lock,
-                            contentDescription = null,
-                            modifier = Modifier.size(30.dp),
-                            tint = Gold
-                        )
-                    }
-                } else null,
-                colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = LimeGreen,
-                    selectedLabelColor = Color.Black,
-                    containerColor = Color.Transparent,
-                    labelColor = Color.White,
-                    iconColor = if (showLock) Gold else Color.White
+            val isExclusive = category == Category.Exclusive
+            val locked = isExclusive && !isExclusiveUnlocked
+
+            val labelText = if (locked) "Buy" else category.displayName
+
+            Box(
+                modifier = Modifier.wrapContentSize()
+            ) {
+
+                FilterChip(
+                    selected = selectedCategory == category,
+                    onClick = { onCategorySelected(category) },
+                    label = { Text(labelText) },
+                    leadingIcon = if (locked) {
+                        {
+                            Icon(
+                                Icons.Default.Lock,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp),
+                                tint = Gold
+                            )
+                        }
+                    } else null,
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = LimeGreen,
+                        selectedLabelColor = Color.Black,
+                        containerColor = Color.Transparent,
+                        labelColor = Color.White,
+                        iconColor = if (locked) Gold else Color.White
+                    )
                 )
-            )
+            }
         }
     }
 }
@@ -485,17 +498,26 @@ fun DrillCard(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Gold.copy(alpha = 0.3f))
+                            .background(Color.Black.copy(alpha = 0.70f))
                     )
 
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = "Exclusive",
+                        tint = Color(0xFFFFD700),
                         modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(10.dp)
-                            .size(30.dp),
-                        tint = Color(0xFF8B7500)
+                            .align(Alignment.Center)
+                            .size(48.dp)
+                    )
+
+                    Text(
+                        text = "Buy",
+                        color = Color(0xFFFFD700),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(top = 70.dp)
                     )
                 }
 

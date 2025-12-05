@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.sportall.az.generated.resources.Res
@@ -78,9 +79,9 @@ fun SearchScreen() {
                     text = "Categories",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.padding(bottom = 3.dp)
                 )
-
                 CategoryFilters(
                     selectedCategory = state.selectedCategory,
                     onCategorySelected = { viewModel.selectCategory(it) },
@@ -238,6 +239,7 @@ fun CategoryFilters(
     isExclusiveUnlocked: Boolean
 ) {
     val categories = listOf(
+        Category.Exclusive to "Exclusive",
         Category.WarmUp to "Warm-up",
         Category.Passing to "Passing",
         Category.Dribbling to "Dribbling",
@@ -245,70 +247,70 @@ fun CategoryFilters(
         Category.Rondo to "Rondo / Possession",
         Category.Agility to "Agility",
         Category.Goalkeeper to "Goalkeeper",
-        Category.Recovery to "Recovery",
-        Category.Exclusive to "Exclusive"
+        Category.Recovery to "Recovery"
     )
 
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 0.dp)
+    ) {
 
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 0.dp)
-        ) {
+        item {
+            FilterChip(
+                selected = selectedCategory == null,
+                onClick = { onCategorySelected(null) },
+                label = { Text("All", color = Color.White) }
+            )
+        }
 
-            item {
-                FilterChip(
-                    selected = selectedCategory == null,
-                    onClick = { onCategorySelected(null) },
-                    label = { Text("All", color = Color.White) }
-                )
-            }
+        items(categories) { (category, label) ->
 
-            items(categories) { (category, label) ->
+            val isSelected = selectedCategory == category
+            val isExclusive = category == Category.Exclusive
+            val locked = isExclusive && !isExclusiveUnlocked
 
-                val isSelected = selectedCategory == category
+            if (isExclusive) {
+                Box {
 
-                if (category == Category.Exclusive) {
                     FilterChip(
-                        selected = isSelected,
+                        selected = isSelected && !locked,
                         onClick = {
-                            if (isExclusiveUnlocked) {
-                                onCategorySelected(
-                                    if (isSelected) null else category
-                                )
-                            } else {
-                                onExclusiveClick()
-                            }
+                            if (locked) onExclusiveClick()
+                            else onCategorySelected(category)
                         },
                         label = {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Text(label, color = Color.White)
 
-                                if (!isExclusiveUnlocked) {
+                                Text(
+                                    text = if (locked) "Buy" else label,
+                                    color = Color.White
+                                )
+
+                                if (locked) {
                                     Icon(
                                         imageVector = Icons.Default.Lock,
                                         contentDescription = null,
-                                        modifier = Modifier.size(20.dp),
+                                        modifier = Modifier.size(22.dp),
                                         tint = Gold
                                     )
                                 }
                             }
                         }
                     )
-                } else {
-
-                    FilterChip(
-                        selected = isSelected,
-                        onClick = {
-                            onCategorySelected(if (isSelected) null else category)
-                        },
-                        label = { Text(label, color = Color.White) }
-                    )
                 }
+            } else {
+
+                FilterChip(
+                    selected = isSelected,
+                    onClick = {
+                        onCategorySelected(if (isSelected) null else category)
+                    },
+                    label = { Text(label, color = Color.White) }
+                )
             }
         }
     }
@@ -360,29 +362,44 @@ fun DifficultyFilters(
         }
 
         item {
-            FilterChip(
-                selected = selectedDifficulty == Difficulty.Exclusive,
-                onClick = {
-                    if (isExclusiveUnlocked) {
-                        onDifficultySelected(
-                            if (selectedDifficulty == Difficulty.Exclusive) null else Difficulty.Exclusive
-                        )
-                    } else onExclusiveClick()
-                },
-                label = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Exclusive", color = Color.White)
-                        if (!isExclusiveUnlocked) {
-                            Icon(
-                                Icons.Default.Lock,
-                                contentDescription = null,
-                                tint = Gold,
-                                modifier = Modifier.size(24.dp)
+
+            val locked = !isExclusiveUnlocked
+
+            Box(
+                contentAlignment = Alignment.TopCenter
+            ) {
+
+                FilterChip(
+                    selected = selectedDifficulty == Difficulty.Exclusive && !locked,
+                    onClick = {
+                        if (locked) {
+                            onExclusiveClick()
+                        } else {
+                            onDifficultySelected(
+                                if (selectedDifficulty == Difficulty.Exclusive) null else Difficulty.Exclusive
                             )
                         }
+                    },
+                    label = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+
+                            Text(
+                                text = if (locked) "Buy" else "Exclusive",
+                                color = Color.White
+                            )
+
+                            if (locked) {
+                                Icon(
+                                    Icons.Default.Lock,
+                                    contentDescription = null,
+                                    tint = Gold,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
